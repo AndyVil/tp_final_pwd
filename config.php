@@ -3,4 +3,4 @@
 $GLOBALS['ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "/pwd_proyectos/tp_final_pwd/";
 
 //Requiere las fuciones de php de la carpeta Tools
-require_once("../../tools/functions.php");
+require_once("../../utils/functions.php");

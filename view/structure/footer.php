@@ -3,7 +3,9 @@
     <h1>Este es el Pie</h1>
 </div>
 
-
+<script src="./../tools/jquery-3.6.0.min.js"></script>
+<script src="./../tools/popper.min.js"></script>
+<script src="./../tools/bootstrap-5.1.3/js/bootstrap.min.js"></script>
 </body>
 <!--FINAL HTML==================================================================-->
 
