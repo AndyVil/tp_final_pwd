@@ -31,6 +31,11 @@ spl_autoload_register(function ($clase) {
 	$directorys = array(
 		$GLOBALS['ROOT'].'model/',
 		$GLOBALS['ROOT'].'controller/',
+		$GLOBALS['ROOT'].'controller/imageworkshop/src/',
+		$GLOBALS['ROOT'].'controller/imageworkshop/src/Core/',
+		$GLOBALS['ROOT'].'controller/imageworkshop/src/Exception/',
+		$GLOBALS['ROOT'].'controller/imageworkshop/src/Exif/',
+		$GLOBALS['ROOT'].'utils/krumo-0.4.4/',
 	);
 	foreach($directorys as $directory){
 	  if(file_exists($directory.$clase . '.php')){  

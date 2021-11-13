@@ -24,25 +24,33 @@
   ?>
 
 
-  <!--CABECERA DIV
-    style="height: 9%; width: 99.8%; border: 2px solid red; border-radius: 5px;"-->
+  <!--CABECERA DIV-->
   <header>
     <h3 id="titulo">Tienda de ropa</h3>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+        <a id="cliente_ini" class="nav-link" aria-current="page" href="./../inicio_cliente/">Clientes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a id="dep_ini" class="nav-link" aria-current="page" href="./../inicio_deposito/">Deposito</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a id="admin_ini" class="nav-link" aria-current="page" href="./../inicio_admin/">Administrador</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  href="#">Link</a>
+        <a id="login" class="nav-link" href="./../login/">Log in</a>
+      </li>
+      <li class="nav-item">
+        <a id="registro" class="nav-link" href="./../registro/">Registrarse</a>
+      </li>
+      <li class="nav-item">
+        <a id="cuenta" class="nav-link" href="./../cuenta/">Cuenta</a>
+      </li>
+      <li class="nav-item">
+        <a id="carrito" class="nav-link" href="./../carrito/">Carrito</a>
       </li>
     </ul>
-</header>
+  </header>
 
 
   <?php
