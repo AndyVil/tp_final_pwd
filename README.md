@@ -1,5 +1,4 @@
-### Ruta de proyecto...
-*C:\xampp\htdocs\pwd_proyectos\tp_final_pwd*
+### Ruta de proyecto: *C:\xampp\htdocs\pwd_proyectos\tp_final_pwd*
 
 # TP Final Programacion Web Dinamica
 
