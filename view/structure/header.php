@@ -27,6 +27,9 @@
   <!--CABECERA DIV-->
   <header>
     <h3 id="titulo">Tienda de ropa</h3>
+
+
+    <!-- MENU TABS -->
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a id="cliente_ini" class="nav-link" aria-current="page" href="./../inicio_cliente/">Clientes</a>
@@ -50,6 +53,8 @@
         <a id="carrito" class="nav-link" href="./../carrito/">Carrito</a>
       </li>
     </ul>
+
+
   </header>
 
 
