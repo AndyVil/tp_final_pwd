@@ -98,6 +98,8 @@ require_once("../structure/Header.php");
     <br>
 
 </main>
+
+
 <?php
 //FOOTER============================================================================
 require_once("../structure/footer.php");

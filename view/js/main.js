@@ -7,8 +7,6 @@ $(document).ready(function () {
     tabSelect(window);
 
 
-
-
     //FUNCIONES-----------------------------------------------------------------------------
 
     //Para que la pestaña se enfoque en la que estamos seleccionando (utiliza la url actual)

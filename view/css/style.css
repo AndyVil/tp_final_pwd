@@ -8,7 +8,7 @@
   background-color: #f5f5f5;
 }
 
-#titulo {
+#titulo, #a.linktitulo:active, #linktitulo:hover, #linktitulo:visited, #linktitulo:link {
     background: -prefix-linear-gradient(left, rgb(91, 7, 148), rgb(161, 30, 173));
     background: linear-gradient(to right, rgb(91, 7, 148), rgb(161, 30, 173));
     padding-top: 5px;
@@ -16,6 +16,7 @@
     text-align:center;
     color: azure;
     text-transform: uppercase;
+    text-decoration: none;
 }
 
 .nav-link {
@@ -43,4 +44,9 @@ main {
 #contacto {
     text-align: center;
     align-content: center;
+}
+
+#btn-form {
+    padding-left: 75px;
+    padding-right: 75px;
 }

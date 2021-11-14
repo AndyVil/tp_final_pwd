@@ -26,8 +26,7 @@
 
   <!--CABECERA DIV-->
   <header>
-    <h3 id="titulo">Tienda de ropa</h3>
-
+    <a href="./../inicio_sinlog/" id="linktitulo"><h3 id="titulo">Tienda de ropa</h3></a>
 
     <!-- MENU TABS -->
     <ul class="nav nav-tabs">
@@ -56,9 +55,3 @@
 
 
   </header>
-
-
-  <?php
-  //LLAMADO A LATERAL(SIDE)===========================================================
-  //require_once("side.php");
-  ?>
