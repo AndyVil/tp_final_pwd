@@ -25,7 +25,7 @@ require_once("../structure/Header.php");
                 <!-- Submit -->
                 <input type="submit" value="Enviar" name="btn-form" id="btn-form" class="btn btn-success">
             </form>
-
+             <!-- Redireccion a registro -->
             <span>Si no tiene cuenta:
                 <a href="./../registro/index.php">
                 <p>Regístrese</p>

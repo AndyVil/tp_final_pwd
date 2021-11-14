@@ -50,3 +50,49 @@ main {
     padding-left: 75px;
     padding-right: 75px;
 }
+
+
+#columnaCarga{
+    background: rgb(166, 82, 173);
+    border-radius: 5px;
+}
+
+
+#descripcion, #talles, #stock, #tipoProducto, #nuevoProducto {
+  margin: 10px;
+}
+#descripcion{
+  margin-top:10px;
+}
+
+#prodcutosCargados{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 1px;
+}
+
+/*Boton para subir archivos*/
+#nuevoProducto::-webkit-file-upload-button {
+  display: none;
+}
+#nuevoProducto::before {
+  content: 'Nuevo Producto';
+  display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 2px solid rgb(101, 30, 107);
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select:none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+  margin-right: 10px;
+}
+#nuevoProducto:hover::before {
+  border-color: rgb(142, 19, 153);
+}
+#nuevoProducto:active::before {
+  background: -webkit-linear-gradient(top, #ff00ea42, #ff00c87c);
+}
