@@ -4,7 +4,9 @@ class Compra
     private $idcompra;
     private $cofecha;
     private $idusuario;
+    private $coprecio;
     private $mensajeoperacion;
+    private $arrayItems;
 
 
     /** CONSTRUCTOR **/
@@ -17,11 +19,13 @@ class Compra
 
 
     /** SETEAR **/
-    public function setear($idcompra, $cofecha, $idusuario)
+    public function setear($idcompra, $cofecha, $idusuario, $precio)
     {
         $this->setidcompra($idcompra);
         $this->setcofecha($cofecha);
         $this->setidusuario($idusuario);
+        $this->setcoprecio($precio);
+        $this->setarrayItems();
     }
 
 
@@ -39,6 +43,10 @@ class Compra
     public function getcofecha()
     {
         return $this->cofecha;
+    }
+    public function getcoprecio()
+    {
+        return $this->coprecio;
     }
 
     public function getmensajeoperacion()
@@ -62,6 +70,21 @@ class Compra
     {
         $this->idusuario = $valor;
     }
+    public function setcoprecio($valor)
+    {
+        if ($valor<> NULL) {
+            $this->ciprecio=$valor;
+        }
+        else{
+            $preciofinal=0;
+            $colitems= $this->getarrayItems();
+            foreach($colitems as $item){
+            $preciofinal += $item->getciprecio(); 
+            }
+            $this->ciprecio=$preciofinal;
+        }
+
+    }
     public function setmensajeoperacion($valor)
     {
         $this->mensajeoperacion = $valor;
@@ -79,13 +102,14 @@ class Compra
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $this->setear($row['idcompra'], $row['cofecha'],$row['idusuario'] );
                     $objUsuario = NULL;
                     if ($row['idproducto'] != null) {
                         $objUsuario = new Usuario();
                         $objUsuario->setidusuario($row['idproducto']);
                         $objUsuario->cargar();
                     }
+                    $this->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio']);
+                    
                 }
             }
         } else {
@@ -94,6 +118,30 @@ class Compra
         return $resp;
     }
 
+    public function getarrayItems(){        
+        return $this->arrayItems;;
+    }
+    /** inicializa la lista de items de la compra **/
+    public function setarrayItems()
+    {
+        $arr = array();
+        $condicion = "idcompra='" . $this->getidcompra() . "'";
+        $objCompraItem = new CompraItem();
+        $colCompraItems = $objCompraItem->listar($condicion);
+        foreach ($colCompraItems as $CompraItem) {
+            array_push($arr, $CompraItem);
+        }
+        $this->arrayItems= $arr;
+    }
+
+    public function compraprecio(){
+        $precio= 0;        
+        $colItems = $this->getarrayItems();
+        foreach ($colItems as $item) {
+            $precio =+$item->ciprecio();
+        }
+        return $precio;
+    }
 
     /** INSERTAR **/
     public function insertar()
@@ -169,7 +217,13 @@ class Compra
             if ($res > 0) {
                 while ($row = $base->Registro()) {
                     $obj = new Compra();
-                    $obj->setear($row['idcompra'], $row['cofecha'],$row['idusuario']);
+                    $objUsuario = NULL;
+                    if ($row['idproducto'] != null) {
+                        $objUsuario = new Usuario();
+                        $objUsuario->setidusuario($row['idproducto']);
+                        $objUsuario->cargar();
+                    }
+                    $obj->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio'] );
                     array_push($arreglo, $obj);
                 }
             }

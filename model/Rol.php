@@ -3,6 +3,7 @@ class Rol
 {
     private $idrol;
     private $roldescripcion;
+    private $arrayMenus;
 
 
     /** CONSTRUCTOR **/
@@ -18,6 +19,7 @@ class Rol
     {
         $this->setidrol($idrol);
         $this->setroldescripcion($roldescripcion);
+        $this->setarrayMenus();
     }
 
 
@@ -52,6 +54,23 @@ class Rol
     public function setmensajeoperacion($valor)
     {
         $this->mensajeoperacion = $valor;
+    }
+
+    public function getarrayMenus(){        
+        return $this->arrayMenus;
+    }
+    /** inicializa la lista de menus del rol **/
+    public function setarrayMenus()
+    {
+        $arr = array();
+        $condicion = "idrol='" . $this->getidrol() . "'";
+        $objmenuRol = new MenuRol();
+        $colmenuRols = $objmenuRol->listar($condicion);
+        foreach ($colmenuRols as $menuRol) {
+            $menu = $menuRol->getobjrol();
+            array_push($arr, $menu);
+        }
+        $this->arrayMenus= $arr;
     }
 
 

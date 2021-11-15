@@ -5,6 +5,7 @@ class Producto
     private $pronombre;
     private $prodetalle;
     private $procantstock;
+    private $proprecio;
     private $mensajeoperacion;
 
 
@@ -15,16 +16,18 @@ class Producto
         $this->pronombre = "";
         $this->prodetalle = "";
         $this->procantstock = "";
+        $this->proprecio = "";
     }
 
 
     /** SETEAR **/
-    public function setear($idproducto, $pronombre, $prodetalle, $procantstock)
+    public function setear($idproducto, $pronombre, $prodetalle, $procantstock,$proprecio )
     {
         $this->setidproducto($idproducto);
         $this->setpronombre($pronombre);
         $this->setprodetalle($prodetalle);
         $this->setprocantstock($procantstock);
+        $this->setproprecio($proprecio);
         
     }
 
@@ -48,6 +51,9 @@ class Producto
     public function getprocantstock()
     {
         return $this->procantstock;
+    }
+    public function getproprecio(){
+        return $this->proprecio;
     }
 
     public function getmensajeoperacion()
@@ -76,11 +82,17 @@ class Producto
     {
         $this->procantstock = $valor;
     }
+    public function setproprecio($valor)
+    {
+        $this->proprecio = $valor;
+    }
 
     public function setmensajeoperacion($valor)
     {
         $this->mensajeoperacion = $valor;
     }
+
+    
 
 
     /** CARGAR **/
@@ -94,7 +106,7 @@ class Producto
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $this->setear($row['idproducto'], $row['pronombre'],$row['prodetalle'], $row['procantstock']);
+                    $this->setear($row['idproducto'], $row['pronombre'],$row['prodetalle'], $row['procantstock'], $row['proprecio']);
                 }
             }
         } else {
@@ -109,7 +121,7 @@ class Producto
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO producto(idproducto,pronombre,prodetalle,procantstock)  VALUES('" . $this->getidproducto() . "','" . $this->getpronombre() ."','" . $this->getprodetalle() ."','" . $this->getprocantstock() . "');";
+        $sql = "INSERT INTO producto(idproducto,pronombre,prodetalle,procantstock,proprecio)  VALUES('" . $this->getidproducto() . "','" . $this->getpronombre() ."','" . $this->getprodetalle() ."','" . $this->getprocantstock(). "','"  . $this->getproprecio() ."');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidproducto($elid);
@@ -131,7 +143,8 @@ class Producto
         $base = new BaseDatos();
         $sql = "UPDATE producto SET pronombre='" . $this->getpronombre() . "',
         prodetalle='" . $this->getprodetalle() . "',
-        procantstock='" . $this->getprocantstock() . "'
+        procantstock='" . $this->getprocantstock(). "',
+        proproprecio='" . $this->getproprecio()  . "'
         WHERE idproducto=" . $this->getidproducto();
         if ($base->Iniciar()) {
             //var_dump($sql);
@@ -180,7 +193,7 @@ class Producto
             if ($res > 0) {
                 while ($row = $base->Registro()) {
                     $obj = new Producto();
-                    $obj->setear($row['idproducto'], $row['pronombre'],$row['prodetalle'], $row['procantstock']);
+                    $obj->setear($row['idproducto'], $row['pronombre'],$row['prodetalle'], $row['procantstock'],$row['proprecio']);
                     array_push($arreglo, $obj);
                 }
             }

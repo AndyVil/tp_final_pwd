@@ -116,7 +116,7 @@ Class Menu{
                         $objpadre->setidMenu($row['ipPadre']);
                         $objpadre->cargar();
                     }
-                    $this->setear($row['idmenu'], $row['menunombre'], $row['menudescripcion'], $objpadre, $row['menudeshabilitado']);
+                    $this->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $objpadre, $row['medeshabilitado']);
                 }
             }
         } else {
@@ -131,7 +131,7 @@ Class Menu{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO menu(idmenu,menunombre,menudescripcion,idpadre,menudesabilitado)  VALUES('" . $this->getidMenu() . "','" . $this->getmenuNombre() . "','" . $this->getmenuDescripcion() . "','" . $this->getobjpadre()->getidMenu() ."','" .$this->getmenuDeshabilitado() . "');";
+        $sql = "INSERT INTO menu(idmenu,menombre,medescripcion,idpadre,medesabilitado)  VALUES('" . $this->getidMenu() . "','" . $this->getmenuNombre() . "','" . $this->getmenuDescripcion() . "','" . $this->getobjpadre()->getidMenu() ."','" .$this->getmenuDeshabilitado() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidMenu($elid);
@@ -151,9 +151,9 @@ Class Menu{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE menu SET menunombre='" . $this->getmenuNombre() . "',";
-        $sql .= "menudescripcion=" . $this->getmenuDescripcion() . ",";
-        $sql .= "menudeshabilitado='" . $this->getmenuDeshabilitado() . "' ";
+        $sql = "UPDATE menu SET menombre='" . $this->getmenuNombre() . "',";
+        $sql .= "medescripcion=" . $this->getmenuDescripcion() . ",";
+        $sql .= "medeshabilitado='" . $this->getmenuDeshabilitado() . "' ";
         $sql .= "WHERE idmenu='" . $this->getidMenu() . "'";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
@@ -207,7 +207,7 @@ Class Menu{
                         $objpadre->setidMenu($row['idpadre']);
                         $objpadre->cargar();
                     }
-                    $obj->setear($row['idmenu'], $row['menunombre'], $row['menudescripcion'], $objpadre,$row['menudeshabilitado']);
+                    $obj->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $objpadre,$row['medeshabilitado']);
 
                     array_push($arreglo, $obj);
                 }

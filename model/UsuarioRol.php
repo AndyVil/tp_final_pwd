@@ -1,37 +1,37 @@
 <?php
 class UsuarioRol
 {
-    private $idrol;
-    private $idusuario;
+    private $objrol;
+    private $objusuario;
     private $mensajeoperacion;
 
 
     /** CONSTRUCTOR **/
     public function __construct()
     {
-        $this->idusuario = new Usuario();
-        $this->idrol = new Rol();
+        $this->objusuario = new Usuario();
+        $this->objrol = new Rol();
         $this->mensajeoperacion = "";
     }
 
 
     /** SETEAR **/
-    public function setear($idusuario, $idrol)
+    public function setear($usuario, $rol)
     {
-        $this->setobjusuario($idusuario);
-        $this->setobjrol($idrol);
+        $this->setobjusuario($usuario);
+        $this->setobjrol($rol);
     }
 
 
     /** GETS **/
     public function getobjusuario()
     {
-        return $this->idusuario;
+        return $this->objusuario;
     }
 
     public function getobjrol()
     {
-        return $this->idrol;
+        return $this->objrol;
     }
 
     public function getMensajeoperacion()
@@ -41,14 +41,14 @@ class UsuarioRol
 
 
     /** SETS **/
-    public function setobjusuario($idusuario)
+    public function setobjusuario($usuario)
     {
-        $this->idusuario = $idusuario;
+        $this->objusuario = $usuario;
     }
 
-    public function setobjrol($idrol)
+    public function setobjrol($rol)
     {
-        $this->idrol = $idrol;
+        $this->objrol = $rol;
     }
 
     public function setMensajeoperacion($mensajeoperacion)
@@ -80,7 +80,7 @@ class UsuarioRol
                         $objRol->setIdrol($row['idrol']);
                         $objRol->cargar();
                     }
-                    $this->setear($row['idusuario'], $row['idrol']);
+                    $this->setear($objUsuario, $objRol);
                 }
             }
         } else {

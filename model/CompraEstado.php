@@ -11,7 +11,7 @@ Class CompraEstado{
 
   public function __construct()
     {
-        $this->cefechaini = "";
+        $this->idcompraestado = "";
         $this->idcompra = "";
         $this->idcompraestadotipo = "";
         $this->cefechaini = "";
@@ -25,7 +25,7 @@ Class CompraEstado{
         $this->setidcompraestado($idcompraestado);
         $this->setidcompra($idcompra);
         $this->setidcompraestadotipo($idcompraestadotipo);
-        $this->setidcompraestado($cefechaini);
+        $this->setcefechaini($cefechaini);
         $this->setcefechafin($cefechafin);
     }
 
