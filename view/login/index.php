@@ -27,7 +27,7 @@ require_once("../structure/Header.php");
             </form>
              <!-- Redireccion a registro -->
             <span>Si no tiene cuenta:
-                <a href="./../registro/index.php">
+                <a href="./../registro/">
                 <p>Regístrese</p>
             </span>
         </div>

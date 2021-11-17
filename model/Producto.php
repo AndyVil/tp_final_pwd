@@ -31,7 +31,7 @@ class Producto
         
     }
 
-
+    
     /** GETS **/
     public function getprodetalle()
     {
@@ -119,20 +119,23 @@ class Producto
     /** INSERTAR **/
     public function insertar()
     {
+        $arr=array();
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO producto(idproducto,pronombre,prodetalle,procantstock,proprecio)  VALUES('" . $this->getidproducto() . "','" . $this->getpronombre() ."','" . $this->getprodetalle() ."','" . $this->getprocantstock(). "','"  . $this->getproprecio() ."');";
+        $sql = "INSERT INTO producto(idproducto,pronombre,prodetalle,procantstock,proprecio)  VALUES(". $this->getidproducto() . ",'" . $this->getpronombre() ."','" . $this->getprodetalle() ."','" . $this->getprocantstock(). "','"  . $this->getproprecio() ."');";
+        //var_dump($sql);
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidproducto($elid);
                 $resp = true;
+                array_push($arr,$resp,$elid);
             } else {
                 $this->setmensajeoperacion("producto->insertar: " . $base->getError());
             }
         } else {
             $this->setmensajeoperacion("producto->insertar: " . $base->getError());
         }
-        return $resp;
+        return $arr;
     }
 
 
@@ -178,6 +181,7 @@ class Producto
         return $resp;
     }
 
+    
 
     /** LISTAR **/
     public static function listar($parametro = "")

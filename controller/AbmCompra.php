@@ -13,7 +13,7 @@ class AbmCompra
     }
 
 
-/**
+    /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los  de las variables instancias del objeto que son claves
      * @param array $param
      * @return Compra
@@ -86,7 +86,7 @@ class AbmCompra
         return $resp;
     }
 
-        /**
+    /**
      * MODIFICACION
      * @param array $param
      * @return boolean

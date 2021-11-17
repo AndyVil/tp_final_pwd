@@ -16,7 +16,7 @@ class BaseDatos extends PDO
     {
         $this->engine = 'mysql';
         $this->host = 'localhost';
-        $this->database = 'tiendaropa';
+        $this->database = 'carritocompras';
         $this->user = 'root';
         $this->pass = '';
         $this->debug = true;
@@ -115,6 +115,7 @@ class BaseDatos extends PDO
         }
         return $resp;
     }
+ 
 
 
     /**

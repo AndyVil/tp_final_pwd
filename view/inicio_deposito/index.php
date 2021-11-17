@@ -1,117 +1,73 @@
-<title><?= "Tienda de ropa" ?></title>
 <?php
-require_once("../structure/Header.php");
-//HEADER============================================================================
+$Titulo = "Deposito";
+require_once("../structure/header.php");
+
+$objAbmTabla = new AbmProducto();
+$listaTabla = $objAbmTabla->buscar(null);
 ?>
 
-
-<!--BODY============================================================================-->
-<!-- INICIO DEPOSITO -->
-<main role="main" class="container">
-    <div class="row" align="center">
-        <div align="center" id="columnaCarga">
-
-            <form action="" method="POST" name="" id="">
-
-                <div class="row align-items-center">
-
-                    <div class="col-sm-2" align="center">
-                        <!-- Seleccionar tipo de producto -->
-                        <select name="tipoProducto" id="tipoProducto">
-                            <option value=" remera">Remera</option>
-                            <option value="pantalon">Pantalon</option>
-                            <option value="interior">Interior</option>
-                            <option value="zapatos">Zapatos</option>
-                            <option value="otro">Otros...</option>
-                        </select>
-                    </div>
-
-                    <div class="col-sm-3" align="center">
-                        <!-- Cantidad de stock -->
-                        <input type="text" name="stock" id="stock" placeholder="Stock">
-                    </div>
-
-                    <div class="col-sm-3" align="center">
-                        <!-- Descripcion -->
-                        <textarea name="descripcion" id="descripcion" cols="30" rows="2" placeholder="Descripción del producto"></textarea>
-                    </div>
-
-                    <div class="col-sm-3" align="center" id="talles">
-                        <!-- Seleccion de talles -->
-                        <span>Talles:</span>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-s' value='S'>
-                        <label for="futbol">S</label>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-m' value='M'>
-                        <label for="futbol">M</label>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L'>
-                        <label for="futbol">L</label>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-xl' value='XL'>
-                        <label for="futbol">XL</label>
-                    </div>
-
-                    <div class="col-sm-12" align="center">
-                        <input type="file" name="nuevoProducto" id="nuevoProducto">
-                    </div>
-
-                    <!-- Submit -->
-                    <br>
-                    <input type="submit" value="Cargar" name="btn-form" id="btn-form" class="btn btn-dark">
-                </div>
-            </form>
-        </div>
-
-        <div class="row" id="prodcutosCargados" align="center">
-            <div class="col" style="border: 2px solid red;">
-                Producto 1
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 2
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 3
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 4
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 5
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 6
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 7
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 8
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 9
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 10
-            </div>
-            <div class="col" style="border: 2px solid red;">
-                Producto 11
-            </div>
-        </div>
-        <span>
-            La idea aca es que el prodcuto no tenga nombre, sino que se seleccione un tipo, y luego a eso le agregamos
-            un numero para identificarlo
-        </span>
+<div class="row mb-5" id="tp4_eje3">
+    <!-- Boton Agregar Producto -->
+    <div align="center">
+        <h2 class="mt-5">Deposito</h2>
+        <button onclick="location.href='cargarProducto.php'" class="btn btn-dark">Nuevo Producto</button>
     </div>
-    <br>
-    <br>
 
+    <form id="productosCargados" name="productosCargados" action="action.php" method="POST">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Detalle</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <?php
 
+                if (count($listaTabla) > 0) {
+                    $i = 1;
+                    echo '<tbody>';
+                    foreach ($listaTabla as $objProducto) {
 
+                        $id = $objProducto->getidproducto();
+                        $nombre = $objProducto->getpronombre();
+                        $detalle = $objProducto->getprodetalle();
+                        $des = $objProducto->getprocantstock();
+                        $precio = $objProducto->getproprecio();
+                        echo '<tr class="align-middle">';
+                        echo '<th scope="row">' . $id . '</th>';
+                        echo '<td>' . $nombre .    '</td>';
 
+                        echo '<td>' . $detalle .  '</td>';
+                        //echo '<td>' . $des .  '</td>';
+                        if ($des > 0) {
+                            echo "<td class='text-center text-success'>" . $des . " <i class='fas fa-check'></i></td>";
+                        } else {
+                            echo "<td class='text-center text-danger'>" . $des . "<i class='fas fa-times'></i></td>";
+                        }
+                        echo '<td>' . $precio .  '</td>';
+                        echo '<td class="text-center"><button class="btn btn-success btn-sm" type="submit" value="' . $id . '" id="proEdit" name="proEdit" role="button"><i class="fas fa-pen"></i></button>
+                        <button class="btn btn-danger btn-sm" type="submit" value="' . $id . '" formaction="eliminarProducto.php" id="proBorrar" name="proBorrar" role="button"><i class="fas fa-trash"></i></button></td>';
+                        echo '</tr>';
+                        $i++;
+                    }
+                    echo '</tbody>';
+                    echo '</table>';
+                } else {
+                    echo "<div class='alert alert-danger d-flex align-items-center mt-5' role='alert'>
+                    <svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Danger:'><use xlink:href='#exclamation-triangle-fill'/></svg>
+                    <div>No hay Productos registrados.</div></div>";
+                }
 
+                ?>
 
-</main>
-
+        </div>
+    </form>
+</div>
 
 <?php
-//FOOTER============================================================================
 require_once("../structure/footer.php");
 ?>

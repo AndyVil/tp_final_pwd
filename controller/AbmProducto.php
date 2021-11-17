@@ -37,7 +37,7 @@ class AbmProducto
 
         if (isset($param['idproducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idproducto'], "", "", "", "", "");
+            $obj->setear($param['idproducto'], "", "", "", "");
         }
         return $obj;
     }
@@ -64,18 +64,19 @@ class AbmProducto
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idproducto'] = $param['idproducto'];
-        $encuentraUser = $this->buscar($buscar2);
-
-        if ($encuentraUser == null) {
+         $arr=array();
             $elObjtProducto = $this->cargarObjeto($param);
-            if ($elObjtProducto != null and $elObjtProducto->insertar()) {
+            //var_dump($elObjtProducto);
+            list($insert, $id)=$elObjtProducto->insertar();
+            if ($elObjtProducto != null and $insert) {
                 $resp = true;
-            }
-        }
-        return $resp;
+                array_push($arr,$resp,$id);
+            }        
+        return $arr;
     }
+
+
+
 
 
     /**
