@@ -14,7 +14,8 @@ Class Menu{
         $this->idMenu = "";
         $this->menuNombre = "";
         $this->menuDescripcion = "";
-        $this->objpadre = new Menu();
+        $this->objpadre = "";
+        //ini_set('memory_limit', '-1');
         $this->menuDeshabilitado = "";
     }
 

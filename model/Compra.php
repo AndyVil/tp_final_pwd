@@ -6,7 +6,7 @@ class Compra
     private $idusuario;
     private $coprecio;
     private $mensajeoperacion;
-    private $arrayItems;
+    // private $arrayItems;
 
 
     /** CONSTRUCTOR **/
@@ -77,7 +77,7 @@ class Compra
         }
         else{
             $preciofinal=0;
-            $colitems= $this->getarrayItems();
+            //$colitems= $this->getarrayItems();
             foreach($colitems as $item){
             $preciofinal += $item->getciprecio(); 
             }
@@ -118,26 +118,26 @@ class Compra
         return $resp;
     }
 
-    public function getarrayItems(){        
-        return $this->arrayItems;;
-    }
-    /** inicializa la lista de items de la compra **/
-    public function setarrayItems()
-    {
-        $arr = array();
-        $condicion = "idcompra='" . $this->getidcompra() . "'";
-        $objCompraItem = new CompraItem();
-        $colCompraItems = $objCompraItem->listar($condicion);
-        foreach ($colCompraItems as $CompraItem) {
-            array_push($arr, $CompraItem);
-        }
-        $this->arrayItems= $arr;
-    }
+    // public function getarrayItems(){        
+    //     return $this->arrayItems;;
+    // }
+    // /** inicializa la lista de items de la compra **/
+    // public function setarrayItems()
+    // {
+    //     $arr = array();
+    //     $condicion = "idcompra='" . $this->getidcompra() . "'";
+    //     $objCompraItem = new CompraItem();
+    //     $colCompraItems = $objCompraItem->listar($condicion);
+    //     foreach ($colCompraItems as $CompraItem) {
+    //         array_push($arr, $CompraItem);
+    //     }
+    //     $this->arrayItems= $arr;
+    // }
 
     public function compraprecio(){
         $precio= 0;        
-        $colItems = $this->getarrayItems();
-        foreach ($colItems as $item) {
+        //$colItems = $this->getarrayItems();
+        foreach $colItems as $item) {
             $precio =+$item->ciprecio();
         }
         return $precio;

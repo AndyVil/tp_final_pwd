@@ -95,7 +95,7 @@ class UsuarioRol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO usuariorol (idusuario,idrol)  VALUES ('" . $this->getobjusuario()->getIdusuario() . "','" . $this->getobjrol()->getIdrol() . "')";
+        $sql = "INSERT INTO usuariorol (idusuario,idrol)  VALUES ('" . $this->getobjusuario(). "','" . $this->getobjrol() . "')";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -127,6 +127,7 @@ class UsuarioRol
         return $resp;
     }
 
+    
 
     /** LISTAR **/
     public static function listar($parametro = "")

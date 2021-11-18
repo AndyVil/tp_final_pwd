@@ -111,27 +111,4 @@ class AbmUsuariorol
     }
 
 
-    // /** 
-    //  * Busca todos los usuariorol correspondientes a un objusuario
-    //  * Lista todos los roles que tiene el usuario
-    //  * @param object
-    //  * @return array devuelve las descripciones de cada rol de dicho usuario
-    //  */
-    // public function buscarRolesUsuario($elObjtUsuario)
-    // {
-    //     $listaUsRol = [];
-    //     //Listo todos los obj usuariorol
-    //     $listaUsRol = $this->buscar(null);
-    //     if ($listaUsRol != "") {
-    //         $roles = [];
-    //         //Agrego todos los roles que tenga el usuario en el array $roles
-    //         foreach ($listaUsRol as $usuariorol) {
-    //             if ($usuariorol->getOBJusuario()->getIdusuario() == $elObjtUsuario->getIdusuario()) {
-    //                 $roldescrip = $usuariorol->getOBJrol()->getroldescripcion();
-    //                 array_push($roles, $roldescrip);
-    //             }
-    //         }
-    //     }
-    //     return $roles;
-    // }
 }

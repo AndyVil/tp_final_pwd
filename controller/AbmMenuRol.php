@@ -111,27 +111,21 @@ class AbmMenurol
     }
 
 
-    // /** 
-    //  * Busca todos los menurol correspondientes a un objmenu
-    //  * Lista todos los roles que tiene el menu
-    //  * @param object
-    //  * @return array devuelve las descripciones de cada rol de dicho menu
-    //  */
-    // public function buscarRolesmenu($elObjtmenu)
-    // {
-    //     $listaUsRol = [];
-    //     //Listo todos los obj menurol
-    //     $listaUsRol = $this->buscar(null);
-    //     if ($listaUsRol != "") {
-    //         $roles = [];
-    //         //Agrego todos los roles que tenga el menu en el array $roles
-    //         foreach ($listaUsRol as $menurol) {
-    //             if ($menurol->getOBJmenu()->getidmenu() == $elObjtmenu->getidmenu()) {
-    //                 $roldescrip = $menurol->getOBJrol()->getroldescripcion();
-    //                 array_push($roles, $roldescrip);
-    //             }
-    //         }
-    //     }
-    //     return $roles;
-    // }
+    /** 
+      * Busca todos los menurol correspondientes a un objmenu
+      * Lista todos los roles que tiene el menu
+      * @param object
+      * @return array devuelve cada menu de dicho rol
+      */
+    public function buscarRolesmenu($param)
+    {
+        
+        $arr = array();
+        $condicion = "idrol='" . $param['idrol'] . "'";
+        $condicion += "idmenu='" . $param['idmenu'] . "'";
+            $objmenuRol = new MenuRol();
+            $colmenuRols = $objmenuRol->listar($condicion);
+        return $colmenuRols;
+       
+    }
 }

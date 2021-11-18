@@ -6,8 +6,8 @@ class Usuario
     private $uspass;
     private $usmail;
     private $usdeshabilitado;
-    private $arrayRol;
-    private $arrayCompra;
+    //private $arrayRol;
+    //private $arrayCompra;
 
 
     /** CONSTRUCTOR **/
@@ -29,42 +29,42 @@ class Usuario
         $this->setuspass($uspass);
         $this->setusmail($usmail);
         $this->setusdeshabilitado($usdeshabilitado);
-        $this->setarrayRol();
-        $this->setarrayCompra();
+        // $this->setarrayRol();
+        // $this->setarrayCompra();
     }
 
-    public function getarrayRol(){        
-        return $this->arrayRol;
-    }
-    /** inicializa la lista de roles del usuario **/
-    public function setarrayRol()
-    {
-        $arr = array();
-        $condicion = "idusuario='" . $this->getidusuario() . "'";
-        $objUsuarioRol = new UsuarioRol();
-        $colCompras = $objUsuarioRol->listar($condicion);
-        foreach ($colCompras as $UsuarioRol) {
-            $rol = $UsuarioRol->getobjrol();
-            array_push($arr, $rol);
-        }
-        $this->arrayRol= $arr;
-    }
+    // public function getarrayRol(){        
+    //     return $this->arrayRol;
+    // }
+    // /** inicializa la lista de roles del usuario **/
+    // public function setarrayRol()
+    // {
+    //     $arr = array();
+    //     $condicion = "idusuario='" . $this->getidusuario() . "'";
+    //     $objUsuarioRol = new UsuarioRol();
+    //     $colCompras = $objUsuarioRol->listar($condicion);
+    //     foreach ($colCompras as $UsuarioRol) {
+    //         $rol = $UsuarioRol->getobjrol();
+    //         array_push($arr, $rol);
+    //     }
+    //     $this->arrayRol= $arr;
+    // }
 
-    public function getarrayCompra(){        
-        return $this->arrayCompra;
-    }
-    /** inicializa la lista de compras del usuario **/
-    public function setarrayCompra()
-    {
-        $arr = array();
-        $condicion = "idusuario='" . $this->getidusuario() . "'";
-        $objCompra = new Compra();
-        $colCompras = $objCompra->listar($condicion);
-        foreach ($colCompras as $compra) {            
-            array_push($arr, $compra);
-        }
-        $this->arrayCompra= $arr;
-    }
+    // public function getarrayCompra(){        
+    //     return $this->arrayCompra;
+    // }
+    // /** inicializa la lista de compras del usuario **/
+    // public function setarrayCompra()
+    // {
+    //     $arr = array();
+    //     $condicion = "idusuario='" . $this->getidusuario() . "'";
+    //     $objCompra = new Compra();
+    //     $colCompras = $objCompra->listar($condicion);
+    //     foreach ($colCompras as $compra) {            
+    //         array_push($arr, $compra);
+    //     }
+    //     $this->arrayCompra= $arr;
+    // }
 
 
     /** GETS Y SETS **/

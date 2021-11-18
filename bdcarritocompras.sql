@@ -104,11 +104,13 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(7, 'nuevo', 'kkkkk', NULL, NULL),
-(8, 'nuevo', 'kkkkk', NULL, NULL),
-(9, 'nuevo', 'kkkkk', 7, NULL),
-(10, 'nuevo', 'kkkkk', NULL, NULL),
-(11, 'nuevo', 'kkkkk', NULL, NULL);
+(1, 'cliente_ini', 'Catalogo', NULL, NULL),
+(2, 'dep_ini', 'Deposito', NULL, NULL),
+(3, 'admin_ini', 'Administrador', NULL, NULL),
+(4, 'login', 'Log in', NULL, NULL),
+(5, 'registro', 'Registrarse', NULL, NULL);
+(6, 'cuenta', 'Cuenta', NULL, NULL);
+(7, 'carrito', 'carrito', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -120,6 +122,16 @@ CREATE TABLE `menurol` (
   `idmenu` bigint(20) NOT NULL,
   `idrol` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+-- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
@@ -152,7 +164,7 @@ CREATE TABLE `rol` (
 INSERT INTO `rol` (`idrol`, `roldescripcion`) VALUES
 (1, 'Admin'),
 (2, 'Cliente'),
-(2, 'Deposito');
+(3, 'Deposito');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -201,7 +213,7 @@ CREATE TABLE `usuariorol` (
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (1, 1),
 (2, 2),
-(3, 2);
+(3, 3);
 
 --
 -- Ín

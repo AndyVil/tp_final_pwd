@@ -35,13 +35,13 @@
     <!-- MENU TABS -->
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a id="cliente_ini" class="nav-link" aria-current="page" href="./../inicio_cliente/">Catalogo</a>
+        <a id="cliente_ini" class="nav-link" href="./../inicio_cliente/">Catalogo</a>
       </li>
       <li class="nav-item">
-        <a id="dep_ini" class="nav-link" aria-current="page" href="./../inicio_deposito/">Deposito</a>
+        <a id="dep_ini" class="nav-link" href="./../inicio_deposito/">Deposito</a>
       </li>
       <li class="nav-item">
-        <a id="admin_ini" class="nav-link" aria-current="page" href="./../inicio_admin/">Administrador</a>
+        <a id="admin_ini" class="nav-link" href="./../inicio_admin/">Administrador</a>
       </li>
       <li class="nav-item">
         <a id="login" class="nav-link" href="./../login/">Log in</a>

@@ -53,13 +53,13 @@ require_once("../structure/Header.php");
                         <!-- Seleccion de talles -->
                         <span>Talles:</span>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-s' value='S'>
-                        <label for="futbol">S</label>
+                        <label for="talle">S</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-m' value='M'>
-                        <label for="futbol">M</label>
+                        <label for="talle">M</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L'checked>
-                        <label for="futbol">L</label>
+                        <label for="talle">L</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-xl' value='XL'>
-                        <label for="futbol">XL</label>
+                        <label for="talle">XL</label>
                     </div>
 
                     <div class="col-sm-12" align="center" style="padding-bottom: 15px;">

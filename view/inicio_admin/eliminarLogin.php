@@ -2,7 +2,7 @@
 <?php
 require_once("../structure/Header.php");
 $datos = data_submited();
-$id = $datos['userDelete'];
+$id = $datos['roldelete'];
 //HEADER============================================================================
 ?>
 <div align="center">
