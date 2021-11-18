@@ -1,7 +1,0 @@
-<h3>Información de el producto</h3>
-                          <p><b>Nombre:</b> 1174.png <br />
-                          <b>Tipo:</b> remera <br />;
-                          <b>Descripcion:</b> null <br />
-                          <b>Cantstock:</b> null <br />;
-                          <b>Talles disponibles:</b> M <br />;
-                          <b>Precio:</b> null <br />

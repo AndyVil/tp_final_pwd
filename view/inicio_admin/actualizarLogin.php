@@ -6,6 +6,7 @@ $objAbmUsuario = new AbmUsuario();
 $filtro = array();
 $filtro['idusuario'] = $datos['userEdit'];
 $unUsuario = $objAbmUsuario->buscar($filtro);
+
 //HEADER============================================================================
 ?>
 <div align="center">

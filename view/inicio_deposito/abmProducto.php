@@ -3,42 +3,39 @@ require_once("../structure/header.php");
 //HEADER================================================================================
 ?>
 
-
-<!--BODY ACTION DIV=====================================================================-->
 <?php
 
-	$ruta = $GLOBALS['ROOT'];
-	$datos = data_submited();
-	$productos = new AbmProducto;
-	$base = new BaseDatos();
-	$arrProductos = [];
-	$arrProductos = $productos->buscar(null);
-	if($datos["accion"]=="borrar"){
-		$productos->baja($datos);
-		echo "Se elimino el producto correctamente";
-	}
-	else{
-    
-     //Llamada a clases y resolucion del problema
-	 //Del archivo funciones
-   
-	 $tipoProducto = $datos['tipoProducto'];
-	 $stock = $datos['procantstock'];
-	 $descripcion = $datos['descripcion'];
-	 $talle = $datos['talle'];
-	 //var_dump($talle);
-	 $arraytostring = implode(', ', $talle);
-	 $datos['prodetalle'] = $descripcion.$arraytostring;
-	 $datos['pronombre'] = $tipoProducto.$descripcion;
-	 $precio = $datos['proprecio'];
- 
- 
- 
- 
-	 if($datos["accion"]=="cargar"){	
-		 list($valido,$id)=$productos->alta($datos); 
-		 if($valido){
-			 /**
+$ruta = $GLOBALS['ROOT'];
+$datos = data_submited();
+$productos = new AbmProducto;
+$base = new BaseDatos();
+$arrProductos = [];
+$arrProductos = $productos->buscar(null);
+if ($datos["accion"] == "borrar") {
+	$productos->baja($datos);
+	echo "Se elimino el producto correctamente";
+} else {
+
+	//Llamada a clases y resolucion del problema
+	//Del archivo funciones
+
+	$tipoProducto = $datos['tipoProducto'];
+	$stock = $datos['procantstock'];
+	$descripcion = $datos['descripcion'];
+	$talle = $datos['talle'];
+	//var_dump($talle);
+	$arraytostring = implode(', ', $talle);
+	$datos['prodetalle'] = $descripcion . " " . $arraytostring;
+	$datos['pronombre'] = $tipoProducto;
+	$precio = $datos['proprecio'];
+
+
+
+
+	if ($datos["accion"] == "cargar") {
+		list($valido, $id) = $productos->alta($datos);
+		if ($valido) {
+			/**
 			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
 			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
 			 */
@@ -48,58 +45,57 @@ require_once("../structure/header.php");
 			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
 			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
 			 */
-
-			//  $cantidadProductos = count($arrProductos)+1;
-
 			$dirUpload = $ruta . "uploads";
 			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
-			//$nombre = $datos['tipoProducto'] . ($id + 1) . "." . $ext; #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			$nombre = $id.".".$ext;
-			if (is_uploaded_file($_FILES['productoImagen']['tmp_name'])) {
-				move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");//tmp
-				echo "Imagen Cargada <br><br>";
-				$formularioCargarProducto = new Formulario();
-				$formularioCargarProducto->cargarArchivos($nombre, $datos);
-			} else {
-				echo "Error de archivo subido";
-			}
+			$nombre = $id . "." . $ext;
 
-	//  $nombre = $tipoProducto.$cantidadProductos;
-	//  $formularioCargarProducto ->cargarArchivos($cantidadProductos,$datos);
-			//var_dump($id);
-	        //$nombre = $tipoProducto.$producto->getidproducto();
-			//$formularioCargarProducto = new Formulario();			
-			//$formularioCargarProducto ->cargarArchivos($cantidadProductos,$datos);
-		 }
-	 }
-	 if($datos["accion"]=="editar"){		 
-		 if($productos->modificacion($datos)){
+			#El move funciona para mover un archivo temporal a otra carpeta
+			//move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");
+
+			$formularioCargarProducto = new Formulario();
+			$array = $formularioCargarProducto->cargarArchivos($nombre, $datos);			
+			$link = "../../uploads/".$nombre;
+			$error = $array['imagen']['error'];
+		}
+	}
+	if ($datos["accion"] == "editar") {
+		if ($productos->modificacion($datos)) {
 			$id = $datos["idproducto"];
 			$dirUpload = $ruta . "uploads";
 			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
-			//$nombre = $datos['tipoProducto'] . ($id + 1) . "." . $ext; #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			$nombre = $id.".".$ext;
-			if (is_uploaded_file($_FILES['productoImagen']['tmp_name'])) {
-				move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");//tmp
-				echo "Imagen Cargada <br><br>";
-				$formularioCargarProducto = new Formulario();
-				$formularioCargarProducto->cargarArchivos($nombre, $datos);
-			} else {
-				echo "Error de archivo subido";
-			} 
-		 }
-	 }
- 
- 
- 
-		 
-		 
-	 //Volver a la pagina anterior 
-	 echo "<br><br><a href='Directorio local host'>
-		 Volver a la pagina anterior</a>"; //NO puede haber echos en las clases
+			$nombre = $id . "." . $ext;
+			echo "Imagen Cargada <br><br>";
+			$formularioCargarProducto = new Formulario();
+			$array = $formularioCargarProducto->cargarArchivos($nombre, $datos);			
+			$link = "../../uploads/".$nombre;
+			$error = $array['imagen']['error'];
+			
+		}
 	}
 
+}
+
 ?>
+<div class="row mb-3">
+	<div class="col-sm-12 ">
+		<?php
+		$detalles = $datos['prodetalle'];
+		if ($error == "") {
+            echo "<div class='alert alert-success mt-5' role='alert'>
+                    <div class='row px-2 my-3'>
+                        <div class='col-lg-7 col-xl-8'>$detalles</div>
+                        <div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src=" . $link . "></div>
+                    </div>
+                  </div>";
+		} else {
+			echo "<div class='alert alert-danger mt-5' role='alert'>$error</div>";
+		}
+		//Volver a la pagina anterior 
+		echo "<br><br><a href='Directorio local host'>
+		 Volver a la pagina anterior</a>"; //NO puede haber echos en las clases
+		?>
+	</div>
+</div>
 
 
 <?php

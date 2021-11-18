@@ -145,7 +145,16 @@ CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL,
   `roldescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Volcado de datos para la tabla `rol`
+--
 
+INSERT INTO `rol` (`idrol`, `roldescripcion`) VALUES
+(1, 'Admin'),
+(2, 'Cliente'),
+(2, 'Deposito');
+
+-- --------------------------------------------------------
 -- --------------------------------------------------------
 
 --
@@ -155,11 +164,23 @@ CREATE TABLE `rol` (
 CREATE TABLE `usuario` (
   `idusuario` bigint(20) NOT NULL,
   `usnombre` varchar(50) NOT NULL,
-  `uspass` int(11) NOT NULL,
+  `uspass` varchar(50) NOT NULL,
   `usmail` varchar(50) NOT NULL,
   `usdeshabilitado` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
+(1, '12d4aaf1584f2d9c40545ddc1309ae5a', 'e10adc3949ba59abbe56e057f20f883e', 'aoshi@hotmail.com', 0),
+(2, '59e9102bf2f15539b491978ba3ee6068', 'd964173dc44da83eeafa3aebbee9a1a0', 'bhima@hotmail.com', 0),
+(3, 'e20d37a5d7fcc4c35be6fc18a8e71bfa', 'c5e172e2507e0a58fac8e343cdfd947d', 'paris@hotmail.com', 0);
+
+-- --------------------------------------------------------
+
+--
 -- --------------------------------------------------------
 
 --
@@ -173,7 +194,17 @@ CREATE TABLE `usuariorol` (
 
 --
 -- Índices para tablas volcadas
+----
+-- Volcado de datos para la tabla `usuariorol`
 --
+
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 1),
+(2, 2),
+(3, 2);
+
+--
+-- Ín
 
 --
 -- Indices de la tabla `compra`

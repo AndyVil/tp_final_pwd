@@ -15,7 +15,7 @@ $stock = $user->getprocantstock();
 ?>
 
 
- 
+
 <!-- INICIO DEPOSITO -->
 <div align="center">
     <h2 class="mt-5">Depósito</h2>
@@ -56,7 +56,7 @@ $stock = $user->getprocantstock();
                     <div class="col-sm-3" align="center" id="talles">
                         <!-- Seleccion de talles -->
                         <span>Talles:</span>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-s' value='S'>
+                        <input type="checkbox" name='talle[]' class="talle" id='talle-s' value='S' Checked>
                         <label for="futbol">S</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-m' value='M'>
                         <label for="futbol">M</label>

@@ -56,7 +56,7 @@ require_once("../structure/Header.php");
                         <label for="futbol">S</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-m' value='M'>
                         <label for="futbol">M</label>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L'>
+                        <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L'checked>
                         <label for="futbol">L</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-xl' value='XL'>
                         <label for="futbol">XL</label>
@@ -64,7 +64,7 @@ require_once("../structure/Header.php");
 
                     <div class="col-sm-12" align="center" style="padding-bottom: 15px;">
                         <input type="text" name="proprecio" id="proprecio" placeholder="Ingrese precio">
-                        <input type="hidden" name="MAX_FILE_SIZE" value="20000" />
+                        <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                         <input type="file" name="productoImagen" id="productoImagen" style="padding-top: 5px;">
                     </div>
 

@@ -19,24 +19,41 @@ class Formulario {
      * Formulario de carga de productos
      */
     public function cargarArchivos($nombre,$datos){   
+        $retorno = [];
+        $retorno['imagen']['link'] = "";
+        $retorno['imagen']['error'] = "";
 
         /**
          * Reescalamos la imagen, creamos un txt con la descripcion como contenido
          */
-
-        $this->rezise($nombre);
         $dir = $GLOBALS['ROOT'] . 'uploads/';
+        $todoOK = true;
+        if ($todoOK && !copy($_FILES['productoImagen']['tmp_name'], $dir . $nombre)) {
+            $error = "ERROR: No se pudo copiar la imagen.";
+            $todoOK = false;            
+        }
+        if($todoOK){
+            $this->rezise($nombre);
+        }  
+        
+        
+        if ($todoOK) {
+            $retorno['imagen']['link'] = $dir . $nombre;
+        } else {
+            $retorno['imagen']['error'] = $error;
+        }
         $pos = mb_strripos($nombre, ".");
         $texto = $this->verInformacion($datos,$nombre);
-        //$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
-        //$numExt = "-".strlen($ext);
+
         $txtName = substr($nombre, 0,$pos).".txt";
         $txtName = $dir . $txtName;
-        var_dump($txtName);
+
         /* fopen crea un nuevo archivo con nombre $name y con "w" reemplaza la información si ya existia */
         $ar = fopen($txtName, "w") or die("error al crear");
         fwrite($ar, $texto);
-        fclose($ar);
+        fclose($ar);       
+        
+        return $retorno;
         
     }
 
@@ -61,6 +78,7 @@ class Formulario {
         $imageQuality = 70; #No sirve para GIF, pero es util para PNG y JPEG (0 to 100);
 
         $layerBase->save($resultadoDir, $name, $crearCarpeta, $backgroundColor, $imageQuality);
+
     }
 
 

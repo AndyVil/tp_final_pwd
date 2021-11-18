@@ -11,9 +11,22 @@ $(document).ready(function () {
 
     //Para que la pestaña se enfoque en la que estamos seleccionando (utiliza la url actual)
     function tabSelect(window) {
-		let valWindow;//ARREGLAR VENTANAS
+		let valWindow = '';
 
-        switch (window) {
+		//Separa el arreglo por cada / que aparezca
+		arrWindow = window.split('/');
+		
+		//$ignore = $arrWindow.length;
+
+		//Elimina el ultimo elemento del arreglo
+		arrWindow.pop();
+		//Junta el arreglo de nuevo en un string
+		valWindow = arrWindow.join('/') + '/';
+
+		//console.log(arrWindow);
+		//console.log(valWindow);
+
+        switch (valWindow) {
 			case 'http://localhost/pwd_proyectos/tp_final_pwd/view/inicio_cliente/':
                     $('#cliente_ini').attr('class','nav-link active');
 				break;
