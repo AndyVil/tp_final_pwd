@@ -3,12 +3,14 @@
 require_once("../structure/Header.php");
 //HEADER============================================================================
 ?>
+<div align="center">
+	<h2 class="mt-5">Administración</h2>
+	<h3>Nuevo Usuario</h3>
+</div>
 
-<main role="main" class="container">
+<div class="container">
 	<div class="row" style="padding-top: 2%;">
 		<div class="col" align="center">
-			<h2>Administración</h2>
-			<h3>Nuevo Usuario</h3>
 			<!-- Formulario -->
 			<form id="nuevoUsuario" name="nuevoUsuario" method="POST" action="abmUsuario.php" data-toggle="validator">
 				<label for="usnombre">Usuario</label> <br>
@@ -36,8 +38,7 @@ require_once("../structure/Header.php");
 			<button onclick="location.href='listarUsuarios.php'" class="btn btn-dark">Usuarios</button>
 		</div>
 	</div>
-
-</main>
+</div>
 
 <?php
 //FOOTER============================================================================

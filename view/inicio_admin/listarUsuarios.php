@@ -6,19 +6,15 @@ $listaTabla = $objAbmTabla->buscar(null);
 //HEADER============================================================================
 ?>
 
-<!--BODY============================================================================-->
-<main role="main">
+<div align="center">
+    <h2 class="mt-5">Administración</h2>
+</div>
 
+<div>
     <div align="center">
-        <h2 class="mt-5">Administración</h2>
         <!-- Botones -->
         <button onclick="location.href='nuevoUsuario.php'" class="btn btn-dark">Nuevo Usuario</button>
         <button onclick="location.href='listarRoles.php'" class="btn btn-dark">Roles</button>
-    </div>
-
-    <h2 class="mt-5">Lista de Usuarios</h2>
-
-    <div class="card mb-4">
     </div>
 
     <div class="row mb-5">
@@ -26,6 +22,9 @@ $listaTabla = $objAbmTabla->buscar(null);
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
+                        <br>
+                        <h3 align="center">Listar Usuarios</h3>
+                        <hr>
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Nombre</th>
@@ -73,7 +72,7 @@ $listaTabla = $objAbmTabla->buscar(null);
             </div>
         </form>
     </div>
-</main>
+</div>
 
 <?php
 //FOOTER============================================================================

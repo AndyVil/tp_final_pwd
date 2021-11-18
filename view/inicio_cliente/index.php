@@ -5,7 +5,7 @@ require_once("../structure/Header.php");
 ?>
 
 
-<!--BODY============================================================================-->
+ 
 <main role="main" class="container">
 
 </main>

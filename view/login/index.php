@@ -5,13 +5,16 @@ require_once("../structure/Header.php");
 ?>
 
 
-<!--BODY============================================================================-->
+ 
 <!-- PAGINA LOGIN -->
-<main role="main" class="container">
+<div align="center">
+    <h2 class="mt-5">LOG IN</h2>
+</div>
+
+<div class="container">
 
     <div class="row" style="padding-top: 2%;">
         <div class="col" align="center">
-            <h3>LOG IN</h3>
             <!-- Formulario -->
             <form action="">
                 <label for="usnombre">Usuario</label> <br>
@@ -36,7 +39,7 @@ require_once("../structure/Header.php");
         </div>
     </div>
 
-</main>
+</div>
 
 
 <?php

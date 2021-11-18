@@ -5,7 +5,7 @@ require_once("../structure/Header.php");
 ?>
 
 
-<!--BODY============================================================================-->
+ 
 <!-- INICIO SIN LOGIN -->
 <main role="main" class="container">
 

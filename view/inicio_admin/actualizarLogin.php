@@ -8,6 +8,11 @@ $filtro['idusuario'] = $datos['userEdit'];
 $unUsuario = $objAbmUsuario->buscar($filtro);
 //HEADER============================================================================
 ?>
+<div align="center">
+    <h2 class="mt-5">Administración</h2>
+    <h3>Actualizar LOG IN</h3>
+</div>
+
 <div class="row my-5">
     <form id="actualizarLogin" method="POST" action="abmUsuario.php">
         <?php
@@ -51,6 +56,8 @@ $unUsuario = $objAbmUsuario->buscar($filtro);
         <a class="btn btn-dark" href="listarUsuarios.php" role="button"><i class="fas fa-angle-double-left"></i> Regresar</a>
     </div>
 </div>
+
+
 <?php
 //FOOTER============================================================================
 require_once("../structure/footer.php");

@@ -6,11 +6,12 @@ require_once("../structure/Header.php");
 
 <div align="center">
 	<h2 class="mt-5">Administración</h2>
+	<h3>Nuevo Rol</h3>
 </div>
-<main role="main" class="container">
+
+<div class="container">
 	<div class="row" style="padding-top: 2%;">
 		<div class="col" align="center">
-			<h3>Nuevo Rol</h3>
 			<!-- Formulario -->
 			<form id="nuevoRol" name="nuevoRol" method="POST" action="abmRol.php" data-toggle="validator">
 				<label for="roldescricion">Descripcion de Rol</label> <br>
@@ -29,8 +30,7 @@ require_once("../structure/Header.php");
 			<button onclick="location.href='listarRoles.php'" class="btn btn-dark">Roles</button>
 		</div>
 	</div>
-
-</main>
+</div>
 
 
 <?php

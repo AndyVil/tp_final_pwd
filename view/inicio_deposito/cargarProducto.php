@@ -5,11 +5,23 @@ require_once("../structure/Header.php");
 ?>
 
 
-<!--BODY============================================================================-->
+
 <!-- INICIO DEPOSITO -->
-<main role="main" class="container">
+<div align="center">
+    <h2 class="mt-5">Depósito</h2>
+</div>
+
+<div align="center">
+    <!-- Botones -->
+    <button onclick="location.href='index.php'" class="btn btn-dark">Volver</button>
+</div>
+
+<div class="container">
+    <br>
+    <h3 align="center">Cargar nuevo Producto</h3>
+    <hr>
     <div class="row" align="center">
-        <h2>Depósito</h2>
+
         <div align="center" id="columnaCarga">
 
             <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
@@ -65,9 +77,8 @@ require_once("../structure/Header.php");
         </div>
         <br>
         <br>
-
-</main>
-
+    </div>
+</div>
 
 <?php
 //FOOTER============================================================================

@@ -15,9 +15,14 @@ $stock = $user->getprocantstock();
 ?>
 
 
-<!--BODY============================================================================-->
+ 
 <!-- INICIO DEPOSITO -->
-<main role="main" class="container">
+<div align="center">
+    <h2 class="mt-5">Depósito</h2>
+    <h3>Actualizar Producto</h3>
+</div>
+
+<div class="container">
     <div class="row" align="center">
         <div align="center" id="columnaCarga">
 
@@ -78,8 +83,8 @@ $stock = $user->getprocantstock();
         </div>
         <br>
         <br>
-
-</main>
+    </div>
+</div>
 
 
 <?php

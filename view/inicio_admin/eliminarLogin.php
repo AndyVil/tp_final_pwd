@@ -5,6 +5,10 @@ $datos = data_submited();
 $id = $datos['userDelete'];
 //HEADER============================================================================
 ?>
+<div align="center">
+    <h2 class="mt-5">Administración</h2>
+    <h3>Eliminar LOG IN</h3>
+</div>
 
 <div class="row my-5">
     <form class="mb-5" id="eliminarLogin" method="POST" action="abmUsuario.php">

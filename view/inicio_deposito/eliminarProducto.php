@@ -5,6 +5,11 @@ require_once("../structure/Header.php");
 $datos = data_submited();
 $id = $datos['proBorrar'];
 ?>
+<!-- Titulo pagina -->
+<div align="center">
+    <h2 class="mt-5">Depósito</h2>
+    <h3>Eliminar Producto</h3>
+</div>
 
 <div class="row my-5">
     <form class="mb-5" method="POST" action="abmProducto.php">
@@ -27,6 +32,7 @@ $id = $datos['proBorrar'];
         <a class="btn btn-dark" href="index.php" role="button"><i class="fas fa-angle-double-left"></i> Regresar</a>
     </div>
 </div>
+
 <?php
 //FOOTER============================================================================
 require_once("../structure/footer.php");
