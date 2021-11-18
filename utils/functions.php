@@ -27,7 +27,7 @@ function data_submited(){
 
 
 spl_autoload_register(function ($clase) {
-	echo "Se cargo la clase:  ".$clase." <br><br>" ;
+	//echo "Se cargo la clase:  ".$clase." <br><br>" ;
 	$directorys = array(
 		$GLOBALS['ROOT'].'model/',
 		$GLOBALS['ROOT'].'model/conector/',

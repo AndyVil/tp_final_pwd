@@ -1,3 +1,9 @@
+html, body, main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
 .footer {
   position: fixed;
   display: block; 
@@ -72,10 +78,10 @@ main {
 }
 
 /*Boton para subir archivos*/
-#nuevoProducto::-webkit-file-upload-button {
+#productoImagen::-webkit-file-upload-button {
   display: none;
 }
-#nuevoProducto::before {
+#productoImagen::before {
   content: 'Nuevo Producto';
   display: inline-block;
   background: linear-gradient(top, #f9f9f9, #e3e3e3);
@@ -90,9 +96,9 @@ main {
   font-size: 10pt;
   margin-right: 10px;
 }
-#nuevoProducto:hover::before {
+#productoImagen:hover::before {
   border-color: rgb(142, 19, 153);
 }
-#nuevoProducto:active::before {
+#productoImagen:active::before {
   background: -webkit-linear-gradient(top, #ff00ea42, #ff00c87c);
 }

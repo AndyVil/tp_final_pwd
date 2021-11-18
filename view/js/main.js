@@ -11,6 +11,8 @@ $(document).ready(function () {
 
     //Para que la pestaña se enfoque en la que estamos seleccionando (utiliza la url actual)
     function tabSelect(window) {
+		let valWindow;//ARREGLAR VENTANAS
+
         switch (window) {
 			case 'http://localhost/pwd_proyectos/tp_final_pwd/view/inicio_cliente/':
                     $('#cliente_ini').attr('class','nav-link active');

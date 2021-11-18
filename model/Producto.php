@@ -147,7 +147,7 @@ class Producto
         $sql = "UPDATE producto SET pronombre='" . $this->getpronombre() . "',
         prodetalle='" . $this->getprodetalle() . "',
         procantstock='" . $this->getprocantstock(). "',
-        proproprecio='" . $this->getproprecio()  . "'
+        proprecio='" . $this->getproprecio()  . "'
         WHERE idproducto=" . $this->getidproducto();
         if ($base->Iniciar()) {
             //var_dump($sql);

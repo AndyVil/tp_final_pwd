@@ -143,7 +143,7 @@ CREATE TABLE `producto` (
 
 CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL,
-  `rodescripcion` varchar(50) NOT NULL
+  `roldescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

@@ -7,6 +7,7 @@ require_once("../structure/header.php");
 <!--BODY ACTION DIV=====================================================================-->
 <?php
 
+	$ruta = $GLOBALS['ROOT'];
 	$datos = data_submited();
 	$productos = new AbmProducto;
 	$base = new BaseDatos();
@@ -14,6 +15,7 @@ require_once("../structure/header.php");
 	$arrProductos = $productos->buscar(null);
 	if($datos["accion"]=="borrar"){
 		$productos->baja($datos);
+		echo "Se elimino el producto correctamente";
 	}
 	else{
     
@@ -30,35 +32,62 @@ require_once("../structure/header.php");
 	 $datos['pronombre'] = $tipoProducto.$descripcion;
 	 $precio = $datos['proprecio'];
  
-	 /**
-	  * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
-	  * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
-	  */
-
-	//  $cantidadProductos = count($arrProductos)+1;
  
-	//  $formularioCargarProducto = new Formulario();
-	//  $nombre = $tipoProducto.$cantidadProductos;
-	//  $formularioCargarProducto ->cargarArchivos($cantidadProductos,$datos);
-	 
  
  
 	 if($datos["accion"]=="cargar"){	
 		 list($valido,$id)=$productos->alta($datos); 
-		 if($valido){			/**
+		 if($valido){
+			 /**
 			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
 			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
 			 */
-			
-			var_dump($id);
+
+
+			/**
+			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
+			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
+			 */
+
+			//  $cantidadProductos = count($arrProductos)+1;
+
+			$dirUpload = $ruta . "uploads";
+			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
+			//$nombre = $datos['tipoProducto'] . ($id + 1) . "." . $ext; #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			$nombre = $id.".".$ext;
+			if (is_uploaded_file($_FILES['productoImagen']['tmp_name'])) {
+				move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");//tmp
+				echo "Imagen Cargada <br><br>";
+				$formularioCargarProducto = new Formulario();
+				$formularioCargarProducto->cargarArchivos($nombre, $datos);
+			} else {
+				echo "Error de archivo subido";
+			}
+
+	//  $nombre = $tipoProducto.$cantidadProductos;
+	//  $formularioCargarProducto ->cargarArchivos($cantidadProductos,$datos);
+			//var_dump($id);
 	        //$nombre = $tipoProducto.$producto->getidproducto();
 			//$formularioCargarProducto = new Formulario();			
 			//$formularioCargarProducto ->cargarArchivos($cantidadProductos,$datos);
 		 }
 	 }
-	 if($datos["accion"]=="editar"){
-		 
-		 $productos->modificacion($datos);
+	 if($datos["accion"]=="editar"){		 
+		 if($productos->modificacion($datos)){
+			$id = $datos["idproducto"];
+			$dirUpload = $ruta . "uploads";
+			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
+			//$nombre = $datos['tipoProducto'] . ($id + 1) . "." . $ext; #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			$nombre = $id.".".$ext;
+			if (is_uploaded_file($_FILES['productoImagen']['tmp_name'])) {
+				move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");//tmp
+				echo "Imagen Cargada <br><br>";
+				$formularioCargarProducto = new Formulario();
+				$formularioCargarProducto->cargarArchivos($nombre, $datos);
+			} else {
+				echo "Error de archivo subido";
+			} 
+		 }
 	 }
  
  

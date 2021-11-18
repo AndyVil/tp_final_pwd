@@ -9,9 +9,10 @@ require_once("../structure/Header.php");
 <!-- INICIO DEPOSITO -->
 <main role="main" class="container">
     <div class="row" align="center">
+        <h2>Depósito</h2>
         <div align="center" id="columnaCarga">
 
-            <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto">
+            <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
 
                 <div class="row align-items-center">
 
@@ -49,9 +50,10 @@ require_once("../structure/Header.php");
                         <label for="futbol">XL</label>
                     </div>
 
-                    <div class="col-sm-12" align="center">
+                    <div class="col-sm-12" align="center" style="padding-bottom: 15px;">
                         <input type="text" name="proprecio" id="proprecio" placeholder="Ingrese precio">
-                        <input type="file" name="nuevoProducto" id="nuevoProducto">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="20000" />
+                        <input type="file" name="productoImagen" id="productoImagen" style="padding-top: 5px;">
                     </div>
 
                     <!-- Submit -->
@@ -61,8 +63,8 @@ require_once("../structure/Header.php");
                 </div>
             </form>
         </div>
-    <br>
-    <br>
+        <br>
+        <br>
 
 </main>
 

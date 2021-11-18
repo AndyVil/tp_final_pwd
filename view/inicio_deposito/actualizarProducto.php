@@ -2,10 +2,15 @@
 <?php
 require_once("../structure/header.php");
 $datos = data_submited();
-$objAbmUsuario = new AbmUsuario();
+$objAbmUsuario = new AbmProducto();
 $filtro = array();
 $filtro['idproducto'] = $datos['proEdit'];
 $unUsuario = $objAbmUsuario->buscar($filtro);
+//var_dump($unUsuario);
+$user = $unUsuario[0];
+$id = $user->getidproducto();
+$precio = $user->getproprecio();
+$stock = $user->getprocantstock();
 //HEADER============================================================================
 ?>
 
@@ -16,7 +21,7 @@ $unUsuario = $objAbmUsuario->buscar($filtro);
     <div class="row" align="center">
         <div align="center" id="columnaCarga">
 
-            <form action="./action.php" method="POST" name="cargaProducto" id="cargaProducto">
+            <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
 
                 <div class="row align-items-center">
 
@@ -33,7 +38,9 @@ $unUsuario = $objAbmUsuario->buscar($filtro);
 
                     <div class="col-sm-3" align="center">
                         <!-- Cantidad de stock -->
-                        <input type="text" name="stock" id="stock" placeholder="Stock">
+                        <?php
+                        echo "<input type='text' value='" . $stock . "'name='procantstock' id='procantstock'>";
+                        ?>
                     </div>
 
                     <div class="col-sm-3" align="center">
@@ -53,21 +60,24 @@ $unUsuario = $objAbmUsuario->buscar($filtro);
                         <input type="checkbox" name='talle[]' class="talle" id='talle-xl' value='XL'>
                         <label for="futbol">XL</label>
                     </div>
-
-                    <div class="col-sm-12" align="center">
-                        <input type="text" name="proprecio" id="proprecio" placeholder="Ingrese precio">
-                        <input type="file" name="nuevoProducto" id="nuevoProducto">
+                    <div class="col-sm-12" align="center" style="padding-bottom: 15px;">
+                        <?php
+                        echo "<input type='text' value='" . $precio . "'name='proprecio' id='proprecio'>";
+                        ?>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="20000" />
+                        <input type="file" name="productoImagen" id="productoImagen" style="padding-top: 5px;">
                     </div>
-
                     <!-- Submit -->
                     <br>
-                    <input type="hidden" value="DEFAULT" name="idproducto" id="idproducto">
+                    <?php
+                    echo "<input type='hidden' value='" . $id . "'name='idproducto' id='idproducto'>";
+                    ?>
                     <input type="submit" value="editar" name="accion" id="accion" class="btn btn-dark">
                 </div>
             </form>
         </div>
-    <br>
-    <br>
+        <br>
+        <br>
 
 </main>
 
