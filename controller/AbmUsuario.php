@@ -12,6 +12,7 @@ class AbmUsuario
     private function cargarObjeto($param)
     {
         $obj = null;
+        //var_dump($param);
         if (
             array_key_exists('idusuario', $param)
             and array_key_exists('usnombre', $param)
@@ -64,17 +65,15 @@ class AbmUsuario
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idusuario'] = $param['idusuario'];
-        $encuentraUser = $this->buscar($buscar2);
-
-        if ($encuentraUser == null) {
+         $arr=array();
             $elObjtUsuario = $this->cargarObjeto($param);
-            if ($elObjtUsuario != null and $elObjtUsuario->insertar()) {
+            //var_dump($elObjtUsuario);
+            list($insert, $id)=$elObjtUsuario->insertar();
+            if ($elObjtUsuario != null and $insert) {
                 $resp = true;
-            }
-        }
-        return $resp;
+                array_push($arr,$resp,$id);
+            }        
+        return $arr;
     }
 
 

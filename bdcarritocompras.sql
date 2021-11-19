@@ -104,14 +104,18 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(1, 'cliente_ini', 'Catalogo', NULL, NULL),
-(2, 'dep_ini', 'Deposito', NULL, NULL),
-(3, 'admin_ini', 'Administrador', NULL, NULL),
-(4, 'login', 'Log in', NULL, NULL),
-(5, 'registro', 'Registrarse', NULL, NULL);
-(6, 'cuenta', 'Cuenta', NULL, NULL);
-(7, 'carrito', 'carrito', NULL, NULL);
+(1, 'admin_ini', 'Administrador', NULL, NULL),--Admin
+(2, 'dep_ini', 'Deposito', NULL, NULL),--Deposito
+(3, 'cliente_ini', 'Catalogo', NULL, NULL),--Cliente
+(4, 'login', 'Log in', NULL, NULL),--Superusuario (sin log)
+(5, 'registro', 'Registrarse', NULL, NULL);--Superusuario
+(6, 'cuenta', 'Cuenta', 3, NULL);--Cliente
+(7, 'carrito', 'carrito', 3, NULL);--Cliente
 
+--1admin
+--2cliente
+--3depo
+--4sin login
 -- --------------------------------------------------------
 
 --

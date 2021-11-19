@@ -84,7 +84,7 @@ class Session
             $error .= "Datos de login incorrectos";
         } 
         if (count($listaUsuarios) > 0) {
-            if ($listaUsuarios[0]->getUsdeshabilitado()) {
+            if ($listaUsuarios[0]->getUsdeshabilitado()!= '0000-00-00 00:00:00') {
                 $error .= "El usuario está deshabilitado";
             } else {
                 $inicia = true;
@@ -95,7 +95,25 @@ class Session
         }
         return array($inicia, $error);
     }
+    
+    /**
+     * @param idrol
+     */
+    public function validarRol($id){
 
+        $resp = false;
+        $abmrol = new AbmUsuariorol();
+        $where = ['idusuario' => $this->getIdUser()];
+        $rolesUsuario= $abmrol->buscar($where);
+
+        foreach($rolesUsuario as $usrol){
+            $rol=$usrol->getobjrol();
+            if($rol->getidrol()==$id){
+               $resp = true;
+            }
+        }
+        return $resp;
+    }
     public function setear(){
 
     }

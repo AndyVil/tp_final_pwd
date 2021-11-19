@@ -3,26 +3,28 @@ require_once("../structure/header.php");
 //HEADER================================================================================
 ?>
 
-
-<!--BODY ACTION DIV=====================================================================-->
 <?php
-	//Llamada a clases y resolucion del problema
-	$datos = data_submited(); //Del archivo funciones
-	$object = new Control_ejercicio();
-	//La accion lo que hace es llamar al objeto que va 
-	//a procesar el ejercicio que estas haiendo
-	//El controlador es el que se encarga de los objetos y la parte logica.
-    
+	$datos = data_submited(); 
+	$ambrol = new AbmUsuarioRol();
+	$object = new AbmUsuario();
+	$datos["usnombre"] = md5($datos["usnombre"]);
+	$datos["uspass"] = md5($datos["uspass"]);
+	$datos["idrol"]= 3;
     
     //Impresion de respuestas	    
-	$respuesta = $object->functionX($datos);
+	list($alta,$id) = $object->alta($datos);
+	#Asignar rol cliente al usuario nuevo	
+	if($alta){
+		echo "Se creo el usuario exitosamente";
+		#asignamos el rol de cliente siempre que se cree una cuenta
+		$datos["idusuario"]=$id;
+		if($ambrol->alta($datos)){
+			echo "Se creo el rol de cliente";
+		}		
+	}else{
+		echo "Error al cargar los datos";
+	}	    
 
-	echo $respuesta;
-	    
-	    
-    //Volver a la pagina anterior 
-	echo "<br><br><a href='Directorio local host'>
-	    Volver a la pagina anterior</a>"; //NO puede haber echos en las clases
 ?>
 
 

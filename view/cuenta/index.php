@@ -4,11 +4,24 @@ require_once("../structure/Header.php");
 //HEADER============================================================================
 ?>
 
+<div class="container">
 
- 
-<main role="main" class="container">
 
-</main>
+<div align="center">
+    <h2 class="mt-5">Cuenta</h2>
+</div>
+
+<div>
+    <div align="center">
+        <!-- Botones -->
+        <button onclick="location.href='cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
+    </div>
+</div>
+
+
+
+
+</div>
 
 
 <?php

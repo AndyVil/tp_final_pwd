@@ -1,6 +1,15 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
-require_once("../structure/Header.php");
+include_once './../../config.php';
+
+$objLogin = new Session();
+if ($objLogin->activa()) {
+    header('location:paginaSegura.php');
+} else {    
+    require_once("../structure/Header.php");
+}
+
+$datos = data_submited();
 //HEADER============================================================================
 ?>
 
@@ -16,7 +25,7 @@ require_once("../structure/Header.php");
     <div class="row" style="padding-top: 2%;">
         <div class="col" align="center">
             <!-- Formulario -->
-            <form action="">
+            <form class="form-signin" id="login" name="login" action="verificarLogin.php" method="POST">
                 <label for="usnombre">Usuario</label> <br>
                 <input name="usnombre" id="usnombre" type="text" placeholder="Usuario">
                 <br>
@@ -38,7 +47,6 @@ require_once("../structure/Header.php");
             </span>
         </div>
     </div>
-
 </div>
 
 

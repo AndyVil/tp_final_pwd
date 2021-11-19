@@ -5,10 +5,20 @@ require_once("../structure/Header.php");
 ?>
 
 
- 
-<main role="main" class="container">
 
-</main>
+<div class="container">
+
+
+
+
+
+
+
+
+
+
+
+</div>
 
 <?php
 //FOOTER============================================================================

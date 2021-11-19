@@ -152,7 +152,8 @@ class Usuario
 
     /** INSERTAR **/
     public function insertar()
-    {
+    {   
+        $arr=array();
         $resp = false;
         $base = new BaseDatos();
         $sql = "INSERT INTO usuario(idusuario,usnombre,uspass,usmail,usdeshabilitado) VALUES('" . $this->getidusuario() . "','" . $this->getusnombre() . "','" . $this->getuspass() . "','" . $this->getusmail() . "','" . $this->getusdeshabilitado() . "');";
@@ -160,13 +161,14 @@ class Usuario
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidusuario($elid);
                 $resp = true;
+                array_push($arr,$resp,$elid);
             } else {
                 $this->setmensajeoperacion("usuario->insertar: " . $base->getError());
             }
         } else {
             $this->setmensajeoperacion("usuario->insertar: " . $base->getError());
         }
-        return $resp;
+        return $arr;
     }
 
 

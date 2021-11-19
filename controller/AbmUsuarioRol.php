@@ -5,6 +5,7 @@ class AbmUsuariorol
     private function cargarObjeto($param)
     {
         $obj = null;
+        var_dump($param);
         if (array_key_exists('idusuario', $param) and array_key_exists('idrol', $param)) {
             $objusuario = new Usuario();
             $objusuario->setIdusuario($param['idusuario']);
@@ -57,17 +58,11 @@ class AbmUsuariorol
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idrol'] = $param['idrol'];
-        $buscar2['idusuario'] = $param['idusuario'];
-        $encuentraPer = $this->buscar($buscar2);
-
-        if ($encuentraPer == null) {
             $elObjtrol = $this->cargarObjeto($param);
             if ($elObjtrol != null and $elObjtrol->insertar()) {
                 $resp = true;
             }
-        }
+        
         return $resp;
     }
 

@@ -28,7 +28,7 @@
 
   <!--CABECERA DIV-->
   <header>
-    <a href="./../inicio_sinlog/" id="linktitulo">
+    <a href="./../inicio_cliente/" id="linktitulo">
       <h3 id="titulo">Tienda de ropa</h3>
     </a>
 

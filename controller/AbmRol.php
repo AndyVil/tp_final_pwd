@@ -60,16 +60,11 @@ class AbmRol
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idrol'] = $param['idrol'];
-        $encuentraPer = $this->buscar($buscar2);
-
-        if ($encuentraPer == null) {
-            $elObjtrol = $this->cargarObjeto($param);
-            if ($elObjtrol != null and $elObjtrol->insertar()) {
-                $resp = true;
-            }
+        $elObjtrol = $this->cargarObjeto($param);
+        if ($elObjtrol != null and $elObjtrol->insertar()) {
+            $resp = true;
         }
+
         return $resp;
     }
 

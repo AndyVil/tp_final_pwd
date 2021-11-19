@@ -5,7 +5,7 @@ require_once("../structure/Header.php");
 ?>
 
 
- 
+
 <!-- PAGINA REGISTRO -->
 <div align="center">
     <h2 class="mt-5">Registro</h2>
@@ -16,7 +16,7 @@ require_once("../structure/Header.php");
     <div class="row" style="padding-top: 2%;">
         <div class="col" align="center">
             <!-- Formulario -->
-            <form action="">
+            <form class="form-register" id="registro" name="registro" method="POST" action="action.php">
                 <label for="usnombre">Usuario</label> <br>
                 <input name="usnombre" id="usnombre" type="text" placeholder="Usuario">
                 <br>
@@ -29,6 +29,8 @@ require_once("../structure/Header.php");
                 <input name="uspass" id="uspass" type="text" placeholder="Contraseña">
                 <br>
                 <br>
+                <input type="hidden" value="DEFAULT" name="idusuario" id="idusuario">
+                <input type="hidden" value="0000-00-00 00:00:00" name="usdeshabilitado" id="usdeshabilitado">
                 <!-- Submit -->
                 <input type="submit" value="Enviar" name="btn-form" id="btn-form" class="btn btn-success">
                 <br>

@@ -3,11 +3,14 @@
 require_once("../structure/Header.php");
 //HEADER============================================================================
 ?>
+<?php
+header("Location: ../inicio_cliente/index.php");
+die();
+?>
 
 
- 
 <!-- INICIO SIN LOGIN -->
-<main role="main" class="container">
+<!-- <main role="main" class="container">
 
     <div class="row">
         <div class="col" id="contacto">
@@ -41,10 +44,10 @@ require_once("../structure/Header.php");
 
     <hr>
     <br>
-    <br>
+    <br> -->
 
 
-    <div class="row">
+<!-- <div class="row">
         <div class="col" align="center">
             <p>ARTICULO 1 <br> vista previa</p>
         </div>
@@ -95,7 +98,7 @@ require_once("../structure/Header.php");
 
     <br>
     <br>
-    <br>
+    <br> -->
 
 </main>
 
