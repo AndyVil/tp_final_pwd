@@ -24,8 +24,8 @@ class Compra
         $this->setidcompra($idcompra);
         $this->setcofecha($cofecha);
         $this->setidusuario($idusuario);
-        $this->setcoprecio($precio);
-        $this->setarrayItems();
+        $this->setcompraprecio($precio);
+        //$this->setarrayItems();
     }
 
 
@@ -44,7 +44,7 @@ class Compra
     {
         return $this->cofecha;
     }
-    public function getcoprecio()
+    public function getcompraprecio()
     {
         return $this->coprecio;
     }
@@ -70,21 +70,6 @@ class Compra
     {
         $this->idusuario = $valor;
     }
-    public function setcoprecio($valor)
-    {
-        if ($valor<> NULL) {
-            $this->ciprecio=$valor;
-        }
-        else{
-            $preciofinal=0;
-            //$colitems= $this->getarrayItems();
-            foreach($colitems as $item){
-            $preciofinal += $item->getciprecio(); 
-            }
-            $this->ciprecio=$preciofinal;
-        }
-
-    }
     public function setmensajeoperacion($valor)
     {
         $this->mensajeoperacion = $valor;
@@ -108,7 +93,7 @@ class Compra
                         $objUsuario->setidusuario($row['idproducto']);
                         $objUsuario->cargar();
                     }
-                    $this->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio']);
+                    $this->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['compraprecio']);
                     
                 }
             }
@@ -134,10 +119,13 @@ class Compra
     //     $this->arrayItems= $arr;
     // }
 
-    public function compraprecio(){
+    public function setcompraprecio(){
         $precio= 0;        
         //$colItems = $this->getarrayItems();
-        foreach $colItems as $item) {
+        $items = new CompraItem();
+        $where = ['idusuario' => $this->getidcompra()];
+        $colCompraItems = $items->listar($where);
+        foreach ($colCompraItems as $item){
             $precio =+$item->ciprecio();
         }
         return $precio;
@@ -148,7 +136,7 @@ class Compra
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO compra(idcompra,cofecha,idusuario)  VALUES('" . $this->getidcompra() . "','" . $this->getcofecha() . "','" . $this->getidusuario() . "');";
+        $sql = "INSERT INTO compra(idcompra,cofecha,idusuario,compraprecio)  VALUES('" . $this->getidcompra() . "','" . $this->getcofecha() . "','" . $this->getidusuario() ."','" . $this->getcompraprecio() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompra($elid);
@@ -165,10 +153,11 @@ class Compra
 
     /** MODIFICAR **/
     public function modificar()
-    {
+    {   
+        $this->setcompraprecio();     
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compra SET cofecha='" . $this->getcofecha() . "'
+        $sql = "UPDATE compra SET compraprecio='" . $this->getcompraprecio() . "'
         WHERE idcompra=" . $this->getidcompra();
         if ($base->Iniciar()) {
             //var_dump($sql);
@@ -223,7 +212,7 @@ class Compra
                         $objUsuario->setidusuario($row['idproducto']);
                         $objUsuario->cargar();
                     }
-                    $obj->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio'] );
+                    $obj->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['compraprecio'] );
                     array_push($arreglo, $obj);
                 }
             }

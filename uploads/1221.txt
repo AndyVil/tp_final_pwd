@@ -1,0 +1,6 @@
+<h3>Información de el producto</h3>
+                          <b>Nombre:</b> 1221remera <br/>
+                          <b>Descripcion:</b> null <br/>
+                          <b>Cantstock:</b> null <br/>
+                          <b>Talles disponibles:</b> S <br />
+                          <b>Precio:</b> 7000 <br />

@@ -64,7 +64,7 @@ if ($datos["accion"] == "borrar") {
 			$dirUpload = $ruta . "uploads";
 			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
 			$nombre = $id . "." . $ext;
-			echo "Imagen Cargada <br><br>";
+			//echo "Imagen Cargada <br><br>";
 			$formularioCargarProducto = new Formulario();
 			$array = $formularioCargarProducto->cargarArchivos($nombre, $datos);			
 			$link = "../../uploads/".$nombre;
@@ -76,6 +76,8 @@ if ($datos["accion"] == "borrar") {
 }
 
 ?>
+
+
 <div class="row mb-3">
 	<div class="col-sm-12 ">
 		<?php
@@ -90,9 +92,6 @@ if ($datos["accion"] == "borrar") {
 		} else {
 			echo "<div class='alert alert-danger mt-5' role='alert'>$error</div>";
 		}
-		//Volver a la pagina anterior 
-		echo "<br><br><a href='Directorio local host'>
-		 Volver a la pagina anterior</a>"; //NO puede haber echos en las clases
 		?>
 	</div>
 </div>

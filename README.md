@@ -44,3 +44,39 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 8. Desde la aplicación un usuario con rol Administrador podrá:
  - Crear nuevos usuarios al sistema, asignar los roles correspondientes y actualizar la información que se requiera.
  - Gestionar y administrar nuevos roles e ítem del menú. Vinculando item del menú al rol según corresponda.
+
+
+
+
+
+
+
+
+
+
+que no se vean los menus
+que no corresponden 
+
+al recargar las paginas de subidas se suman datos a la base de datos
+
+carrito
+
+---------catalogo
+
+cerrar sesion
+
+registro debe comprobar que el nombre no existe, el usname deberia ser unico
+
+estilos y limpiar codigo, comentarlo
+
+
+precio 0 = a null en el ver producto
+
+manejar el error al modificar el producto
+error de imagen, traer el detalle de nuevo
+y pedir volver a cargar la imagen
+o quitar ese parametro de formulario
+
+Que muestre una burbuja verde de edicion exitosa o erronea y mande nuevamente al deposito
+
+solo al crear nuevo prodcuto se muestra el detalle del mismo

@@ -146,7 +146,7 @@ class CompraItem
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO compraitem(idcompraitem,idproducto,idcompra,cicantidad)  VALUES('" . $this->getidcompraitem() . "','" . $this->getidproducto() ."','" . $this->getidcompra() ."','" . $this->getcicantidad() . "');";
+        $sql = "INSERT INTO compraitem(idcompraitem,idproducto,idcompra,cicantidad, ciprecio)  VALUES('" . $this->getidcompraitem() . "','" . $this->getidproducto() ."','" . $this->getidcompra() ."','" . $this->getcicantidad(). "','" . $this->getciprecio() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompraitem($elid);
@@ -164,14 +164,17 @@ class CompraItem
     /** MODIFICAR **/
     public function modificar()
     {
+        $this->setciprecio(null);
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compraitem SET cicantidad='" . $this->getcicantidad() . "'
-        WHERE idcompraitem=" . $this->getidcompraitem();
+        $sql = "UPDATE compraitem SET cicantidad='" . $this->getcicantidad() 
+        . "'ciprecio='".$this->getciprecio() 
+        . "'WHERE idcompraitem=" . $this->getidcompraitem();
         if ($base->Iniciar()) {
             //var_dump($sql);
             if ($base->Ejecutar($sql)) {
                 $resp = true;
+                
             } else {
                 $this->setmensajeoperacion("compraitem->modificar: " . $base->getError());
             }
@@ -227,7 +230,7 @@ class CompraItem
                         $idcompra->setidcompra($row['idcompra']);
                         $idcompra->cargar();
                     }     
-                    $obj->setear($row['idcompraitem'], $idproducto,$idcompra,$row['cicantidad'],$row['cicantidad']);
+                    $obj->setear($row['idcompraitem'], $idproducto,$idcompra,$row['cicantidad'],$row['ciprecio']);
                     array_push($arreglo, $obj);
                 }
             }

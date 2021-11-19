@@ -81,27 +81,95 @@ class Formulario {
 
     }
 
+    public function obtenerArchivos()
+    {
+        $directorio = $GLOBALS['ROOT']."/uploads";
+        
+        if (is_dir($directorio)) {
+            //Escaneamos el directorio
+            $carpeta = scandir($directorio);
+            //Miramos si existen archivos
+            if (count($carpeta) > 2) {
+                $return = scandir($directorio, 1);
+                //var_dump($archivos);
+                //Miramos si existe el archivo pasado como parámetro
+                // if (file_exists('folder/index.php'))
+                // echo 'El archivo existe';
+                // else
+                //     echo 'El archivo no existe';
+            } else {
+                echo 'No hay productos cargados';
+                $return =  false;
+            }
+        } else {
+            echo 'El directorio no existe.';
+                $return =  false;
+        }
+
+        return $return;
+    }
 
     public function verInformacion($datos, $nombre)
     {
-        $nombre;
+        $pos = mb_strripos($nombre, ".");
+
+        $id = substr($nombre, 0, $pos);
         $protipo = $datos['tipoProducto'];
         $descripcion = $datos["descripcion"];
         $procantstock = $datos["procantstock"];    
         $protalle = implode(", ", $datos['talle']);  
         $proprecio = $datos['proprecio'];
+        $nombre = $protipo.$id;
 
         $texto = "<h3>Información de el producto</h3>
-                          <p><b>Nombre:</b> $nombre <br />
-                          <b>Tipo:</b> $protipo <br />;
-                          <b>Descripcion:</b> $descripcion <br />
-                          <b>Cantstock:</b> $procantstock <br />;
-                          <b>Talles disponibles:</b> $protalle <br />;
+                          <b>Nombre:</b> $id"."$protipo <br/>
+                          <b>Descripcion:</b> $descripcion <br/>
+                          <b>Cantstock:</b> $procantstock <br/>
+                          <b>Talles disponibles:</b> $protalle <br />
                           <b>Precio:</b> $proprecio <br />";
-
         return $texto;
     }
 
+    #Llama al archivo txt desde su ruta y la carga 
+    public function obtenerInfoDeArchivo($datos)
+    {
+        $directorio = "../../uploads/";
+        foreach ($datos as $clave => $valor) {
+            $nombreArchivo = str_replace("Seleccion:", '', $clave);
+        }
+
+        /* pos y ultPos lo usamos para reemplazar el tipo de arhivo sea cual sea su longitud (.png o .jpeg) */
+        $pos = mb_strripos($nombreArchivo, "_");
+        //echo $pos;
+        $ultPos = substr($nombreArchivo, $pos);
+        //print_r(($ultPos));
+        $ultPos = str_replace("_", '.', $ultPos);
+        // echo " ";
+        // print_r(($ultPos));
+        $nombreArchivo = substr($nombreArchivo, 0, $pos) . $ultPos;
+        $nombreImagen = $directorio . $nombreArchivo;
+        $nombreArchivodescripcion = substr($nombreArchivo, 0, $pos) . ".txt";
+        
+        $descripcion = "";
+        if (file_exists($directorio . $nombreArchivodescripcion)) {
+            $fArchivoOBS = fopen($directorio . $nombreArchivodescripcion, "r");
+            $descripcion = fread($fArchivoOBS, filesize($directorio . $nombreArchivodescripcion));
+            fclose($fArchivoOBS);
+        }
+        //var_dump($nombreImagen); 
+        $datosArch = [
+            "link" => $nombreImagen,
+            "NombreArchivo" => $nombreArchivo,
+            "Descripcion" => $descripcion
+
+        ];
+        //finfo_close($finfo);
+
+        return $datosArch;
+    }
+
 }
+
+
 
 ?>

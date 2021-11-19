@@ -1,15 +1,29 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
+
+$compra = new AbmCompra();
+$items = $compra;
+
 //HEADER============================================================================
 ?>
-
-
  
-<main role="main" class="container">
+<div class="container">
 
-</main>
 
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
 
 <?php
 //FOOTER============================================================================

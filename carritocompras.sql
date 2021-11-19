@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 15-10-2018 a las 23:12:45
--- Versión del servidor: 10.1.34-MariaDB
--- Versión de PHP: 7.2.7
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 19-11-2021 a las 22:23:38
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bdcarritocompras`
+-- Base de datos: `carritocompras`
 --
 
 -- --------------------------------------------------------
@@ -30,9 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `compra` (
   `idcompra` bigint(20) NOT NULL,
-  `cofecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cofecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `coprecio` int(11) NOT NULL,
-  `idusuario` bigint(20) NOT NULL
+  `idusuario` bigint(20) NOT NULL,
+  `compraprecio` float(7,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE `compraestado` (
   `idcompraestado` bigint(20) UNSIGNED NOT NULL,
   `idcompra` bigint(11) NOT NULL,
   `idcompraestadotipo` int(11) NOT NULL,
-  `cefechaini` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cefechaini` timestamp NOT NULL DEFAULT current_timestamp(),
   `cefechafin` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -82,7 +82,7 @@ CREATE TABLE `compraitem` (
   `idproducto` bigint(20) NOT NULL,
   `idcompra` bigint(20) NOT NULL,
   `cicantidad` int(11) NOT NULL,
-  `ciprecio` int(11) NOT NULL
+  `ciprecio` float(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -96,7 +96,7 @@ CREATE TABLE `menu` (
   `menombre` varchar(50) NOT NULL COMMENT 'Nombre del item del menu',
   `medescripcion` varchar(124) NOT NULL COMMENT 'Descripcion mas detallada del item del menu',
   `idpadre` bigint(20) DEFAULT NULL COMMENT 'Referencia al id del menu que es subitem',
-  `medeshabilitado` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en la que el menu fue deshabilitado por ultima vez'
+  `medeshabilitado` timestamp NULL DEFAULT current_timestamp() COMMENT 'Fecha en la que el menu fue deshabilitado por ultima vez'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -104,18 +104,16 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(1, 'admin_ini', 'Administrador', NULL, NULL),--Admin
-(2, 'dep_ini', 'Deposito', NULL, NULL),--Deposito
-(3, 'cliente_ini', 'Catalogo', NULL, NULL),--Cliente
-(4, 'login', 'Log in', NULL, NULL),--Superusuario (sin log)
-(5, 'registro', 'Registrarse', NULL, NULL);--Superusuario
-(6, 'cuenta', 'Cuenta', 3, NULL);--Cliente
-(7, 'carrito', 'carrito', 3, NULL);--Cliente
+(1, 'admin_ini', 'Administrador', NULL, NULL),
+(2, 'dep_ini', 'Deposito', NULL, NULL),
+(3, 'cliente_ini', 'Catalogo', NULL, NULL),
+(4, 'login', 'Log in', 8, NULL),
+(5, 'registro', 'Registrarse', 8, NULL),
+(6, 'cuenta', 'Cuenta', 6, NULL),
+(7, 'carrito', 'Carrito', 3, NULL),
+(8, 'sinlog', 'Menus accesibles sin login', 8, NULL),
+(9, 'editarcuenta', 'Permite editar los datos de la cuenta a los clientes', 6, NULL);
 
---1admin
---2cliente
---3depo
---4sin login
 -- --------------------------------------------------------
 
 --
@@ -126,16 +124,27 @@ CREATE TABLE `menurol` (
   `idmenu` bigint(20) NOT NULL,
   `idrol` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
--- Volcado de datos para la tabla `rol`
+-- Volcado de datos para la tabla `menurol`
 --
 
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 1),
 (2, 2),
-(3, 3);
-
--- --------------------------------------------------------
+(4, 4),
+(5, 4),
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 5),
+(7, 3),
+(8, 1),
+(8, 2),
+(8, 3),
+(8, 4),
+(8, 5),
+(9, 3);
 
 -- --------------------------------------------------------
 
@@ -145,11 +154,21 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 
 CREATE TABLE `producto` (
   `idproducto` bigint(20) NOT NULL,
-  `pronombre` int(11) NOT NULL,
+  `pronombre` varchar(15) NOT NULL,
   `prodetalle` varchar(512) NOT NULL,
   `procantstock` int(11) NOT NULL,
-  `proprecio` int(11) NOT NULL
+  `proprecio` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`) VALUES
+(1217, 'remera', 'Remera blanca de algodon M, L, XL', 10, 650),
+(1219, 'pantalon', 'Pantalon largo, marron S, M, L', 50, 2000),
+(1220, 'remera', 'null S', 20, 470),
+(1221, 'remera', 'null S', 0, 7000);
 
 -- --------------------------------------------------------
 
@@ -161,16 +180,18 @@ CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL,
   `roldescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`idrol`, `roldescripcion`) VALUES
 (1, 'Admin'),
-(2, 'Cliente'),
-(3, 'Deposito');
+(2, 'Deposito'),
+(3, 'Cliente'),
+(4, 'sinlog'),
+(5, 'superuser');
 
--- --------------------------------------------------------
 -- --------------------------------------------------------
 
 --
@@ -190,13 +211,36 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(1, '12d4aaf1584f2d9c40545ddc1309ae5a', 'e10adc3949ba59abbe56e057f20f883e', 'aoshi@hotmail.com', 0),
-(2, '59e9102bf2f15539b491978ba3ee6068', 'd964173dc44da83eeafa3aebbee9a1a0', 'bhima@hotmail.com', 0),
-(3, 'e20d37a5d7fcc4c35be6fc18a8e71bfa', 'c5e172e2507e0a58fac8e343cdfd947d', 'paris@hotmail.com', 0);
+(1, '63a9f0ea7bb98050796b649e85481845', '63a9f0ea7bb98050796b649e85481845', 'USR: root\r\nPSS: root', NULL),
+(2, '2338c56c00fec1f1c7a87df7ab43936e', '2338c56c00fec1f1c7a87df7ab43936e', 'USR:sinlog\r\nPSS: sinlog', NULL),
+(3, 'e20d37a5d7fcc4c35be6fc18a8e71bfa', '827ccb0eea8a706c4c34a16891f84e7b', 'paris@hotmail.com', '0000-00-00 00:00:00'),
+(4, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'aoshi@hotmail.com', '2021-11-18 12:16:56'),
+(5, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'bima@hotmail.com', '2021-11-18 08:27:56'),
+(11, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(12, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(13, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(14, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(15, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(16, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(17, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(18, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(19, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(20, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(21, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(22, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(23, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(24, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(25, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(26, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(27, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(28, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(29, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(30, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(31, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(32, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(33, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
+(34, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00');
 
--- --------------------------------------------------------
-
---
 -- --------------------------------------------------------
 
 --
@@ -209,18 +253,43 @@ CREATE TABLE `usuariorol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Índices para tablas volcadas
-----
 -- Volcado de datos para la tabla `usuariorol`
 --
 
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
+(3, 2),
+(4, 1),
+(5, 1),
+(5, 2),
+(5, 3),
+(11, 3),
+(12, 3),
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 3),
+(17, 3),
+(18, 3),
+(19, 3),
+(20, 3),
+(21, 3),
+(22, 3),
+(23, 3),
+(24, 3),
+(25, 3),
+(26, 3),
+(27, 3),
+(28, 3),
+(29, 3),
+(30, 3),
+(31, 3),
+(32, 3),
+(33, 3),
+(34, 3);
 
 --
--- Ín
+-- Índices para tablas volcadas
+--
 
 --
 -- Indices de la tabla `compra`
@@ -324,25 +393,25 @@ ALTER TABLE `compraitem`
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `idmenu` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idmenu` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1222;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Restricciones para tablas volcadas
