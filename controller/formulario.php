@@ -136,7 +136,7 @@ class Formulario
         $directorio = "../../uploads/";
         $return = array();
         $archivos = scandir($directorio, 1);
-        var_dump($archivos);
+        //var_dump($archivos);
         //Miramos si existe el archivo pasado como parámetro
         $i = 0;
         $loencontre = false;

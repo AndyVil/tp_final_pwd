@@ -5,7 +5,7 @@ $sesion = new Session();
 $datos = data_submited();
 if(array_key_exists("mensaje",$datos))
 $mensaje=$datos["mensaje"];
-var_dump($mensaje);
+//var_dump($mensaje);
 
 if (!$sesion->activa()) {
     header('Location: login.php');

@@ -12,7 +12,7 @@
     list($valido, $error) = $sesion->validar();
     if(array_key_exists("idproducto", $datos))
     $error=$datos["idproducto"];
-    var_dump($error);
+    //var_dump($error);
 
     if ($valido) {
         header("Location:paginaSegura.php?mensaje=". urlencode($error));
