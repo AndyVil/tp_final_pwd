@@ -14,7 +14,7 @@ require_once("../structure/Header.php");
 <div>
     <div align="center">
         <!-- Botones -->
-        <button onclick="location.href='cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
+        <button onclick="location.href='./cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
     </div>
 </div>
 

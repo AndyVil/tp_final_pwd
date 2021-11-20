@@ -4,4 +4,6 @@ include_once '../../config.php';
 $sesion = new Session();
 $sesion->cerrar();
 $message = "Sesión cerrada";
-header('Location: login.php?message=' . urlencode($message));
+header('Location: ../inicio_cliente/index.php?message=' . urlencode($message));
+?>
+

@@ -1,15 +1,20 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 include_once './../../config.php';
-
+$datos = data_submited();
+var_dump($datos);
 $objLogin = new Session();
 if ($objLogin->activa()) {
     header('location:paginaSegura.php');
 } else {    
     require_once("../structure/Header.php");
 }
+$id = '';
+foreach ($datos as $key => $valor) {
+	$id = $key;
+	$accion = $valor;
+}
 
-$datos = data_submited();
 //HEADER============================================================================
 ?>
 
@@ -38,6 +43,7 @@ $datos = data_submited();
                 <input type="submit" value="Enviar" name="btn-form" id="btn-form" class="btn btn-success">
                 <br>
                 <br>
+                <input type="hidden" name="idproducto" id="idproducto" value="<?=$id?>">
                 <input type="reset" name="btn-form" id="btn-form" class="btn btn-warning">
             </form>
             <!-- Redireccion a registro -->

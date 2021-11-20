@@ -10,9 +10,12 @@
     $pass = md5($datos['uspass']);
     $sesion->iniciar($name, $pass);
     list($valido, $error) = $sesion->validar();
+    if(array_key_exists("idproducto", $datos))
+    $error=$datos["idproducto"];
+    var_dump($error);
 
     if ($valido) {
-        header("Location:paginaSegura.php");
+        header("Location:paginaSegura.php?mensaje=". urlencode($error));
     } else {
         $sesion->cerrar();
         header("Location:login.php?error=" . urlencode($error));

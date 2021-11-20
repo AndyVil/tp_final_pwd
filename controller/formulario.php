@@ -4,21 +4,23 @@ use PHPImageWorkshop\ImageWorkshop;
 
 $ruta = $GLOBALS['ROOT'];
 
-require_once($ruta.'/controller/imageworkshop/ImageWorkshop.php');
-require_once($ruta.'/controller/imageworkshop/Core/ImageWorkshopLayer.php');
-require_once($ruta.'/controller/imageworkshop/Core/ImageWorkshopLib.php');
-require_once($ruta.'/controller/imageworkshop/Exception/ImageWorkshopBaseException.php');
-require_once($ruta.'/controller/imageworkshop/Exception/ImageWorkshopException.php');
+require_once($ruta . '/controller/imageworkshop/ImageWorkshop.php');
+require_once($ruta . '/controller/imageworkshop/Core/ImageWorkshopLayer.php');
+require_once($ruta . '/controller/imageworkshop/Core/ImageWorkshopLib.php');
+require_once($ruta . '/controller/imageworkshop/Exception/ImageWorkshopBaseException.php');
+require_once($ruta . '/controller/imageworkshop/Exception/ImageWorkshopException.php');
 
 /**
  * Clase formularios, para comprobacion de formularios, subida de archivos etc.
  */
-class Formulario {
+class Formulario
+{
 
     /**
      * Formulario de carga de productos
      */
-    public function cargarArchivos($nombre,$datos){   
+    public function cargarArchivos($nombre, $datos)
+    {
         $retorno = [];
         $retorno['imagen']['link'] = "";
         $retorno['imagen']['error'] = "";
@@ -30,42 +32,42 @@ class Formulario {
         $todoOK = true;
         if ($todoOK && !copy($_FILES['productoImagen']['tmp_name'], $dir . $nombre)) {
             $error = "ERROR: No se pudo copiar la imagen.";
-            $todoOK = false;            
+            $todoOK = false;
         }
-        if($todoOK){
+        if ($todoOK) {
             $this->rezise($nombre);
-        }  
-        
-        
+        }
+
+
         if ($todoOK) {
             $retorno['imagen']['link'] = $dir . $nombre;
         } else {
             $retorno['imagen']['error'] = $error;
         }
         $pos = mb_strripos($nombre, ".");
-        $texto = $this->verInformacion($datos,$nombre);
 
-        $txtName = substr($nombre, 0,$pos).".txt";
+
+        $txtName = substr($nombre, 0, $pos) . ".txt";
         $txtName = $dir . $txtName;
-
+        $texto = $this->verInformacion($datos, $nombre);
         /* fopen crea un nuevo archivo con nombre $name y con "w" reemplaza la información si ya existia */
         $ar = fopen($txtName, "w") or die("error al crear");
         fwrite($ar, $texto);
-        fclose($ar);       
-        
+        fclose($ar);
+
         return $retorno;
-        
     }
 
 
     /**
      * @param string $nombre (Nombre del archivo)
      */
-    public function rezise ($name){
+    public function rezise($name)
+    {
         // Variable que almacena el directorio del proyecto
         $layerBase = new PHPImageWorkshop\ImageWorkshop;
         #Image Path
-        $pathInicial = $GLOBALS['ROOT'] . 'uploads/' . $name;//tmp
+        $pathInicial = $GLOBALS['ROOT'] . 'uploads/' . $name; //tmp
         #Traemos la imagen a la capa inicializada
         $layerBase = ImageWorkshop::initFromPath($pathInicial);
 
@@ -78,19 +80,18 @@ class Formulario {
         $imageQuality = 70; #No sirve para GIF, pero es util para PNG y JPEG (0 to 100);
 
         $layerBase->save($resultadoDir, $name, $crearCarpeta, $backgroundColor, $imageQuality);
-
     }
 
     public function obtenerArchivos()
     {
-        $directorio = $GLOBALS['ROOT']."/uploads";
-        
+        $directorio = $GLOBALS['ROOT'] . "/uploads";
+
         if (is_dir($directorio)) {
             //Escaneamos el directorio
             $carpeta = scandir($directorio);
             //Miramos si existen archivos
             if (count($carpeta) > 2) {
-                $return = scandir($directorio, 1);
+                $archivos = scandir($directorio, 1);
                 //var_dump($archivos);
                 //Miramos si existe el archivo pasado como parámetro
                 // if (file_exists('folder/index.php'))
@@ -99,14 +100,14 @@ class Formulario {
                 //     echo 'El archivo no existe';
             } else {
                 echo 'No hay productos cargados';
-                $return =  false;
+                $archivos =  false;
             }
         } else {
             echo 'El directorio no existe.';
-                $return =  false;
+            $archivos =  false;
         }
 
-        return $return;
+        return $archivos;
     }
 
     public function verInformacion($datos, $nombre)
@@ -116,19 +117,53 @@ class Formulario {
         $id = substr($nombre, 0, $pos);
         $protipo = $datos['tipoProducto'];
         $descripcion = $datos["descripcion"];
-        $procantstock = $datos["procantstock"];    
-        $protalle = implode(", ", $datos['talle']);  
+        $procantstock = $datos["procantstock"];
+        $protalle = implode(", ", $datos['talle']);
         $proprecio = $datos['proprecio'];
-        $nombre = $protipo.$id;
+        $nombre = $protipo . $id;
 
         $texto = "<h3>Información de el producto</h3>
-                          <b>Nombre:</b> $id"."$protipo <br/>
+                          <b>Nombre:</b> $id" . "$protipo <br/>
                           <b>Descripcion:</b> $descripcion <br/>
                           <b>Cantstock:</b> $procantstock <br/>
                           <b>Talles disponibles:</b> $protalle <br />
                           <b>Precio:</b> $proprecio <br />";
         return $texto;
     }
+
+    public function obtenerArchivosPorId($id)
+    {
+        $directorio = "../../uploads/";
+        $return = array();
+        $archivos = scandir($directorio, 1);
+        var_dump($archivos);
+        //Miramos si existe el archivo pasado como parámetro
+        $i = 0;
+        $loencontre = false;
+        // while (!$loencontre) {
+        //     $dot = mb_strripos($archivos[0], ".");
+        //     $nombre = substr($archivos[0], 0, $dot);
+        //     if ($nombre == $id) {
+        //         array_push($return, $archivos);
+        //     }
+        //     if (count($return) > 1) {
+        //         $noloencontre = true;
+        //     }
+        //     $i++;
+        // }
+
+        foreach ($archivos as $archivo) {
+            $dot = mb_strripos($archivo, ".");
+            $nombre = substr($archivo, 0, $dot);  
+            if($nombre==$id){                        
+                array_push($return,$archivo);
+            }                    
+        }
+
+
+        return $return;
+    }
+
 
     #Llama al archivo txt desde su ruta y la carga 
     public function obtenerInfoDeArchivo($datos)
@@ -149,7 +184,7 @@ class Formulario {
         $nombreArchivo = substr($nombreArchivo, 0, $pos) . $ultPos;
         $nombreImagen = $directorio . $nombreArchivo;
         $nombreArchivodescripcion = substr($nombreArchivo, 0, $pos) . ".txt";
-        
+
         $descripcion = "";
         if (file_exists($directorio . $nombreArchivodescripcion)) {
             $fArchivoOBS = fopen($directorio . $nombreArchivodescripcion, "r");
@@ -167,9 +202,4 @@ class Formulario {
 
         return $datosArch;
     }
-
 }
-
-
-
-?>

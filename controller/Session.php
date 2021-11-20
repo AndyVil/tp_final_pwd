@@ -84,7 +84,7 @@ class Session
             $error .= "Datos de login incorrectos";
         } 
         if (count($listaUsuarios) > 0) {
-            if ($listaUsuarios[0]->getUsdeshabilitado()!= '0000-00-00 00:00:00') {
+            if ($listaUsuarios[0]->getUsdeshabilitado()== '0000-00-00 00:00:00') {
                 $error .= "El usuario está deshabilitado";
             } else {
                 $inicia = true;
