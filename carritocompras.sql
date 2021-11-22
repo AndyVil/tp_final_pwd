@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2021 a las 22:23:38
+-- Tiempo de generación: 23-11-2021 a las 00:48:19
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -216,30 +216,7 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabili
 (3, 'e20d37a5d7fcc4c35be6fc18a8e71bfa', '827ccb0eea8a706c4c34a16891f84e7b', 'paris@hotmail.com', '0000-00-00 00:00:00'),
 (4, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'aoshi@hotmail.com', '2021-11-18 12:16:56'),
 (5, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'bima@hotmail.com', '2021-11-18 08:27:56'),
-(11, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(12, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(13, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(14, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(15, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(16, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(17, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(18, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(19, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(20, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(21, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(22, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(23, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(24, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(25, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(26, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(27, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(28, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(29, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(30, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(31, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(32, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(33, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00'),
-(34, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '0000-00-00 00:00:00');
+(11, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '2021-11-20 04:40:10');
 
 -- --------------------------------------------------------
 
@@ -262,30 +239,7 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (5, 1),
 (5, 2),
 (5, 3),
-(11, 3),
-(12, 3),
-(13, 3),
-(14, 3),
-(15, 3),
-(16, 3),
-(17, 3),
-(18, 3),
-(19, 3),
-(20, 3),
-(21, 3),
-(22, 3),
-(23, 3),
-(24, 3),
-(25, 3),
-(26, 3),
-(27, 3),
-(28, 3),
-(29, 3),
-(30, 3),
-(31, 3),
-(32, 3),
-(33, 3),
-(34, 3);
+(11, 3);
 
 --
 -- Índices para tablas volcadas
@@ -411,7 +365,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Restricciones para tablas volcadas
