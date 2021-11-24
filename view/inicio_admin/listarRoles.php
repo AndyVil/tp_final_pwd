@@ -27,9 +27,9 @@ $listaTabla = $objAbmTabla->buscar(null);
                     <h3 align="center">Listar Roles</h3>
                     <hr>
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col" class="text-center">Editar</th>
+                        <th scope="col" id="tablepadding">Id</th>
+                        <th scope="col" id="tablepadding">Descripcion</th>
+                        <th scope="col" class="text-center" id="tablepadding">Editar</th>
                     </tr>
                 </thead>
                 <?php
@@ -41,8 +41,8 @@ $listaTabla = $objAbmTabla->buscar(null);
                         $des = $objRol->getroldescripcion();
                         $id = $objRol->getidRol();
                         echo '<tr class="align-middle">';
-                        echo '<th scope="row">' . $id . '</th>';
-                        echo '<td>' . $des .    '</td>';
+                        echo '<th scope="row" id="tablepadding">' . $id . '</th>';
+                        echo '<td id="tablepadding">' . $des .    '</td>';
                         echo '
                         <td class="text-center">
                             <button class="btn btn-success btn-sm" type="submit" value="' . $id . '" id="proEdit" name="roledit" role="roledit">

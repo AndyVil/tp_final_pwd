@@ -18,7 +18,8 @@ class Session
     /** CONSTRUCTOR **/
     public function __construct()
     {
-        session_start();
+        $sesionIni = session_status() == PHP_SESSION_ACTIVE;
+        if(!$sesionIni)session_start();
     }
 
 
@@ -79,12 +80,13 @@ class Session
         $listaUsuarios = $abmUsuario->buscar($where);
         $username = $abmUsuario->buscar($filtro1);
         $pass =  $abmUsuario->buscar($filtro2);
-        $error = "";
+        $error = '';
+        
         if ($username == null||$pass == null) {
             $error .= "Datos de login incorrectos";
         } 
         if (count($listaUsuarios) > 0) {
-            if ($listaUsuarios[0]->getUsdeshabilitado()== '0000-00-00 00:00:00') {
+            if ($listaUsuarios[0]->getUsdeshabilitado()!= '0000-00-00 00:00:00') {
                 $error .= "El usuario está deshabilitado";
             } else {
                 $inicia = true;
@@ -98,6 +100,7 @@ class Session
     
     /**
      * @param idrol
+     * Se podria usar el motodo obtener rol, para obtener el arreglo y con eso verificar los roles de los usuarios
      */
     public function validarRol($id){
 
@@ -118,6 +121,25 @@ class Session
 
     }
 
+    /**
+     * @param int ID de usuario
+     * @return array ID de ROL
+     * La idea es obtener el ROL de la tabla UsuarioRol por medio del ID del usuario
+     */
+    public function obtenerRol($idUser){
+        $abmrol = new AbmUsuariorol();#Nuevo objeto ROL
+        $where = ['idusuario' => $this->getIdUser()];#Where idusuario = ID de este usuario
+        $arrayUsuario = $abmrol->buscar($where);#Busca la lista de roles ARRAY con objetos dentro (cada objeto es un rol vinculado de un iduser)
+
+        $roles=[];
+        #Recorre el arreglo de roles
+        foreach ($arrayUsuario as $usuario) {
+            $rolUser = $usuario->getobjrol();
+            $rol = $rolUser->getidrol();#Devuelve el id del rol 1 al 5
+            array_push($roles, $rol);
+        }
+        return $roles;
+    }
 
     /** ACTIVA **/
     public function activa()

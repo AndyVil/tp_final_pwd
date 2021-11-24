@@ -7,16 +7,17 @@ require_once("../structure/Header.php");
 <div class="container">
 
 
-<div align="center">
-    <h2 class="mt-5">Cuenta</h2>
-</div>
-
-<div>
     <div align="center">
-        <!-- Botones -->
-        <button onclick="location.href='./cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
+        <h2 class="mt-5">Cuenta</h2>
     </div>
-</div>
+
+    <div>
+        <div align="center">
+            <!-- Botones -->
+            <button onclick="location.href='./cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
+        </div>
+        <br><br>
+    </div>
 
 
 

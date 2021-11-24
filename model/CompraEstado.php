@@ -68,7 +68,7 @@ Class CompraEstado{
 
     public function setcefechaini($valor)
     {
-        $this->cefechaini->$valor;
+        $this->cefechaini=$valor;
         //var_dump($valor);
 
         // $cefechaini = $this->getidcompraestado();
@@ -104,7 +104,7 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM menu WHERE idcompraestado = " . $this->getidcompraestado();
+        $sql = "SELECT * FROM CompraEstado WHERE idcompraestado = " . $this->getidcompraestado();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
             if ($res > -1) {
@@ -115,7 +115,7 @@ Class CompraEstado{
                 }
             }
         } else {
-            $this->setmensajeoperacion("menu->listar: " . $base->getError());
+            $this->setmensajeoperacion("CompraEstado->listar: " . $base->getError());
         }
         return $resp;
     }
@@ -126,16 +126,16 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO menu(idcompraestado,idcompra,idcompraestadotipo,cefechaini,menudesabilitado)  VALUES('" . $this->getidcompraestado() . "','" . $this->getidcompra() . "','" . $this->getidcompraestadotipo() . "','" . $this->getcefechaini()->getidcompraestado() ."','" .$this->getcefechafin() . "');";
+        $sql = "INSERT INTO compraestado(idcompraestado,idcompra,idcompraestadotipo,cefechaini,cefechafin)  VALUES('" . $this->getidcompraestado() . "','" . $this->getidcompra() . "','" . $this->getidcompraestadotipo() . "','" . $this->getcefechaini() ."','" .$this->getcefechafin() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompraestado($elid);
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("menu->insertar: " . $base->getError());
+                $this->setmensajeoperacion("CompraEstado->insertar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("menu->insertar: " . $base->getError());
+            $this->setmensajeoperacion("CompraEstado->insertar: " . $base->getError());
         }
         return $resp;
     }
@@ -146,7 +146,7 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE menu SET idcompra='" . $this->getidcompra() . "',";
+        $sql = "UPDATE CompraEstado SET idcompra='" . $this->getidcompra() . "',";
         $sql .= "idcompraestadotipo=" . $this->getidcompraestadotipo() . ",";
         $sql .= "cefechafin='" . $this->getcefechafin() . "' ";
         $sql .= "WHERE idcompraestado='" . $this->getidcompraestado() . "'";
@@ -154,10 +154,10 @@ Class CompraEstado{
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("menu->modificar: " . $base->getError());
+                $this->setmensajeoperacion("CompraEstado->modificar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("menu->modificar: " . $base->getError());
+            $this->setmensajeoperacion("CompraEstado->modificar: " . $base->getError());
         }
         return $resp;
     }
@@ -168,15 +168,15 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM menu WHERE idcompraestado=" . $this->getidcompraestado();
+        $sql = "DELETE FROM CompraEstado WHERE idcompraestado=" . $this->getidcompraestado();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 return true;
             } else {
-                $this->setmensajeoperacion("menu->eliminar: " . $base->getError());
+                $this->setmensajeoperacion("CompraEstado->eliminar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("menu->eliminar: " . $base->getError());
+            $this->setmensajeoperacion("CompraEstado->eliminar: " . $base->getError());
         }
         return $resp;
     }
@@ -187,15 +187,16 @@ Class CompraEstado{
     {
         $arreglo = array();
         $base = new BaseDatos();
-        $sql = "SELECT * FROM menu ";
+        $sql = "SELECT * FROM CompraEstado ";
         if ($parametro != "") {
             $sql .= 'WHERE ' . $parametro;
         }
+        //var_dump($sql);
         $res = $base->Ejecutar($sql);
         if ($res > -1) {
             if ($res > 0) {
                 while ($row = $base->Registro()) {
-                    $obj = new Menu();
+                    $obj = new CompraEstado();
                     $objcompra = NULL;
                     if ($row['cefechaini'] != null) {
                         $objcompra = new Compra();
@@ -208,13 +209,13 @@ Class CompraEstado{
                         $objcet->setidcompraestadotipo($row['idcompraestadotipo']);
                         $objcet->cargar();
                     }
-                    $obj->setear($row['idcompraestado'], $objcompra, $objcet, $row['cefechaini'],$row['cefechafin']);
+                    $obj->setear($row['idcompraestado'], $row['idcompra'], $row['idcompraestadotipo'], $row['cefechaini'],$row['cefechafin']);
 
                     array_push($arreglo, $obj);
                 }
             }
         } else {
-            //$this->setmensajeoperacion("menu->listar: ".$base->getError());
+            //$this->setmensajeoperacion("CompraEstado->listar: ".$base->getError());
         }
         return $arreglo;
     }

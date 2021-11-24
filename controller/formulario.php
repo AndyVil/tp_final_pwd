@@ -151,15 +151,31 @@ class Formulario
         //     }
         //     $i++;
         // }
-
+        $descripcion ="";
+        $imagen ="";
         foreach ($archivos as $archivo) {
             $dot = mb_strripos($archivo, ".");
-            $nombre = substr($archivo, 0, $dot);  
-            if($nombre==$id){                        
-                array_push($return,$archivo);
+            $nombre = substr($archivo, 0, $dot);
+            $ext = substr($archivo, $dot+1);
+            
+            if($nombre==$id){ 
+                
+                if($ext =="txt"){
+                    $fArchivoOBS = fopen($directorio . $archivo, "r");
+                    $descripcion = fread($fArchivoOBS, filesize($directorio . $archivo));
+                }
+                else{
+                    $imagen = $directorio. $archivo;
+                }
+                
+                
             }                    
         }
+        $return = [
+            "link" => $imagen,            
+            "Descripcion" => $descripcion
 
+        ];
 
         return $return;
     }

@@ -9,14 +9,17 @@
     $name = md5($datos['usnombre']);
     $pass = md5($datos['uspass']);
     $sesion->iniciar($name, $pass);
+    
+    $mensaje="mensaje";
     list($valido, $error) = $sesion->validar();
-    if(array_key_exists("idproducto", $datos))
+    if($datos["idproducto"] !=""){
     $error=$datos["idproducto"];
-    //var_dump($error);
+    $mensaje=$datos["idproducto"];
+    }
 
     if ($valido) {
-        header("Location:paginaSegura.php?mensaje=". urlencode($error));
+        header("Location:paginaSegura.php?".$mensaje."=". urlencode($error));
     } else {
         $sesion->cerrar();
-        header("Location:login.php?error=" . urlencode($error));
+        header("Location:index.php?error=" . urlencode($error));
     }

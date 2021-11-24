@@ -88,12 +88,12 @@ class Compra
                 if ($res > 0) {
                     $row = $base->Registro();
                     $objUsuario = NULL;
-                    if ($row['idproducto'] != null) {
+                    if ($row['idusuario'] != null) {
                         $objUsuario = new Usuario();
-                        $objUsuario->setidusuario($row['idproducto']);
+                        $objUsuario->setidusuario($row['idusuario']);
                         $objUsuario->cargar();
                     }
-                    $this->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['compraprecio']);
+                    $this->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio']);
                     
                 }
             }
@@ -119,45 +119,54 @@ class Compra
     //     $this->arrayItems= $arr;
     // }
 
-    public function setcompraprecio(){
-        $precio= 0;        
+    public function setcompraprecio($valor){
+        $precio= $valor; 
+        if($valor ==null){
+            $precio = $this->getcompraprecio();
+            $items = new CompraItem();
+            $where = 'idcompra='. $this->getidcompra();
+            //var_dump($where);
+            $colCompraItems = $items->listar($where);
+            foreach ($colCompraItems as $item){
+                $precio =+$item->getciprecio();
+            }
+        }     
+               
         //$colItems = $this->getarrayItems();
-        $items = new CompraItem();
-        $where = ['idusuario' => $this->getidcompra()];
-        $colCompraItems = $items->listar($where);
-        foreach ($colCompraItems as $item){
-            $precio =+$item->ciprecio();
-        }
+        
         return $precio;
     }
 
     /** INSERTAR **/
     public function insertar()
     {
+        $arr=array();
+        
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO compra(idcompra,cofecha,idusuario,compraprecio)  VALUES('" . $this->getidcompra() . "','" . $this->getcofecha() . "','" . $this->getidusuario() ."','" . $this->getcompraprecio() . "');";
+        $sql = "INSERT INTO compra(idcompra,cofecha,idusuario,coprecio)  VALUES('" . $this->getidcompra() . "','" . $this->getcofecha() . "','" . $this->getidusuario() ."','" . $this->getcompraprecio() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompra($elid);
                 $resp = true;
+                array_push($arr,$resp,$elid);
             } else {
                 $this->setmensajeoperacion("compra->insertar: " . $base->getError());
             }
         } else {
             $this->setmensajeoperacion("compra->insertar: " . $base->getError());
         }
-        return $resp;
+        return $arr;
     }
 
 
     /** MODIFICAR **/
     public function modificar()
     {   
-        $this->setcompraprecio();     
+        $this->setcompraprecio(null);     
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compra SET compraprecio='" . $this->getcompraprecio() . "'
+        $sql = "UPDATE compra SET coprecio='" . $this->getcompraprecio() . "'
         WHERE idcompra=" . $this->getidcompra();
         if ($base->Iniciar()) {
             //var_dump($sql);
@@ -207,12 +216,12 @@ class Compra
                 while ($row = $base->Registro()) {
                     $obj = new Compra();
                     $objUsuario = NULL;
-                    if ($row['idproducto'] != null) {
+                    if ($row['idusuario'] != null) {
                         $objUsuario = new Usuario();
-                        $objUsuario->setidusuario($row['idproducto']);
+                        $objUsuario->setidusuario($row['idusuario']);
                         $objUsuario->cargar();
                     }
-                    $obj->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['compraprecio'] );
+                    $obj->setear($row['idcompra'], $row['cofecha'],$objUsuario,$row['coprecio'] );
                     array_push($arreglo, $obj);
                 }
             }

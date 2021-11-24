@@ -5,10 +5,12 @@ class AbmCompra
     private function cargarObjeto($param)
     {
         $obj = null;
-        if (array_key_exists('idcompra', $param)and array_key_exists('cofecha', $param) and array_key_exists('idusuario', $param)and array_key_exists('coprecio', $param)) {
+        //var_dump($param);
+        if (array_key_exists('idcompra', $param) and array_key_exists('cofecha', $param) and array_key_exists('idusuario', $param) and array_key_exists('coprecio', $param)) {
             $obj = new Compra();
-            $obj->setear($param['idcompras'], $param['cofecha'],$param['idusuario'],$param['coprecio']);
+            $obj->setear($param['idcompra'], $param['cofecha'], $param['idusuario'], $param['coprecio']);
         }
+        //var_dump($obj);
         return $obj;
     }
 
@@ -24,7 +26,7 @@ class AbmCompra
 
         if (isset($param['idcompra'])) {
             $obj = new Compra();
-            $obj->setear($param['idcompra'], "", $param['idusuario'],"");
+            $obj->setear($param['idcompra'], "", $param['idusuario'], "");
         }
         return $obj;
     }
@@ -38,7 +40,7 @@ class AbmCompra
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idcompra'])and isset($param['idusuario']))
+        if (isset($param['idcompra']) and isset($param['idusuario']))
             $resp = true;
         return $resp;
     }
@@ -53,17 +55,15 @@ class AbmCompra
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idcompra'] = $param['idcompra'];
-        $encuentraPer = $this->buscar($buscar2);
-
-        if ($encuentraPer == null) {
-            $objcompras = $this->cargarObjeto($param);
-            if ($objcompras != null and $objcompras->insertar()) {
-                $resp = true;
-            }
+        $arr = array();
+        $elObjtProducto = $this->cargarObjeto($param);
+        //var_dump($elObjtProducto);
+        list($insert, $id) = $elObjtProducto->insertar();
+        if ($elObjtProducto != null and $insert) {
+            $resp = true;
+            array_push($arr, $id, $resp);
         }
-        return $resp;
+        return $arr;
     }
 
 
@@ -99,8 +99,8 @@ class AbmCompra
             $buscar2['idcompra'] = $param['idcompra'];
             $compras = $this->buscar($buscar2);
             if ($compras != null) {
-                $objcompra= $compras[0];
-                $objcompra->setcofecha($param['cofecha']);               
+                $objcompra = $compras[0];
+                $objcompra->setcofecha($param['cofecha']);
 
                 if ($compras[0] != null and $compras[0]->modificar()) {
                     $resp = true;
@@ -126,11 +126,9 @@ class AbmCompra
             if (isset($param['cofecha']))
                 $where .= " and cofecha =" . $param['cofecha'];
             if (isset($param['idusuario']))
-                $where .= " and idusuario =" . $param['idusuario'];                
+                $where .= " and idusuario =" . $param['idusuario'];
         }
         $arreglo = Compra::listar($where);
         return $arreglo;
     }
-
-
 }

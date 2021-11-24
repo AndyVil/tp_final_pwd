@@ -4,7 +4,6 @@ require_once("../structure/header.php");
 ?>
 
 
-<!--BODY ACTION DIV=====================================================================-->
 <?php
 
 	$datos = data_submited();

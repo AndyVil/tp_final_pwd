@@ -7,8 +7,8 @@ foreach ($datos as $key => $valor) {
 	$id = $key;
 	$accion = $valor;
 }
-if($accion=="Comprar")
-$accion= "comprar.php";
+if ($accion == "Comprar")
+	$accion = "comprar.php";
 //HEADER================================================================================
 ?>
 
@@ -21,10 +21,10 @@ $accion= "comprar.php";
 		<form method="POST" action="../login/index.php">
 			<div align="center">
 				<!-- Botones -->
-				<input type='submit'  name='<?=$id?>' id='Seleccion:$archivo' class='btn btn-dark' value='Ya tengo cuenta'>
+				<input type='submit' formaction="../login/index.php" name='<?= $id ?>' id='Seleccion:$archivo' class='btn btn-dark' value='Ya tengo cuenta'>
 				<br>
 				<br>
-				<input type='submit' formaction="../registro/index.php" name='<?=$id?>' id='Seleccion:$archivo' class='btn btn-dark' value='Registrarse'>
+				<input type='submit' formaction="../registro/index.php" name='<?= $id ?>' id='Seleccion:$archivo' class='btn btn-dark' value='Soy nuevo'>
 				<br>
 				<br>
 			</div>

@@ -5,7 +5,7 @@ class AbmUsuariorol
     private function cargarObjeto($param)
     {
         $obj = null;
-        var_dump($param);
+        //var_dump($param);
         if (array_key_exists('idusuario', $param) and array_key_exists('idrol', $param)) {
             $objusuario = new Usuario();
             $objusuario->setIdusuario($param['idusuario']);

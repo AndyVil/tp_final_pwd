@@ -25,11 +25,11 @@ $listaTabla = $objAbmTabla->buscar(null);
                     <h3 align="center">Listar Productos</h3>
                     <hr>
                     <tr>
-                        <th scope="">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Detalle</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Precio</th>
+                        <th scope="" id='tablepadding'>ID</th>
+                        <th scope="col" id='tablepadding'>Nombre</th>
+                        <th scope="col" id='tablepadding'>Detalle</th>
+                        <th scope="col" id='tablepadding'>Stock</th>
+                        <th scope="col" id='tablepadding'>Precio</th>
                     </tr>
                 </thead>
                 <?php
@@ -44,16 +44,16 @@ $listaTabla = $objAbmTabla->buscar(null);
                         $des = $objProducto->getprocantstock();
                         $precio = $objProducto->getproprecio();
                         echo '<tr class="align-middle">';
-                        echo '<th scope="row">' . $id . '</th>';
-                        echo '<td>' . $nombre .    '</td>';
-                        echo '<td>' . $detalle .  '</td>';
+                        echo '<th scope="row" id="tablepadding">' . $id . '</th>';
+                        echo '<td id="tablepadding">' . $nombre .    '</td>';
+                        echo '<td id="tablepadding">' . $detalle .  '</td>';
                         //echo '<td>' . $des .  '</td>';
                         if ($des > 0) {
-                            echo "<td class='text-center text-success'>" . $des . " <i class='fas fa-check'></i></td>";
+                            echo "<td class='text-center text-success' id='tablepadding'>" . $des . " <i class='fas fa-check'></i></td>";
                         } else {
-                            echo "<td class='text-center text-danger'>" . $des . "<i class='fas fa-times'></i></td>";
+                            echo "<td class='text-center text-danger' id='tablepadding'>" . $des . "<i class='fas fa-times'></i></td>";
                         }
-                        echo '<td>' . $precio .  '</td>';
+                        echo '<td id="tablepadding">' . $precio .  '</td>';
                         //SVG son los iconos de los botones
                         echo '
                         <td class="text-center">

@@ -26,11 +26,11 @@ $listaTabla = $objAbmTabla->buscar(null);
                         <h3 align="center">Listar Usuarios</h3>
                         <hr>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Mail</th>
-                            <th scope="col" class="text-center">Deshabilitado</th>
-                            <th scope="col" class="text-center">Editar</th>
+                            <th scope="col" id="tablepadding">Id</th>
+                            <th scope="col" id="tablepadding">Nombre</th>
+                            <th scope="col" id="tablepadding">Mail</th>
+                            <th scope="col" class="text-center" id="tablepadding">Deshabilitado</th>
+                            <th scope="col" class="text-center" id="tablepadding">Editar</th>
                         </tr>
                     </thead>
                     <?php
@@ -44,10 +44,10 @@ $listaTabla = $objAbmTabla->buscar(null);
                             $des = $objUsuario->getusdeshabilitado();
                             $id = $objUsuario->getidusuario();
                             echo '<tr class="align-middle">';
-                            echo '<th scope="row">' . $i . '</th>';
-                            echo '<td>' . $nombre .    '</td>';
+                            echo '<th scope="row" id="tablepadding">' . $i . '</th>';
+                            echo '<td id="tablepadding">' . $nombre .    '</td>';
 
-                            echo '<td>' . $mail .  '</td>';
+                            echo '<td id="tablepadding">' . $mail .  '</td>';
                             //echo '<td>' . $des .  '</td>';
                             if ($des) {
                                 echo "<td class='text-center text-success'><i class='fas fa-check'></i></td>";

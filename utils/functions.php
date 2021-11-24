@@ -45,4 +45,55 @@ spl_autoload_register(function ($clase) {
 		}           
 	}
 });
+
+
+/**
+ * Un var_dump por renglon, mas facil de leer
+ */
+function var_dum($variable){
+	echo '<div style="background-color:powderblue; position:relative; margin-top:20px;" >';
+	$nombreVar = print_var_name($variable);
+	echo "input var: $nombreVar: <br>";
+	var_dump($variable);
+	echo '</div>';
+}
+
+
+function print_var_name($var)
+{
+	foreach ($GLOBALS as $var_name => $value) {
+		if ($value === $var) {
+			return $var_name;
+		}
+	}
+
+	return false;
+}
+
+
+// function debug_varTEST($variable)
+// {
+// 	echo '<div style="background-color:powderblue; position:absolute; bottom:70px;" >';
+// 	$nombreVar = print_var_name($variable);
+// 	echo "input: $nombreVar { <br>";
+// 	if (is_object($variable)) {
+// 		echo "Objeto: <br>";
+// 		foreach ($variable as $clave => $valor) {
+// 			echo "atributo[$clave]" . " -> $valor ";
+// 			echo '<br>';
+// 		}
+// 	} elseif (is_array($variable)) {
+// 		echo "Arreglo: <br>";
+// 		foreach ($variable as $clave => $valor) {
+// 			echo "clave[$clave]" . " -> $valor ";
+// 			echo '<br>';
+// 		}
+// 	} else {
+// 		echo "input: $nombreVar { <br>";
+// 		var_dump($variable);
+// 	}
+// 	echo "}";
+// 	echo '</div>';
+// }
+
 ?>

@@ -11,8 +11,9 @@ if (!$sesion->activa()) {
     //header('Location: ../login/index.php'); DESCOMENT
 } else {
     list($sesionValidar, $error) = $sesion->validar();
-    $escliente = $sesion->validarRol($sesion->getIdUser());#Devuelve falso en root
+    $escliente = $sesion->validarRol($sesion->getIdUser());
     if ($sesionValidar) {
+
         if ($escliente) {
             $f = array();
             $f['idusuario'] = $sesion->getIdUser();
@@ -30,12 +31,8 @@ if (!$sesion->activa()) {
                 }
 
                 //var_dump($carrito);
-                if ($carrito == null && $carrito != '') {
-                    echo "
-                        <div class='alert alert-warning' role='alert' align=center>
-                        No tienes nada en tu carrito aún.
-                        </div>";
-                        $arreglo = false;
+                if ($carrito == null) {
+                    echo "no tienes nada en tu carrito aun";
                 } else {
                     $idcompra = $carrito[0]->getidcompra();
                     $filtro = ['idcompra' => $idcompra];
@@ -51,9 +48,6 @@ if (!$sesion->activa()) {
                     //var_dump($arreglo);
                 }
             }
-        }else{
-            $arreglo = false;
-            echo  "<p id='error'>Error en carrito index (56).</p>";
         }
     } else {
         header('Location: ../inicio_cliente/index.php');
@@ -64,7 +58,7 @@ if (!$sesion->activa()) {
 <div class="container">
     <!-- Titulo pagina -->
     <div align="center">
-        <h2 class="mt-5">Carrito</h2>
+        <h2 class="mt-5">Bienvenido al catalogo prro</h2>
         <hr>
     </div>
 
@@ -88,8 +82,3 @@ if (!$sesion->activa()) {
             ?>
         </div>
     </form>
-
-<?php
-//FOOTER============================================================================
-require_once("../structure/footer.php");
-?>

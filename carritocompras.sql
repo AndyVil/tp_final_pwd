@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2021 a las 00:48:19
+-- Tiempo de generación: 24-11-2021 a las 03:59:53
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -30,10 +30,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `compra` (
   `idcompra` bigint(20) NOT NULL,
   `cofecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `coprecio` int(11) NOT NULL,
   `idusuario` bigint(20) NOT NULL,
-  `compraprecio` float(7,2) NOT NULL
+  `coprecio` float(7,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`, `coprecio`) VALUES
+(23, '2021-11-22 15:02:56', 1, 0.00);
 
 -- --------------------------------------------------------
 
@@ -48,6 +54,13 @@ CREATE TABLE `compraestado` (
   `cefechaini` timestamp NOT NULL DEFAULT current_timestamp(),
   `cefechafin` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compraestado`
+--
+
+INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
+(10, 23, 1, '2021-11-22 15:02:56', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -67,9 +80,8 @@ CREATE TABLE `compraestadotipo` (
 
 INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
 (1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
-(2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
-(3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+(2, 'confirmada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
+(3, 'cancelada', 'cuando el usuario administrador envia a uno de las compras en estado =2 ');
 
 -- --------------------------------------------------------
 
@@ -84,6 +96,15 @@ CREATE TABLE `compraitem` (
   `cicantidad` int(11) NOT NULL,
   `ciprecio` float(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compraitem`
+--
+
+INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`, `ciprecio`) VALUES
+(13, 1220, 23, 1, 470.00),
+(14, 1219, 23, 1, 999.99),
+(26, 1217, 23, 3, 650.00);
 
 -- --------------------------------------------------------
 
@@ -107,12 +128,11 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (1, 'admin_ini', 'Administrador', NULL, NULL),
 (2, 'dep_ini', 'Deposito', NULL, NULL),
 (3, 'cliente_ini', 'Catalogo', NULL, NULL),
-(4, 'login', 'Log in', 8, NULL),
-(5, 'registro', 'Registrarse', 8, NULL),
-(6, 'cuenta', 'Cuenta', 6, NULL),
+(4, 'login', 'Log in', NULL, NULL),
+(5, 'registro', 'Registrarse', NULL, NULL),
+(6, 'cuenta', 'Cuenta', NULL, NULL),
 (7, 'carrito', 'Carrito', 3, NULL),
-(8, 'sinlog', 'Menus accesibles sin login', 8, NULL),
-(9, 'editarcuenta', 'Permite editar los datos de la cuenta a los clientes', 6, NULL);
+(8, 'editarcuenta', 'Permite editar los datos de la cuenta a los clientes', 6, NULL);
 
 -- --------------------------------------------------------
 
@@ -132,19 +152,12 @@ CREATE TABLE `menurol` (
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 1),
 (2, 2),
-(4, 4),
-(5, 4),
 (6, 1),
 (6, 2),
 (6, 3),
-(6, 5),
+(6, 4),
 (7, 3),
-(8, 1),
-(8, 2),
-(8, 3),
-(8, 4),
-(8, 5),
-(9, 3);
+(8, 3);
 
 -- --------------------------------------------------------
 
@@ -167,8 +180,8 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`) VALUES
 (1217, 'remera', 'Remera blanca de algodon M, L, XL', 10, 650),
 (1219, 'pantalon', 'Pantalon largo, marron S, M, L', 50, 2000),
-(1220, 'remera', 'null S', 20, 470),
-(1221, 'remera', 'null S', 0, 7000);
+(1220, 'remera', 'Remera blanca S', 20, 470),
+(1221, 'remera', 'Sin stock S', 0, 7000);
 
 -- --------------------------------------------------------
 
@@ -189,8 +202,7 @@ INSERT INTO `rol` (`idrol`, `roldescripcion`) VALUES
 (1, 'Admin'),
 (2, 'Deposito'),
 (3, 'Cliente'),
-(4, 'sinlog'),
-(5, 'superuser');
+(4, 'superuser');
 
 -- --------------------------------------------------------
 
@@ -211,12 +223,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(1, '63a9f0ea7bb98050796b649e85481845', '63a9f0ea7bb98050796b649e85481845', 'USR: root\r\nPSS: root', NULL),
-(2, '2338c56c00fec1f1c7a87df7ab43936e', '2338c56c00fec1f1c7a87df7ab43936e', 'USR:sinlog\r\nPSS: sinlog', NULL),
-(3, 'e20d37a5d7fcc4c35be6fc18a8e71bfa', '827ccb0eea8a706c4c34a16891f84e7b', 'paris@hotmail.com', '0000-00-00 00:00:00'),
-(4, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'aoshi@hotmail.com', '2021-11-18 12:16:56'),
-(5, '37a6259cc0c1dae299a7866489dff0bd', '827ccb0eea8a706c4c34a16891f84e7b', 'bima@hotmail.com', '2021-11-18 08:27:56'),
-(11, '098f6bcd4621d373cade4e832627b4f6', '098f6bcd4621d373cade4e832627b4f6', 'test@test.com', '2021-11-20 04:40:10');
+(1, '63a9f0ea7bb98050796b649e85481845', '63a9f0ea7bb98050796b649e85481845', 'root@root.com', '0000-00-00 00:00:00'),
+(2, '21232f297a57a5a743894a0e4a801fc3', '21232f297a57a5a743894a0e4a801fc3', 'admin@admin.com', '0000-00-00 00:00:00'),
+(3, 'caaf856169610904e4f188e6ee23e88c', 'caaf856169610904e4f188e6ee23e88c', 'deposito@deposito.com', '0000-00-00 00:00:00'),
+(4, '4983a0ab83ed86e0e7213c8783940193', '4983a0ab83ed86e0e7213c8783940193', 'cliente@cliente.com', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -234,12 +244,10 @@ CREATE TABLE `usuariorol` (
 --
 
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 4),
+(2, 1),
 (3, 2),
-(4, 1),
-(5, 1),
-(5, 2),
-(5, 3),
-(11, 3);
+(4, 3);
 
 --
 -- Índices para tablas volcadas
@@ -329,19 +337,19 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `compraestado`
 --
 ALTER TABLE `compraestado`
-  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `compraitem`
 --
 ALTER TABLE `compraitem`
-  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -365,7 +373,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restricciones para tablas volcadas

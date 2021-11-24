@@ -209,9 +209,12 @@ class CompraItem
     {
         $arreglo = array();
         $base = new BaseDatos();
+        //var_dump($parametro);
         $sql = "SELECT * FROM compraitem ";
         if ($parametro != "") {
+            //var_dump($parametro);
             $sql .= 'WHERE ' . $parametro;
+            //var_dump($sql);
         }
         $res = $base->Ejecutar($sql);
         if ($res > -1) {

@@ -16,10 +16,10 @@ class AbmCompraItem
             array_key_exists('idcompraitem', $param)
             and array_key_exists('idproducto', $param)
             and array_key_exists('idcompra', $param)
-            and array_key_exists('cicantidad', $param)            
+            and array_key_exists('cicantidad', $param)
         ) {
             $obj = new CompraItem();
-            $obj->setear($param['idcompraitem'], $param['idproducto'], $param['idcompra'], $param['cicantidad'], $param['proprecio']);
+            $obj->setear($param['idcompraitem'], $param['idproducto'], $param['idcompra'], $param['cicantidad'], $param['ciprecio']);
         }
         return $obj;
     }
@@ -63,16 +63,12 @@ class AbmCompraItem
     public function alta($param)
     {
         $resp = false;
-        $buscar2 = array();
-        $buscar2['idcompraitem'] = $param['idcompraitem'];
-        $encuentraUser = $this->buscar($buscar2);
-
-        if ($encuentraUser == null) {
-            $elObjtCompraitem = $this->cargarObjeto($param);
-            if ($elObjtCompraitem != null and $elObjtCompraitem->insertar()) {
-                $resp = true;
-            }
+        //var_dump($param);
+        $elObjtCompraitem = $this->cargarObjeto($param);
+        if ($elObjtCompraitem != null and $elObjtCompraitem->insertar()) {
+            $resp = true;
         }
+
         return $resp;
     }
 

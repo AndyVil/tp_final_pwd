@@ -1,19 +1,21 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
+require_once("../structure/header.php");
 include_once './../../config.php';
 $datos = data_submited();
-var_dump($datos);
+//var_dump($datos);
 $objLogin = new Session();
+$arrayKey = key($datos);
+//var_dum($arrayKey);
 if ($objLogin->activa()) {
     header('location:paginaSegura.php');
-} else {    
-    require_once("../structure/Header.php");
+} elseif (!$objLogin->activa() && $arrayKey == 'error'){    
+    echo "<div class='alert alert-danger' role='alert' align=center>
+          Datos incorrectos!
+          </div>";
 }
 $id = '';
-foreach ($datos as $key => $valor) {
-	$id = $key;
-	$accion = $valor;
-}
+
 
 //HEADER============================================================================
 ?>
@@ -43,13 +45,24 @@ foreach ($datos as $key => $valor) {
                 <input type="submit" value="Enviar" name="btn-form" id="btn-form" class="btn btn-success">
                 <br>
                 <br>
-                <input type="hidden" name="idproducto" id="idproducto" value="<?=$id?>">
+                <?php 
+                if(count($datos)>0){
+                    foreach ($datos as $key => $valor) {
+                        $id = $key;
+                        $accion = $valor;
+                    }
+                    echo "<input type='hidden' name='idproducto' id='idproducto' value='<?=$id?>'>";
+
+                }
+                ?>
+                
                 <input type="reset" name="btn-form" id="btn-form" class="btn btn-warning">
             </form>
             <!-- Redireccion a registro -->
             <span>Si no tiene cuenta:
                 <a href="./../registro/">
                     <p>Regístrese</p>
+                </a>    
             </span>
         </div>
     </div>
