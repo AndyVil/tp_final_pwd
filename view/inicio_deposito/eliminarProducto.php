@@ -4,6 +4,10 @@ require_once("../structure/Header.php");
 //HEADER============================================================================
 $datos = data_submited();
 $id = $datos['proBorrar'];
+$dir = "../inicio_cliente/index.php";
+$rol = "Deposito";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
 ?>
 <!-- Titulo pagina -->
 <div align="center">

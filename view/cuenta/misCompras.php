@@ -8,6 +8,11 @@ $ambCompraEstado = new AbmCompraEstado();
 $datos = data_submited();
 $arreglo = array();
 
+$dir = "../inicio_cliente/index.php";
+$rol = "Cliente";
+$sesion->permisoAcceso($dir, $rol);
+
+
 $ambitems = new AbmCompraItem();
 if (!$sesion->activa()) {
     header('Location: ../login/index.php');

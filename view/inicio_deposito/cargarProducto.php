@@ -1,6 +1,11 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
+$url = data_submited();
+$dir = "../inicio_cliente/index.php";
+$rol = "Deposito";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
 //HEADER============================================================================
 ?>
 

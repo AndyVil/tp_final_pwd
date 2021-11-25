@@ -3,6 +3,11 @@
 require_once("../structure/Header.php");
 $datos = data_submited();
 $id = $datos['roldelete'];
+
+$dir = "../inicio_cliente/index.php";
+$rol = "Administrador";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
 //HEADER============================================================================
 ?>
 <div align="center">

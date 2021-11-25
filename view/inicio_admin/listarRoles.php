@@ -3,6 +3,11 @@
 require_once("../structure/Header.php");
 $objAbmTabla = new AbmRol();
 $listaTabla = $objAbmTabla->buscar(null);
+
+$dir = "../inicio_cliente/index.php";
+$rol = "Administrador";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
 //HEADER============================================================================
 ?>
 

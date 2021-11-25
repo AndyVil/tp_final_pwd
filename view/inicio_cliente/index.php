@@ -4,8 +4,14 @@ require_once("../structure/Header.php");
 $datos = data_submited();
 $obj = new Formulario();
 $arreglo = $obj->obtenerArchivos();
-if (array_key_exists('message', $datos))
-    echo $datos["message"];
+if (array_key_exists('message', $datos)){
+
+    $mensaje = $datos["message"];
+    echo "<div class='alert alert-danger' role='alert' align=center>
+    $mensaje
+  </div>
+  ";
+}
 if (array_key_exists('mensaje', $datos)) {
     $id = $datos["mensaje"];
     header("Location: ../inicio_cliente/detallesProducto.php?mensaje=" . urlencode($id));

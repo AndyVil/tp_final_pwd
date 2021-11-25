@@ -121,15 +121,16 @@ class Compra
 
     public function setcompraprecio($valor){
         $this->coprecio=$valor;
-        $precio = 0;
-        if($valor ==null){            
-            
+        
+        if($valor ==null){       
+            $precio = 0;
             $items = new CompraItem();
-            $where = 'idcompra='. $this->getidcompra();
-            //var_dump($where);
+            echo $precio;
+            $where = 'idcompra='. $this->getidcompra();            //var_dump($where);
             $colCompraItems = $items->listar($where);
             foreach ($colCompraItems as $item){
-                $precio =+$item->getciprecio();
+                $precio +=$item->getciprecio();
+                //echo "preciosumado: ".$precio ."  ";
             }
             $this->coprecio=$precio;
         }

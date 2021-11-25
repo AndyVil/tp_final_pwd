@@ -76,12 +76,12 @@
           //       break;
           //   }
           // }
-          if ($validRol['Cliente'] == true || $validRol['superuser'] == true) {
-            echo "
+          echo "
               <li class='nav-item'>
               <a id='cliente_ini' class='nav-link' href='./../inicio_cliente/'>Catalogo</a>
               </li>
             ";
+          if ($validRol['Cliente'] == true || $validRol['superuser'] == true) {
             echo "
               <li class='nav-item'>
               <a id='carrito' class='nav-link' href='./../carrito/'>Carrito</a>
@@ -109,6 +109,11 @@
               </li>
             ";
       } else {
+        echo "
+              <li class='nav-item'>
+              <a id='cliente_ini' class='nav-link' href='./../inicio_cliente/'>Catalogo</a>
+              </li>
+            ";
         echo "
               <li class='nav-item'>
               <a id='login' class='nav-link' href='./../login/'>Log In</a>

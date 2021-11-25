@@ -15,6 +15,17 @@ require_once("../structure/Header.php");
         <div align="center">
             <!-- Botones -->
             <button onclick="location.href='./cerrarSesion.php'" class="btn btn-dark">Cerrar Sesion</button>
+
+            <?php
+            $sesion = new Session();
+            $rol = $sesion->obtenerRol();
+            $cliente = $sesion->arrayRolesUser($rol);
+            if ($cliente['Cliente'] == true) {
+                echo '<button  class="btn btn-dark" onclick="location.href="./cerrarSesion.php"">Mis Compras</button>'; 
+            }
+
+            ?>
+
         </div>
         <br><br>
     </div>

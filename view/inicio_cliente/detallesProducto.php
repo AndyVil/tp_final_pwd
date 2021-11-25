@@ -80,18 +80,23 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
         <div class="row">
             <?php
             echo "<div class='alert alert-success mt-5' role='alert'>
-                  <div class='row px-2 my-3'>
+                  <div class='row px-2 my-4 justify-content-center'>
 
                 <div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
                 </div>";
             echo "<div align='center'>";
             echo "<input type='hidden' name='idproducto' id='idproducto' value='$id' >";
+            echo "<input type='hidden' name='procantstock' id='procantstock' value='$stock' >";
+            echo "<input type='hidden' name='pronombre' id='nombre' value='$nombre' >";
+            echo "<input type='hidden' name='prodetalle' id='prodetalle' value='$detalle' >";
+            echo "<input type='hidden' name='proprecio' id='idproducto' value='$precio' >";
             
             echo "<input type='hidden' name='ciprecio' id='ciprecio' value='$precio'>";
             echo ' ';
             //echo "<input type='submit' formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' value='Agregar al carrito'>";
+            
             if ($stock > 0) {
-                echo "<input type='number' name='cicantidad' id='cicantidad' value='1'>";
+                echo "<input min='1' max='$stock' type='number' name='cicantidad' id='cicantidad' value='1'>";
                 echo "
                 <button formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' style='width:40; height:40;'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cart-plus-fill' viewBox='0 0 16 16'>
@@ -103,7 +108,7 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
             }
             else{
                 echo "
-                <div class='alert alert-danger mt-5' role='alert' align=center>
+                <div class='alert alert-danger mt-3' role='alert' align=center>
                 Stock agotado
                 </div>";
             }
@@ -111,7 +116,7 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
             
             echo "</div>";
             echo "
-            <div class='alert alert-warning mt-5' role='alert' align=center>
+            <div class='alert alert-warning mt-3' role='alert' align=center>
             Precio: $$precio
             </div>";
             echo "<div class='col-lg-7 col-xl-8'>Stock: $stock</div>

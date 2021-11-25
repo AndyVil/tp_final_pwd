@@ -11,6 +11,11 @@ $filtro['idusuario'] = $datos['roledit'];
 $unUsuario = $objAbmUsuario->buscar($filtro);
 $colrol = $usuariorol->buscar($filtro);
 
+$dir = "../inicio_cliente/index.php";
+$rol = "Administrador";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
+
 
 //HEADER============================================================================
 ?>

@@ -1,6 +1,0 @@
-<h3>Información de el producto</h3>
-                          <b>Nombre:</b> 1219pantalon <br/>
-                          <b>Descripcion:</b> Pantalon largo, marron <br/>
-                          <b>Cantstock:</b> 50 <br/>
-                          <b>Talles disponibles:</b> S, M, L <br />
-                          <b>Precio:</b> 2000 <br />

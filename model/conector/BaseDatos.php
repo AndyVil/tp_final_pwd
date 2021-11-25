@@ -103,12 +103,14 @@ class BaseDatos extends PDO
         // se desea UPDATE o DELETE ? 
         if (stristr($sql, "update") or stristr($sql, "delete")) {
             $resp =  $this->EjecutarDeleteUpdate($sql);
+            //echo "impresion ejercutar delete: ".$resp ."  .";
         }
 
         // se desea ejecutar un select
         if (stristr($sql, "select")) {
             $resp =  $this->EjecutarSelect($sql);
         }
+        
         return $resp;
     }
  

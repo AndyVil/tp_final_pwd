@@ -44,3 +44,27 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 8. Desde la aplicación un usuario con rol Administrador podrá:
  - Crear nuevos usuarios al sistema, asignar los roles correspondientes y actualizar la información que se requiera.
  - Gestionar y administrar nuevos roles e ítem del menú. Vinculando item del menú al rol según corresponda.
+
+
+
+
+
+lucas
+js
+ajax
+arreglar bd para vincular el menu a idmenu
+arreglar vista de comprar carrito aceptar
+persona cambiar mail
+
+
+santiago
+mis compras
+arreglar bd para vincular el menu a idmenu
+poder cambiar los roles, desactivarlos
+agregar eliminar usuario
+que no se puedan agrega admin o no se lo pueda quitar
+
+
+
+Final
+estilos y limpiar codigo, comentarlo

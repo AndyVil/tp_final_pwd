@@ -21,6 +21,7 @@ if (!$sesion->activa()) {
             $f['idusuario'] = $sesion->getIdUser();
             $compras = $abmCompra->buscar($f);
             $carrito = array();
+            
             if (count($compras) > 0) {
                 foreach ($compras as $compra) {
                     $where['idcompra'] = $compra->getidcompra();
@@ -31,7 +32,7 @@ if (!$sesion->activa()) {
                         break;
                     }
                 }
-
+                //var_dump($carrito);
                 //var_dump($carrito);
                 if (count($carrito) == 0) {
                     // echo "
@@ -40,6 +41,7 @@ if (!$sesion->activa()) {
                     //     </div>";
                     $arreglo = false;
                 } else {
+                    //echo "encontro el carrio";
                     $idcompra = $carrito[0]->getidcompra();
                     $filtro = ['idcompra' => $idcompra];
                     $items = $ambitems->buscar($filtro);
@@ -48,10 +50,14 @@ if (!$sesion->activa()) {
                     foreach ($items as $item) {
                         //echo "entro al item";
                         $idproducto = $item->getidproducto()->getidproducto();
+                        $producto = $item->getidproducto();
                         //var_dump($idproducto);
                         $archivos = $obj->obtenerArchivosPorId($idproducto);
                         $arreglo[$i]["link"] = $archivos["link"];
                         $arreglo[$i]["idproducto"] = $idproducto;
+                        $arreglo[$i]["pronombre"] = $producto->getpronombre();
+                        $arreglo[$i]["prodetalle"] = $producto->getprodetalle();
+                        $arreglo[$i]["procantstock"] = $producto->getprocantstock();  
                         $arreglo[$i]["proprecio"] = $item->getidproducto()->getproprecio();
                         $arreglo[$i]["ciprecio"] = $item->getciprecio();
                         $arreglo[$i]["idcompraitem"] = $item->getidcompraitem();
@@ -80,12 +86,14 @@ if (!$sesion->activa()) {
         <hr>
     </div>
     <?php
+     //var_dump($arreglo);
     if ($arreglo === false) {
         echo "<div class='alert alert-warning' role='alert' align=center>
                         No tienes nada en tu carrito aún.
                         </div>";
     } else {
-        echo "<form id='carrito' name='catalogo' method='POST' action='eliminaritem.php'>
+        //var_dump($idcompra);
+        echo "<form id='carrito' name='catalogo' method='POST' action='eliminarCarrito.php'>
             <div class='row'> ";
         echo "<input type='hidden' name='idcompra' id='idcompra'  value='$idcompra'>";
         echo "<input type='submit' formaction='action.php' name='compracarrito' id='compracarrito' class='btn btn-light' value='Comprar carrito' style='margin-bottom: 10px;'>";
@@ -98,21 +106,26 @@ if (!$sesion->activa()) {
             $ciprecio = $archivo["ciprecio"];
             $idcompraitem = $archivo["idcompraitem"];
             $cicantidad = $archivo["cicantidad"];
+            $procantstock = $archivo["procantstock"];
+            $detalle = $archivo["prodetalle"];
+            $nombre = $archivo["pronombre"];
+            
                 echo
                 "<div id='pelis' class='d-grid col-lg-2 col-sm-4 mb-4'>
                         <img class='img-fluid' alt='$link' src='$link' width='100%'>
                         <div class='d-grid align-items-end'>
+                        
                         <input type='hidden' name='imagen' id='imagen' value='$link'> 
-                        <input type='hidden' name='proprecio' id='proprecio' value='$proprecio'> 
+                        <input type='hidden' name='proprecio' id='proprecio' value=$proprecio'> 
                         <input type='hidden' name='ciprecio' id='v' value='$ciprecio'> 
-                        <input type='hidden' name='idcompraitem' id='idcompraitem' value='$idcompraitem'> 
+                        <input type='hidden' name=''idcompraitem' id='idcompraitem' value='$idcompraitem'> 
                         <input type='hidden' name='cicantidad' id='cicantidad' value='$cicantidad'> 
                         <input type='hidden' name='idproducto' id='idproducto' value='$idproducto'> 
-                        <input type='hidden' name='idcompra' id='idcompra' 
+                        <input type='hidden' name='idcompra' id='idcompra' value='$idcompra'>
                         <input type='hidden' name='nombre' id='Seleccion:$link' class='btn btn-primary' value='$link'>                            
-                        <input type='submit' name='Seleccion:$link' id='Seleccion:$link' class='btn btn-primary' value='Eliminar'>";
-                echo "</div>
-                    </div>";
+                        <input type='submit' name='Seleccion:$idcompraitem' id='Seleccion:$idcompraitem' class='btn btn-danger' value='Eliminar'>";
+                echo "</div>";
+                echo "</div>";
             
         }
     }

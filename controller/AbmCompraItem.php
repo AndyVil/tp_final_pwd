@@ -17,10 +17,12 @@ class AbmCompraItem
             and array_key_exists('idproducto', $param)
             and array_key_exists('idcompra', $param)
             and array_key_exists('cicantidad', $param)
+            and array_key_exists('ciprecio', $param)
         ) {
             $obj = new CompraItem();
             $obj->setear($param['idcompraitem'], $param['idproducto'], $param['idcompra'], $param['cicantidad'], $param['ciprecio']);
         }
+        //var_dump($param);
         return $obj;
     }
 
@@ -63,13 +65,16 @@ class AbmCompraItem
     public function alta($param)
     {
         $resp = false;
-        //var_dump($param);
-        $elObjtCompraitem = $this->cargarObjeto($param);
-        if ($elObjtCompraitem != null and $elObjtCompraitem->insertar()) {
+        $arr = array();
+        $elObjtProducto = $this->cargarObjeto($param);
+        //var_dump($elObjtProducto);
+        list($insert, $id) = $elObjtProducto->insertar();
+        if ($elObjtProducto != null and $insert) {
             $resp = true;
+            array_push($arr, $id, $resp);
         }
-
-        return $resp;
+        //var_dump($insert,$id);
+        return $arr;
     }
 
 
@@ -83,7 +88,10 @@ class AbmCompraItem
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $elObjtCompraitem = $this->cargarObjetoConClave($param);
-            if ($elObjtCompraitem != null and $elObjtCompraitem->eliminar()) {
+            //var_dump($elObjtCompraitem);
+            $delete  =$elObjtCompraitem->eliminar();
+            //var_dump($delete);
+            if ($elObjtCompraitem != null and $delete) {
                 $resp = true;
             }
         }
@@ -106,8 +114,7 @@ class AbmCompraItem
             if ($elCompraitem != null) {
                 $elCompraitem[0]->setidproducto($param['idproducto']);
                 $elCompraitem[0]->setidcompra($param['idcompra']);
-                $elCompraitem[0]->setcicantidad($param['cicantidad']);
-                $elCompraitem[0]->setproprecio($param['proprecio']);
+                $elCompraitem[0]->setcicantidad($param['cicantidad']);                
 
                 if ($elCompraitem[0] != null and $elCompraitem[0]->modificar()) {
                     $resp = true;

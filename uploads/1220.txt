@@ -1,6 +1,0 @@
-<h3>Información de el producto</h3>
-                          <b>Nombre:</b> 1220remera <br/>
-                          <b>Descripcion:</b> Remera blanca <br/>
-                          <b>Cantstock:</b> 20 <br/>
-                          <b>Talles disponibles:</b> S <br />
-                          <b>Precio:</b> 470 <br />

@@ -3,10 +3,12 @@ require_once("../structure/header.php");
 $datos = data_submited();
 $id = '';
 $accion = "carrito.php";
+
 foreach ($datos as $key => $valor) {
 	$id = $key;
 	$accion = $valor;
 }
+
 if ($accion == "Comprar")
 	$accion = "comprar.php";
 //HEADER================================================================================
@@ -21,6 +23,7 @@ if ($accion == "Comprar")
 		<form method="POST" action="../login/index.php">
 			<div align="center">
 				<!-- Botones -->
+
 				<input type='submit' formaction="../login/index.php" name='<?= $id ?>' id='Seleccion:$archivo' class='btn btn-dark' value='Ya tengo cuenta'>
 				<br>
 				<br>

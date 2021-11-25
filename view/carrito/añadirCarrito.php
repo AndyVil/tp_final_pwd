@@ -34,13 +34,33 @@ if (!$sesion->activa()) {
                     }
                 }
                 if (count($compras) == 0 && count($objcarrito) == 0) {
-                    list($idcompra, $resp) = $carrito->crearcompra($datos, 1);
+                    list($idcompra,$iditem, $resp) = $carrito->crearcompra($datos, 1);
                 } elseif (count($objcarrito) > 0) {
                     //echo "entro a añadir nuevo item";
                     $idcompra = $objcarrito[0]->getidcompra();
-                    $datos["idcompra"] = $idcompra;
-                    $datos["idcompraitem"] = "DEFAULT";
-                    $resp = $carrito->sumarItem($datos);
+                    $whereitem = array();
+                    $whereitem["idcompra"] = $idcompra;
+                    $whereitem["idproducto"] = $datos["idproducto"];
+                    $items =  $ambitem->buscar($whereitem);
+                    if(count($items)==0){
+                        $datos["idcompra"] = $idcompra;
+                        $datos["idcompraitem"] = "DEFAULT";
+                        $resp = $carrito->sumarItem($datos);
+                    }
+                    else{
+                        $datos["idcompra"] = $idcompra;
+                        $datos["idcompraitem"] = $items[0]->getidcompraitem();
+                        $stock = $items[0]->getidproducto()->getprocantstock();
+                        $idproducto = $items[0]->getidproducto()->getidproducto();
+                        if(($items[0]->getcicantidad()+$datos["cicantidad"])>$stock){
+                            $datos["cicantidad"] = $stock;
+                        }
+                        //var_dump($datos);
+                        $datos["cicantidad"] = $items[0]->getcicantidad()+$datos["cicantidad"];
+                        $datos["ciprecio"] = $items[0]->getciprecio();                        
+                        $ambitem->modificacion($datos);
+                    }
+                    
                     //echo $resp;
                 }
             }
@@ -54,6 +74,10 @@ if (!$sesion->activa()) {
             $where = ['idproducto' => $id];
             $productos = $Abmproducto->buscar($where);
             $precio = $productos[0]->getproprecio();
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
         } else {
             header('Location: ../inicio_cliente/index.php');
         }
@@ -65,26 +89,37 @@ if (!$sesion->activa()) {
     <!-- Titulo pagina -->
     <div align="center">
         <div class='alert alert-success mt-5' role='alert' align=center>
-            ¡Añadiste a tu carrito!
+            ¡Añadiste <?= $nombre ?> a tu carrito!
         </div>
     </div>
     <form id="carrito" name="carrito" method="POST" action="index.php">
-        <div class="row">
+        <div class="row mx-6">
             <?php
-            echo "
-            <div class='alert alert-success mt-5' role='alert'>
-                <div class='row px-2 my-3'>
-                    <div class='col-lg-7 col-xl-8'>$respuesta</div>
-                <div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "'>
+            echo "<div class='alert alert-success' role='alert' >
+                  <div class='row px-2 my-4 justify-content-center'>
+
+                <div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
                 </div>";
+            echo "<div align='center'>";
             echo "<input type='hidden' name='idproducto' id='idproducto' value='$id' >";
-            echo "<input type='hidden' name='cicantidad' id='cicantidad' value='1' >";
-            echo "<input type='hidden' name='ciprecio' id='ciprecio' value='$precio' >";
-            echo '<div align="center">';
-            echo    "<input type='submit' class='btn btn-light' value='Ver el carrito'>";
-            echo    ' ';
-            echo    "<input type='submit' formaction='comprarCarrito.php' class='btn btn-light' value='Comprar carrito'>";
-            echo '</div>';
+
+            echo "<input type='hidden' name='ciprecio' id='ciprecio' value='$precio'>";
+            echo ' ';
+            //echo "<input type='submit' formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' value='Agregar al carrito'>";
+            //echo "<input type='number' name='cicantidad' id='cicantidad' value='1'>";
+            echo "<input type='submit' formaction='../inicio_cliente/index.php' class='btn btn-light' value='Seguir comprando'>";
+            echo " ";
+            echo "<input type='submit' name='$id' id='Seleccion:$id' class='btn btn-light' value='Ver el carrito'>";
+
+
+
+            echo "</div>";
+            echo "
+            <div class='alert alert-warning mt-3' role='alert' align=center>
+            Precio: $$precio
+            </div>";
+            echo "<div class='col-lg-7 col-xl-8'>Stock: $stock</div>
+            <div class='col-lg-7 col-xl-8'>Descripcion: $detalle</div>";
             echo "</div>
             </div>";
             ?>

@@ -13,13 +13,13 @@
 
 class Session
 {
-    private $objUser;    
+    private $objUser;
 
     /** CONSTRUCTOR **/
     public function __construct()
     {
         $sesionIni = session_status() == PHP_SESSION_ACTIVE;
-        if(!$sesionIni)session_start();
+        if (!$sesionIni) session_start();
     }
 
 
@@ -81,47 +81,48 @@ class Session
         $username = $abmUsuario->buscar($filtro1);
         $pass =  $abmUsuario->buscar($filtro2);
         $error = '';
-        
-        if ($username == null||$pass == null) {
+
+        if ($username == null || $pass == null) {
             $error .= "Datos de login incorrectos";
-        } 
+        }
         if (count($listaUsuarios) > 0) {
-            if ($listaUsuarios[0]->getUsdeshabilitado()!= '0000-00-00 00:00:00') {
+            if ($listaUsuarios[0]->getUsdeshabilitado() != '0000-00-00 00:00:00') {
                 $error .= "El usuario está deshabilitado";
             } else {
                 $inicia = true;
-                $id= $listaUsuarios[0]->getidusuario();
+                $id = $listaUsuarios[0]->getidusuario();
                 $this->setIdUser($id);
                 $this->setobjUsuario($id);
             }
         }
         return array($inicia, $error);
     }
-    
+
     /**
      * @param idrol
      * Se podria usar el motodo obtener rol, para obtener el arreglo y con eso verificar los roles de los usuarios
      * 1.Admin 2.Deposito 3.Cliente 4.superuser
      */
-    public function validarRol($idRol){
+    public function validarRol($idRol)
+    {
 
         $resp = false;
         $abmrol = new AbmUsuariorol();
         $where = ['idusuario' => $this->getIdUser()];
-        $rolesUsuario= $abmrol->buscar($where);
+        $rolesUsuario = $abmrol->buscar($where);
 
-        foreach($rolesUsuario as $usrol){
-            $rol=$usrol->getobjrol();
-            if($rol->getidrol()==$idRol){
-               $resp = true;
+        foreach ($rolesUsuario as $usrol) {
+            $rol = $usrol->getobjrol();
+            if ($rol->getidrol() == $idRol) {
+                $resp = true;
             }
         }
         return $resp;
     }
 
 
-    public function setear(){
-
+    public function setear()
+    {
     }
 
     /**
@@ -129,16 +130,17 @@ class Session
      * @return array ID de ROL
      * La idea es obtener el ROL de la tabla UsuarioRol por medio del ID del usuario
      */
-    public function obtenerRol(){
-        $abmrol = new AbmUsuariorol();#Nuevo objeto ROL
-        $where = ['idusuario' => $this->getIdUser()];#Where idusuario = ID de este usuario
-        $arrayUsuario = $abmrol->buscar($where);#Busca la lista de roles ARRAY con objetos dentro (cada objeto es un rol vinculado de un iduser)
+    public function obtenerRol()
+    {
+        $abmrol = new AbmUsuariorol(); #Nuevo objeto ROL
+        $where = ['idusuario' => $this->getIdUser()]; #Where idusuario = ID de este usuario
+        $arrayUsuario = $abmrol->buscar($where); #Busca la lista de roles ARRAY con objetos dentro (cada objeto es un rol vinculado de un iduser)
 
-        $roles=[];
+        $roles = [];
         #Recorre el arreglo de roles
         foreach ($arrayUsuario as $usuario) {
             $rolUser = $usuario->getobjrol();
-            $rol = $rolUser->getidrol();#Devuelve el id del rol 1 al 4
+            $rol = $rolUser->getidrol(); #Devuelve el id del rol 1 al 4
             array_push($roles, $rol);
         }
         return $roles;
@@ -149,7 +151,8 @@ class Session
      * @param array de id Roles
      * @return array booleano
      */
-    public function arrayRolesUser($ArrayIdRoles){
+    public function arrayRolesUser($ArrayIdRoles)
+    {
         $validRol = [
             'Administrador' => false,
             'Deposito' => false,
@@ -179,6 +182,32 @@ class Session
         return $validRol;
     }
 
+    /**
+     * @param string Directorio
+     * @param string rol de acceso 
+     * [Administrador, Cliente, Deposito, superuser]
+     */
+    function permisoAcceso($dir, $rol)
+    {
+        if (!$this->activa()) {
+
+            $mensaje = "No iniciaste sesion: permiso denegado.";
+            header("Location: $dir?message=" . urlencode($mensaje));
+        } else {
+            if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
+                list($sesionValidar, $error) = $this->validar();
+                if ($sesionValidar) {
+                    $mensaje = 'No tiene permisos de ' . $rol;
+                    $roles = $this->obtenerRol();
+                    $usuario = $this->arrayRolesUser($roles);
+                    if ($usuario[$rol] == false) {
+                        header("Location: $dir?message=" . urlencode($mensaje));
+                    }
+                }
+            }
+        }
+    }
+
 
     /** ACTIVA **/
     public function activa()
@@ -192,7 +221,7 @@ class Session
 
     /** GET USUARIO **/
     public function getobjUsuario()
-    {        
+    {
         return $this->objUser;
     }
 
@@ -206,7 +235,7 @@ class Session
         if ($listaUsuarios >= 1) {
             $usuarioLog = $listaUsuarios[0];
         }
-        $this->objUser= $usuarioLog;
+        $this->objUser = $usuarioLog;
     }
 
 

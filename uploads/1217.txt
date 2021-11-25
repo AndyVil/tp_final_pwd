@@ -1,6 +1,6 @@
 <h3>Información de el producto</h3>
-                          <b>Nombre:</b> remera1217 <br />
-                          <b>Descripcion:</b> Remera blanca de algodon <br />
-                          <b>Cantstock:</b> 10 <br />
-                          <b>Talles disponibles:</b> M, L, XL <br />
-                          <b>Precio:</b> 650 <br />
+                          <b>Nombre:</b> 1217remera <br/>
+                          <b>Descripcion:</b> Remera algodon <br/>
+                          <b>Cantstock:</b> 10 <br/>
+                          <b>Talles disponibles:</b> S <br />
+                          <b>Precio:</b> 32500 <br />

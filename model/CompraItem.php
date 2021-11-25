@@ -89,6 +89,19 @@ class CompraItem
         if ($valor<> NULL) {
             $this->ciprecio=$valor;
         }
+        else if($valor ===""){
+            $this->ciprecio=$valor;
+        }
+        elseif(is_string($this->getidproducto())){
+            $abmProducto = new Producto();
+            $where = "idproducto=".$this->getidproducto();
+            $arr=$abmProducto->listar($where);
+            $producto =$arr[0];
+            $precio = $producto->getproprecio();
+            $cant = $this->getcicantidad();
+            $preciofinal= $precio*$cant;
+            $this->ciprecio=$preciofinal;
+        }
         else{            
             $precio = $this->getidproducto()->getprecio();
             $cant = $this->getcicantidad();
@@ -144,6 +157,7 @@ class CompraItem
     /** INSERTAR **/
     public function insertar()
     {
+        $arr=array();
         $resp = false;
         $base = new BaseDatos();
         $sql = "INSERT INTO compraitem(idcompraitem,idproducto,idcompra,cicantidad, ciprecio)  VALUES('" . $this->getidcompraitem() . "','" . $this->getidproducto() ."','" . $this->getidcompra() ."','" . $this->getcicantidad(). "','" . $this->getciprecio() . "');";
@@ -151,13 +165,16 @@ class CompraItem
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompraitem($elid);
                 $resp = true;
+                array_push($arr,$resp,$elid);
+                
             } else {
                 $this->setmensajeoperacion("compraitem->insertar: " . $base->getError());
             }
         } else {
             $this->setmensajeoperacion("compraitem->insertar: " . $base->getError());
         }
-        return $resp;
+        //var_dump($arr);
+        return $arr;
     }
 
 
@@ -168,8 +185,8 @@ class CompraItem
         $resp = false;
         $base = new BaseDatos();
         $sql = "UPDATE compraitem SET cicantidad='" . $this->getcicantidad() 
-        . "'ciprecio='".$this->getciprecio() 
-        . "'WHERE idcompraitem=" . $this->getidcompraitem();
+        . "',ciprecio='".$this->getciprecio() 
+        . "' WHERE idcompraitem=" . $this->getidcompraitem();
         if ($base->Iniciar()) {
             //var_dump($sql);
             if ($base->Ejecutar($sql)) {
@@ -192,8 +209,9 @@ class CompraItem
         $base = new BaseDatos();
         $sql = "DELETE FROM compraitem WHERE idcompraitem=" . $this->getidcompraitem();
         if ($base->Iniciar()) {
+            //var_dump($sql);
             if ($base->Ejecutar($sql)) {
-                return true;
+                $resp = true;
             } else {
                 $this->setmensajeoperacion("compra->eliminar: " . $base->getError());
             }

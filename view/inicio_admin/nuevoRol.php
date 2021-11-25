@@ -1,6 +1,11 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
+
+$dir = "../inicio_cliente/index.php";
+$rol = "Administrador";
+$sesion = new Session();
+$sesion->permisoAcceso($dir, $rol);
 //HEADER============================================================================
 ?>
 

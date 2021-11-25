@@ -4,6 +4,14 @@ require_once("../structure/header.php");
 
 $objAbmTabla = new AbmProducto();
 $listaTabla = $objAbmTabla->buscar(null);
+
+$url = data_submited();
+$dir = "../inicio_cliente/index.php";
+$rol = "Deposito";
+$sesion = new Session();
+//echo "entra a permisos";
+$sesion->permisoAcceso($dir, $rol);
+
 ?>
 <!-- Titulo pagina -->
 <div align="center">
@@ -23,6 +31,14 @@ $listaTabla = $objAbmTabla->buscar(null);
                 <thead>
                     <br>
                     <h3 align="center">Listar Productos</h3>
+
+                    <?php
+                    if (array_key_exists('mensaje', $url)) {
+                        echo "  <div class='alert alert-success mt-3' role='alert' align=center>
+                        Se actualizo la lista con exito.
+                        </div>";
+                    }
+                    ?>
                     <hr>
                     <tr>
                         <th scope="" id='tablepadding'>ID</th>
