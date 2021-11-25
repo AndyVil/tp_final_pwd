@@ -120,9 +120,10 @@ class Compra
     // }
 
     public function setcompraprecio($valor){
-        $precio= $valor; 
-        if($valor ==null){
-            $precio = $this->getcompraprecio();
+        $this->coprecio=$valor;
+        $precio = 0;
+        if($valor ==null){            
+            
             $items = new CompraItem();
             $where = 'idcompra='. $this->getidcompra();
             //var_dump($where);
@@ -130,11 +131,10 @@ class Compra
             foreach ($colCompraItems as $item){
                 $precio =+$item->getciprecio();
             }
-        }     
-               
-        //$colItems = $this->getarrayItems();
+            $this->coprecio=$precio;
+        }
+        //$colItems = $this->getarrayItems();        
         
-        return $precio;
     }
 
     /** INSERTAR **/

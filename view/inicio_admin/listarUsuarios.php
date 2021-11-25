@@ -24,6 +24,27 @@ $listaTabla = $objAbmTabla->buscar(null);
                     <thead>
                         <br>
                         <h3 align="center">Listar Usuarios</h3>
+
+
+                        <?php
+                        $edicion = data_submited();
+                        if (array_key_exists('mensaje', $edicion)) {
+                            //var_dump($edicion);
+                            if ($edicion['mensaje'] == 'edicion_exitosa') {
+                                echo "<div class='alert alert-success' role='alert' align=center>
+                                Se actualizo usuario correctamente.
+                                </div>";
+                            } elseif ($edicion['mensaje'] == 'edicion_fallida') {
+                                echo "<div class='alert alert-warning' role='alert' align=center>
+                                No se modifico el usuario.
+                                </div>";
+                            }
+                        }
+                        
+                        ?>
+
+
+
                         <hr>
                         <tr>
                             <th scope="col" id="tablepadding">Id</th>

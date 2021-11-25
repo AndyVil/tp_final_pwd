@@ -52,8 +52,8 @@ spl_autoload_register(function ($clase) {
  */
 function var_dum($variable){
 	echo '<div style="background-color:powderblue; position:relative; margin-top:20px;" >';
-	$nombreVar = print_var_name($variable);
-	echo "input var: $nombreVar: <br>";
+	//$nombreVar = print_var_name($variable);
+	//echo "input var: $nombreVar: <br>";
 	var_dump($variable);
 	echo '</div>';
 }

@@ -51,7 +51,7 @@ require_once("../structure/header.php");
 					$ambuserRol->baja($filtrorol);
 				}	
 			}
-			$datos['usnombre'] = md5($datos['usnombre']);
+			//$datos['usnombre'] = md5($datos['usnombre']); Mejor no hacer esto
 			if ($abmUser->modificacion($datos)) {
 				$resp = true;
 			} else {
@@ -92,9 +92,11 @@ require_once("../structure/header.php");
 
 
 		if ($resp) {
-			$mensaje = "La acción <b>" . $datos['accion'] . " usuario</b> se realizo correctamente.";
+			$mensaje = "La acción <b>" . $datos['accion'] . " usuario</b>Se realizo correctamente.";
+			header('Location: listarUsuarios.php?mensaje='.urldecode('edicion_exitosa'));
 		} else {
-			$mensaje .= "La acción <b>" . $datos['accion'] . " usuario</b> no pudo concretarse.";
+			$mensaje .= "La acción <b>" . $datos['accion'] . " usuario</b>No pudo concretarse.";
+			header('Location: listarUsuarios.php?mensaje=' . urldecode('edicion_fallida'));
 		}
 	}	
 	$encuentraError = strpos(strtoupper($mensaje), 'ERROR');

@@ -9,89 +9,80 @@ $objAbmUsuario = new AbmUsuario();
 $filtro = array();
 $filtro['idusuario'] = $datos['roledit'];
 $unUsuario = $objAbmUsuario->buscar($filtro);
-$colrol= $usuariorol->buscar($filtro);
+$colrol = $usuariorol->buscar($filtro);
 
 
 //HEADER============================================================================
 ?>
 <div align="center">
     <h2 class="mt-5">Administración</h2>
+    <a class="btn btn-dark" href="listarUsuarios.php" role="button"><i class="fas fa-angle-double-left"></i>Regresar a usuarios</a>
+    <br>
+    <br>
     <h3>Actualizar LOG IN</h3>
 </div>
 
-<div class="row my-5">
+<div class="container">
     <form id="actualizarLogin" method="POST" action="abmUsuario.php">
         <?php
-        echo "<div class='table-responsive'>
-            <table class='table table-striped'>
-                <thead>
-                    <tr class='align-middle'>
-                        <th scope='col'>Nombre</th>
-                        
-                        <th scope='col'>Mail</th>      
-                        <th class='d-none' scope='col'>#</th> 
-                        <th class='d-none' scope='col'>#</th>                 
-                        <th class='text-center' scope='col'>Editar</th>
-                    </tr>
-                </thead>
-                <tbody>";
-        
-                if(count($unUsuario)>0){
-    
-                $user= $unUsuario[0];
-                $nombre = $user->getusnombre();
-                $mail = $user->getusmail();
-                $usdeshabilitado = $user->getusdeshabilitado();
-                $id = $user->getidusuario();
-                
-                    
+
+        if (count($unUsuario) > 0) {
+
+            $user = $unUsuario[0];
+            $nombre = $user->getusnombre();
+            $mail = $user->getusmail();
+            $usdeshabilitado = $user->getusdeshabilitado();
+            $id = $user->getidusuario();
+            $uspass = $user->getuspass();
+
+            echo "<hr>";
+            echo "<div align='center'>";
+            echo '<label for="usmail">Email</label> <br>';
+            echo '<input name="usmail" id="usmail" type="text" placeholder="Nuevo email" value="' . $mail . '">';
+            echo '</div>';
+            echo "<br>";
 
             echo '<tr class="align-middle">';
-            echo '<td><input class="w-100" type="text" id="usnombre" name="usnombre" placeholder="Ingrese un nuevo nombre">' . '</td>';
-            echo '<td><input class="w-100" type="text" id="usmail" name="usmail" value="' . $mail . '">' . '</td>';
-            echo '<td class="d-none"><input id="usdeshabilitado" name="usdeshabilitado" type="hidden" value="' . $usdeshabilitado . '">' . '</td>';
-            echo '<td class="d-none"><input id="idusuario" name="idusuario" type="hidden" value="' . $id . '">' . '</td>';
-            echo '<td class="d-none"><input id="idusuario" name="idusuario" type="hidden" value="' . $id . '">' . '</td>';
-            $i=0;
-            echo "<div class='col-sm-3' align='center' id='roles'>        
+            echo '<input id="usnombre" name="usnombre" type="hidden" value="' . $nombre . '">';
+            echo '<input id="usdeshabilitado" name="usdeshabilitado" type="hidden" value="' . $usdeshabilitado . '">';
+            echo '<input id="idusuario" name="idusuario" type="hidden" value="' . $id . '">';
+            echo '<input id="uspass" name="uspass" type="hidden" value="' . $uspass . '">';
+            $i = 0;
+            echo "<div align='center' id='roles'>        
             <span>Roles:</span><br>";
 
-            //
-            foreach($allrol as $rol){
-                $check ="";
+            foreach ($allrol as $rol) {
+                $check = "";
                 $checkeado = false;
-                 $descripcion = $rol->getroldescripcion();  
-                 $id = $rol->getidrol();                 
-                 foreach($colrol as $rolactual){
-                     $idus=$rolactual->getobjrol()->getidrol();
-                      if($id== $idus){
-                          $checkeado = true;
-                      }
-                 }
-                 if($checkeado){
-                     $check = "Checked";
-                 }
-                 echo "<label for='roles'>".$descripcion."</label>";
-                 echo "<input type='checkbox' name='colrol[]' class='colrol' id='colrol' value=".$id." ".$check.">";
-                 
-            }
-            
-            echo "<td class='text-center'>
-                <button class='btn btn-success btn-sm' id='accion' name='accion' value='editar' type='submit'>
-                <i class='fas fa-pen'></i></button></td>";
-            echo '</tr>';
+                $descripcion = $rol->getroldescripcion();
+                $id = $rol->getidrol();
+                foreach ($colrol as $rolactual) {
+                    $idus = $rolactual->getobjrol()->getidrol();
+                    if ($id == $idus) {
+                        $checkeado = true;
+                    }
                 }
-        echo '</tbody>';
-        echo '</table>';
-        echo '</div>';
+                if ($checkeado) {
+                    $check = "Checked";
+                }
 
+                echo "<input class='form-check-input' type='checkbox' name='colrol[]' class='colrol' id='colrol' value=" . $id . " " . $check . ">";
+                echo "<label for='roles'>" . $descripcion . "</label>";
+                echo ' | ';
+            }
+            echo "<br><br>";
+            echo '<div>';
+            echo "
+                <button class='btn btn-success btn-sm' id='accion' name='accion' value='editar' type='submit'>
+                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-hand-thumbs-up-fill' viewBox='0 0 16 16'>
+                <path d='M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z'/>
+                </svg>
+                Modificar
+                </button>";
+            echo '<div>';
+        }
         ?>
     </form>
-
-    <!-- Botones -->
-    <div class="mb-5">
-        <a class="btn btn-dark" href="listarUsuarios.php" role="button"><i class="fas fa-angle-double-left"></i> Regresar</a>
-    </div>
 </div>
 
 

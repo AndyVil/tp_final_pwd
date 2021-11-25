@@ -8,6 +8,10 @@ $id = $datos['roldelete'];
 <div align="center">
     <h2 class="mt-5">Administración</h2>
     <h3>Eliminar LOG IN</h3>
+    <!-- Botones -->
+    <div class="mb-5">
+        <a class="btn btn-dark" href="listarUsuarios.php" role="button"><i class="fas fa-angle-double-left"></i>Regresar a lista de usuarios</a>
+    </div>
 </div>
 
 <div class="row my-5">
@@ -15,21 +19,16 @@ $id = $datos['roldelete'];
         <div class="d-flex justify-content-center">
             <?php
             echo "<input class='d-none' id='idusuario' name='idusuario' type='hidden' value='" . $id . "'>";
-            echo "<div class='card text-center border border-3 border-primary' style='width: 25rem;'>
+            echo "<div class='container' style='width: 25rem;' align='center'>
                 <div class='card-body'>
-                    <h4 class='card-title'>¡Atención!</h4>
-                    <p class='card-text'>¿Realmente desea eliminar este usuario?</p>
-                    <button href='#' class='btn btn-primary' id='accion' name='accion' type='submit' value='deshabilitar' style='width: 3rem;'>Sí</button>
-                    <button href='#' class='btn btn-primary' id='accion' name='accion' type='submit' value='noAccion' style='width: 3rem;'>No</button>
+                    <h4 class='mt-4'>¿Realmente desea eliminar este Usuario?</h4>
+                    <button href='#' formaction='listarUsuarios.php' class='btn btn-primary' id='accion' name='accion' type='submit' value='noAccion' style='width: 3rem;'>No</button>
+                    <button href='#' class='btn btn-danger' id='accion' name='accion' type='submit' value='borrar' style='width: 3rem;'>Sí</button>
                 </div>
             </div>";
             ?>
         </div>
     </form>
-    <!-- Botones -->
-    <div class="mb-5">
-        <a class="btn btn-dark" href="listarUsuarios.php" role="button"><i class="fas fa-angle-double-left"></i> Regresar</a>
-    </div>
 </div>
 
 

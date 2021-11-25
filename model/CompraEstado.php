@@ -67,8 +67,10 @@ Class CompraEstado{
     }
 
     public function setcefechaini($valor)
-    {
-        $this->cefechaini=$valor;
+    {   
+        if($valor!=null){
+            $this->cefechaini=$valor;
+        }        
         //var_dump($valor);
 
         // $cefechaini = $this->getidcompraestado();
@@ -104,7 +106,7 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM CompraEstado WHERE idcompraestado = " . $this->getidcompraestado();
+        $sql = "SELECT * FROM compraEstado WHERE idcompraestado = " . $this->getidcompraestado();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
             if ($res > -1) {
@@ -146,7 +148,7 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE CompraEstado SET idcompra='" . $this->getidcompra() . "',";
+        $sql = "UPDATE compraEstado SET idcompra='" . $this->getidcompra() . "',";
         $sql .= "idcompraestadotipo=" . $this->getidcompraestadotipo() . ",";
         $sql .= "cefechafin='" . $this->getcefechafin() . "' ";
         $sql .= "WHERE idcompraestado='" . $this->getidcompraestado() . "'";
@@ -168,7 +170,7 @@ Class CompraEstado{
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM CompraEstado WHERE idcompraestado=" . $this->getidcompraestado();
+        $sql = "DELETE FROM compraEstado WHERE idcompraestado=" . $this->getidcompraestado();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 return true;
@@ -187,8 +189,9 @@ Class CompraEstado{
     {
         $arreglo = array();
         $base = new BaseDatos();
-        $sql = "SELECT * FROM CompraEstado ";
+        $sql = "SELECT * FROM compraestado ";
         if ($parametro != "") {
+            //var_dump($parametro);
             $sql .= 'WHERE ' . $parametro;
         }
         //var_dump($sql);

@@ -35,7 +35,7 @@
 
     <!-- MENU SEGUN USUARIOS -->
     <!-- MENU TABS -->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs justify-content-center">
       <?php
       #MANERA 1 de MENU
       $sesion = new Session();
@@ -45,36 +45,37 @@
         list($sesionValidar, $error) = $sesion->validar();
         if ($sesionValidar) {
           $idUser = $sesion->getIdUser();
-          $esUsuario = $sesion->validarRol($idUser);
+          //$esUsuario = $sesion->validarRol($idUser);
           $roles = [];
-          $roles = $sesion->obtenerRol($idUser); #La funcion la cree debajo del validarRol() en Sesion
+          $roles = $sesion->obtenerRol(); #La funcion la cree debajo del validarRol() en Sesion
+          $validRol = $sesion->arrayRolesUser($roles);
           //var_dum($roles);
           //var_dum($sesion);
 
-          $validRol = [
-            'Administrador' => false,
-            'Deposito' => false,
-            'Cliente' => false,
-            'sinlog' => false,
-            'superuser' => false
-          ];
+          // $validRol = [
+          //   'Administrador' => false,
+          //   'Deposito' => false,
+          //   'Cliente' => false,
+          //   'sinlog' => false,
+          //   'superuser' => false
+          // ];
 
-          foreach ($roles as $rol) {
-            switch ($rol) {
-              case '1':
-                $validRol['Administrador'] = true;
-                break;
-              case '2':
-                $validRol['Deposito'] = true;
-                break;
-              case '3':
-                $validRol['Cliente'] = true;
-                break;
-              case '4':
-                $validRol['superuser'] = true;
-                break;
-            }
-          }
+          // foreach ($roles as $rol) {
+          //   switch ($rol) {
+          //     case '1':
+          //       $validRol['Administrador'] = true;
+          //       break;
+          //     case '2':
+          //       $validRol['Deposito'] = true;
+          //       break;
+          //     case '3':
+          //       $validRol['Cliente'] = true;
+          //       break;
+          //     case '4':
+          //       $validRol['superuser'] = true;
+          //       break;
+          //   }
+          // }
           if ($validRol['Cliente'] == true || $validRol['superuser'] == true) {
             echo "
               <li class='nav-item'>
@@ -108,12 +109,12 @@
               </li>
             ";
       } else {
-            echo "
+        echo "
               <li class='nav-item'>
               <a id='login' class='nav-link' href='./../login/'>Log In</a>
               </li>
             ";
-            echo "
+        echo "
               <li class='nav-item'>
               <a id='registro' class='nav-link' href='./../registro/'>Registrarse</a>
               </li>

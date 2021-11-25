@@ -101,8 +101,9 @@ class Session
     /**
      * @param idrol
      * Se podria usar el motodo obtener rol, para obtener el arreglo y con eso verificar los roles de los usuarios
+     * 1.Admin 2.Deposito 3.Cliente 4.superuser
      */
-    public function validarRol($id){
+    public function validarRol($idRol){
 
         $resp = false;
         $abmrol = new AbmUsuariorol();
@@ -111,12 +112,14 @@ class Session
 
         foreach($rolesUsuario as $usrol){
             $rol=$usrol->getobjrol();
-            if($rol->getidrol()==$id){
+            if($rol->getidrol()==$idRol){
                $resp = true;
             }
         }
         return $resp;
     }
+
+
     public function setear(){
 
     }
@@ -126,7 +129,7 @@ class Session
      * @return array ID de ROL
      * La idea es obtener el ROL de la tabla UsuarioRol por medio del ID del usuario
      */
-    public function obtenerRol($idUser){
+    public function obtenerRol(){
         $abmrol = new AbmUsuariorol();#Nuevo objeto ROL
         $where = ['idusuario' => $this->getIdUser()];#Where idusuario = ID de este usuario
         $arrayUsuario = $abmrol->buscar($where);#Busca la lista de roles ARRAY con objetos dentro (cada objeto es un rol vinculado de un iduser)
@@ -135,11 +138,47 @@ class Session
         #Recorre el arreglo de roles
         foreach ($arrayUsuario as $usuario) {
             $rolUser = $usuario->getobjrol();
-            $rol = $rolUser->getidrol();#Devuelve el id del rol 1 al 5
+            $rol = $rolUser->getidrol();#Devuelve el id del rol 1 al 4
             array_push($roles, $rol);
         }
         return $roles;
     }
+
+
+    /**
+     * @param array de id Roles
+     * @return array booleano
+     */
+    public function arrayRolesUser($ArrayIdRoles){
+        $validRol = [
+            'Administrador' => false,
+            'Deposito' => false,
+            'Cliente' => false,
+            'superuser' => false
+        ];
+
+        foreach ($ArrayIdRoles as $rol) {
+            switch ($rol) {
+                case '1':
+                    $validRol['Administrador'] = true;
+                    break;
+                case '2':
+                    $validRol['Deposito'] = true;
+                    break;
+                case '3':
+                    $validRol['Cliente'] = true;
+                    break;
+                case '4':
+                    $validRol['Administrador'] = true;
+                    $validRol['Deposito'] = true;
+                    $validRol['Cliente'] = true;
+                    $validRol['superuser'] = true;
+                    break;
+            }
+        }
+        return $validRol;
+    }
+
 
     /** ACTIVA **/
     public function activa()

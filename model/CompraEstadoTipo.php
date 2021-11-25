@@ -73,7 +73,7 @@ class CompraEstadoTipo
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM compra WHERE idcompraestadotipo = " . $this->getidcompraestadotipo();
+        $sql = "SELECT * FROM compraestadotipo WHERE idcompraestadotipo = " . $this->getidcompraestadotipo();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
             if ($res > -1) {
@@ -94,7 +94,7 @@ class CompraEstadoTipo
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO compra(idcompraestadotipo,cetdescripcion,cetdetalle)  VALUES('" . $this->getidcompraestadotipo() . "','" . $this->getcetdescripcion() . "','" . $this->getcetdetalle() . "');";
+        $sql = "INSERT INTO compraestadotipo(idcompraestadotipo,cetdescripcion,cetdetalle)  VALUES('" . $this->getidcompraestadotipo() . "','" . $this->getcetdescripcion() . "','" . $this->getcetdetalle() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompraestadotipo($elid);
@@ -114,7 +114,7 @@ class CompraEstadoTipo
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compra SET cetdescripcion='" . $this->getcetdescripcion() . "',
+        $sql = "UPDATE compraestadotipo SET cetdescripcion='" . $this->getcetdescripcion() . "',
         uspass='" . $this->getcetdetalle() . "'
         WHERE idcompraestadotipo=" . $this->getidcompraestadotipo();
         if ($base->Iniciar()) {
@@ -136,7 +136,7 @@ class CompraEstadoTipo
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM compra WHERE idcompraestadotipo=" . $this->getidcompraestadotipo();
+        $sql = "DELETE FROM compraestadotipo WHERE idcompraestadotipo=" . $this->getidcompraestadotipo();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 return true;
@@ -155,7 +155,7 @@ class CompraEstadoTipo
     {
         $arreglo = array();
         $base = new BaseDatos();
-        $sql = "SELECT * FROM compra ";
+        $sql = "SELECT * FROM compraestadotipo ";
         if ($parametro != "") {
             $sql .= 'WHERE ' . $parametro;
         }

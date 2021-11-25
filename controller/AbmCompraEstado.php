@@ -103,6 +103,7 @@ class AbmCompraEstado
             $CompraEstados = $this->buscar($buscar2);
             if ($CompraEstados != null) {
                 $objCompraEstado = $CompraEstados[0];
+                $objCompraEstado->setidcompraestadotipo($param['idcompraestadotipo']);
                 $objCompraEstado->setcefechaini($param['cefechaini']);
                 $objCompraEstado->setcefechafin($param['cefechafin']);
 
