@@ -146,33 +146,63 @@ class Session
         return $roles;
     }
 
+
+    /**
+     * @param array roles id
+     * 
+     */
+    public function idMenu($roles){
+        $abmMenu = new AbmMenurol();
+        $arrayMenu = [];
+        foreach($roles as $rol){
+            $where = ['idrol' => $rol];
+            $menu = $abmMenu->buscar($where);
+
+            array_push($arrayMenu, $menu);
+        }
+        print_r($arrayMenu);
+
+
+    }
+
+
+
     /**
      * 1.admin_ini 2.dep_ini 3.cliente_ini 4.login 5.registro 6.cuenta 7.carrito
      */
-    public function menusroles($Arraymenu){
+    public function menusroles($arrayMenu){
         $validMenu = [
-            'Administrador' => false,
-            'Deposito' => false,
-            'Cliente' => false,
-            'superuser' => false
+            'admin_ini' => false,
+            'dep_ini' => false,
+            'cliente_ini' => false,
+            'login' => false,
+            'registro' => false,
+            'cuenta' => false,
+            'carrito' => false
         ];
 
-        foreach ($Arraymenu as $menu) {
+        foreach ($arrayMenu as $menu) {
             switch ($menu) {
                 case '1':
-                    $validRol['Administrador'] = true;
+                    $validMenu['admin_ini'] = true;
                     break;
                 case '2':
-                    $validRol['Deposito'] = true;
+                    $validMenu['dep_ini'] = true;
                     break;
                 case '3':
-                    $validRol['Cliente'] = true;
+                    $validMenu['cliente_ini'] = true;
                     break;
-                case '4':
-                    $validRol['Administrador'] = true;
-                    $validRol['Deposito'] = true;
-                    $validRol['Cliente'] = true;
-                    $validRol['superuser'] = true;
+                case '5':
+                    $validMenu['login'] = true;
+                    break;
+                case '6':
+                    $validMenu['registro'] = true;
+                    break;
+                case '7':
+                    $validMenu['cuenta'] = true;
+                    break;
+                case '8':
+                    $validMenu['carrito'] = true;
                     break;
             }
         }

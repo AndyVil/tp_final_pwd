@@ -49,33 +49,11 @@
           $roles = [];
           $roles = $sesion->obtenerRol(); #La funcion la cree debajo del validarRol() en Sesion
           $validRol = $sesion->arrayRolesUser($roles);
-          //var_dum($roles);
-          //var_dum($sesion);
 
-          // $validRol = [
-          //   'Administrador' => false,
-          //   'Deposito' => false,
-          //   'Cliente' => false,
-          //   'sinlog' => false,
-          //   'superuser' => false
-          // ];
+          $sesion->idMenu($roles);
 
-          // foreach ($roles as $rol) {
-          //   switch ($rol) {
-          //     case '1':
-          //       $validRol['Administrador'] = true;
-          //       break;
-          //     case '2':
-          //       $validRol['Deposito'] = true;
-          //       break;
-          //     case '3':
-          //       $validRol['Cliente'] = true;
-          //       break;
-          //     case '4':
-          //       $validRol['superuser'] = true;
-          //       break;
-          //   }
-          // }
+
+          
           echo "
               <li class='nav-item'>
               <a id='cliente_ini' class='nav-link' href='./../inicio_cliente/'>Catalogo</a>

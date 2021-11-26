@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2021 a las 03:59:53
+-- Tiempo de generación: 26-11-2021 a las 18:50:15
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -39,7 +39,9 @@ CREATE TABLE `compra` (
 --
 
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`, `coprecio`) VALUES
-(23, '2021-11-22 15:02:56', 1, 0.00);
+(65, '2021-11-26 05:52:01', 1, 470.00),
+(66, '2021-11-26 06:27:08', 1, 67470.00),
+(67, '2021-11-26 15:51:01', 1, 2000.00);
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,9 @@ CREATE TABLE `compraestado` (
 --
 
 INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
-(10, 23, 1, '2021-11-22 15:02:56', '0000-00-00 00:00:00');
+(52, 65, 2, '2021-11-26 05:52:01', '2021-11-26 05:52:01'),
+(53, 66, 2, '2021-11-26 06:24:48', '2021-11-26 07:20:13'),
+(54, 67, 1, '2021-11-26 15:51:01', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -94,7 +98,7 @@ CREATE TABLE `compraitem` (
   `idproducto` bigint(20) NOT NULL,
   `idcompra` bigint(20) NOT NULL,
   `cicantidad` int(11) NOT NULL,
-  `ciprecio` float(5,2) NOT NULL
+  `ciprecio` float(7,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -102,9 +106,10 @@ CREATE TABLE `compraitem` (
 --
 
 INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`, `ciprecio`) VALUES
-(13, 1220, 23, 1, 470.00),
-(14, 1219, 23, 1, 999.99),
-(26, 1217, 23, 3, 650.00);
+(133, 1220, 65, 1, 470.00),
+(134, 1217, 66, 2, 65000.00),
+(135, 1220, 66, 1, 470.00),
+(136, 1219, 66, 1, 2000.00);
 
 -- --------------------------------------------------------
 
@@ -131,8 +136,7 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (4, 'login', 'Log in', NULL, NULL),
 (5, 'registro', 'Registrarse', NULL, NULL),
 (6, 'cuenta', 'Cuenta', NULL, NULL),
-(7, 'carrito', 'Carrito', 3, NULL),
-(8, 'editarcuenta', 'Permite editar los datos de la cuenta a los clientes', 6, NULL);
+(7, 'carrito', 'Carrito', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,13 +155,21 @@ CREATE TABLE `menurol` (
 
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 1),
+(1, 4),
 (2, 2),
+(2, 4),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(4, 4),
+(5, 4),
 (6, 1),
 (6, 2),
 (6, 3),
 (6, 4),
 (7, 3),
-(8, 3);
+(7, 4);
 
 -- --------------------------------------------------------
 
@@ -178,10 +190,11 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`) VALUES
-(1217, 'remera', 'Remera blanca de algodon M, L, XL', 10, 650),
-(1219, 'pantalon', 'Pantalon largo, marron S, M, L', 50, 2000),
-(1220, 'remera', 'Remera blanca S', 20, 470),
-(1221, 'remera', 'Sin stock S', 0, 7000);
+(1217, 'remera', 'Remera algodon S S S', 9, 32500),
+(1219, 'pantalon', 'pantalon XL', 49, 2000),
+(1220, 'otro', 'Gorra S', 8, 470),
+(1221, 'remera', 'Sin stock S', 0, 7000),
+(1227, 'otro', 'Campera S, M, L, XL', 50, 7000);
 
 -- --------------------------------------------------------
 
@@ -226,7 +239,8 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabili
 (1, '63a9f0ea7bb98050796b649e85481845', '63a9f0ea7bb98050796b649e85481845', 'root@root.com', '0000-00-00 00:00:00'),
 (2, '21232f297a57a5a743894a0e4a801fc3', '21232f297a57a5a743894a0e4a801fc3', 'admin@admin.com', '0000-00-00 00:00:00'),
 (3, 'caaf856169610904e4f188e6ee23e88c', 'caaf856169610904e4f188e6ee23e88c', 'deposito@deposito.com', '0000-00-00 00:00:00'),
-(4, '4983a0ab83ed86e0e7213c8783940193', '4983a0ab83ed86e0e7213c8783940193', 'cliente@cliente.com', '0000-00-00 00:00:00');
+(4, '4983a0ab83ed86e0e7213c8783940193', '4983a0ab83ed86e0e7213c8783940193', 'cliente@cliente.com', '0000-00-00 00:00:00'),
+(39, '7215ee9c7d9dc229d2921a40e899ec5f', '7215ee9c7d9dc229d2921a40e899ec5f', ' asdasdasd', '2021-11-26 05:35:31');
 
 -- --------------------------------------------------------
 
@@ -247,7 +261,9 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (1, 4),
 (2, 1),
 (3, 2),
-(4, 3);
+(4, 3),
+(39, 3),
+(39, 4);
 
 --
 -- Índices para tablas volcadas
@@ -337,19 +353,19 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `compraestado`
 --
 ALTER TABLE `compraestado`
-  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT de la tabla `compraitem`
 --
 ALTER TABLE `compraitem`
-  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -361,7 +377,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1222;
+  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1228;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -373,7 +389,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Restricciones para tablas volcadas

@@ -35,7 +35,7 @@ $sesion->permisoAcceso($dir, $rol);
                     <?php
                     if (array_key_exists('mensaje', $url)) {
                         echo "  <div class='alert alert-success mt-3' role='alert' align=center>
-                        Se actualizo la lista con exito.
+                        ".$url['mensaje']."
                         </div>";
                     }
                     ?>

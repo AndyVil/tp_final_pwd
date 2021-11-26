@@ -42,7 +42,6 @@ if ($datos["accion"] == "borrar") {
 		list($valido, $id) = $productos->alta($datos);
 		if ($valido) {
 			$idproducto = $datos['idproducto'];
-			header("Location: index.php?mensaje=" . urlencode("Se cargo exitosamente el producto: " . $idproducto . "."));
 			/**
 			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
 			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
@@ -53,23 +52,22 @@ if ($datos["accion"] == "borrar") {
 			 * Cargo los prodcutos de la base de datos en una variable para hacer un conteo de los mismos
 			 * Esto me permite asignarle un nuevo nombre al archivo para identificarlo
 			 */
-			// $dirUpload = $ruta . "uploads";
-			// $ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
-			// $nombre = $id . "." . $ext;
+			$dirUpload = $ruta . "uploads";
+			$ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);
+			$nombre = $id . "." . $ext;
 
-			// #El move funciona para mover un archivo temporal a otra carpeta
-			// //move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");
+			#El move funciona para mover un archivo temporal a otra carpeta
+			//move_uploaded_file($_FILES['productoImagen']['tmp_name'], "$dirUpload/$nombre");
 
-			// $formularioCargarProducto = new Formulario();
-			// $array = $formularioCargarProducto->cargarArchivos($nombre, $datos);			
-			// $link = "../../uploads/".$nombre;
-			// $error = $array['imagen']['error'];
+			$formularioCargarProducto = new Formulario();
+			$array = $formularioCargarProducto->cargarArchivos($nombre, $datos);		
+			header("Location: index.php?mensaje=" . urlencode("Se cargo exitosamente el producto."));
 		}
 	}
 	if ($datos["accion"] == "editar") {
 		if ($productos->modificacion($datos)) {
 			$idproducto = $datos['idproducto'];
-			header("Location: index.php?mensaje=" . urlencode("Se edito exitosamente el producto: " . $idproducto . "."));
+			header("Location: index.php?mensaje=" . urlencode("Se edito exitosamente el producto."));
 			// $id = $datos["idproducto"];
 			// $dirUpload = $ruta . "uploads";
 			// $ext = pathinfo($_FILES['productoImagen']['name'], PATHINFO_EXTENSION);

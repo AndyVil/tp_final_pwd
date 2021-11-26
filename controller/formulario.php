@@ -44,16 +44,16 @@ class Formulario
         } else {
             $retorno['imagen']['error'] = $error;
         }
-        $pos = mb_strripos($nombre, ".");
+        // $pos = mb_strripos($nombre, ".");
 
 
-        $txtName = substr($nombre, 0, $pos) . ".txt";
-        $txtName = $dir . $txtName;
-        $texto = $this->verInformacion($datos, $nombre);
-        /* fopen crea un nuevo archivo con nombre $name y con "w" reemplaza la información si ya existia */
-        $ar = fopen($txtName, "w") or die("error al crear");
-        fwrite($ar, $texto);
-        fclose($ar);
+        // $txtName = substr($nombre, 0, $pos) . ".txt";
+        // $txtName = $dir . $txtName;
+        // $texto = $this->verInformacion($datos, $nombre);
+        // /* fopen crea un nuevo archivo con nombre $name y con "w" reemplaza la información si ya existia */
+        // $ar = fopen($txtName, "w") or die("error al crear");
+        // fwrite($ar, $texto);
+        // fclose($ar);
 
         return $retorno;
     }

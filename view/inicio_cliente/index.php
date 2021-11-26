@@ -33,7 +33,7 @@ if (array_key_exists('mensaje', $datos)) {
                 foreach ($arreglo as $archivo) {
                     if (strlen($archivo) > 2 && strpos($archivo, "txt") <= 0  && strpos($archivo, "pdf") <= 0) {
                         echo
-                        "<div id='pelis' class='d-grid col-lg-2 col-sm-4 mb-4' id='productosLista'>
+                        "<div id='productos' class='d-grid col-lg-2 col-sm-4 mb-4' id='productosLista'>
                             <img class='img-fluid' alt='$archivo' src='../../uploads/$archivo' width='100%'>
                             <div class='d-grid align-items-end'>
                             <input type='hidden' name='nombre' id='Seleccion:$archivo' class='btn btn-light' value='$archivo'>                            
