@@ -18,6 +18,7 @@ $datos["idcompraitem"] = $idcompraitem;
 $dir = "../inicio_cliente/index.php";
 $rol = "Cliente";
 $sesion->permisoAcceso($dir, $rol);
+$datos["idusuario"]=$sesion->getIdUser();
 if($carrito->eliminarItem($datos)){    
     header('Location: index.php');
 }

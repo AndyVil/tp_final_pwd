@@ -37,7 +37,7 @@ if (!$sesion->activa()) {
                     if (count($estado) > 0) {
                         array_push($aceptadas, $estado[0]);
                     } else {
-                        echo "no tienes compras aun";
+                        //echo "no tienes compras aun";
                     }
                 }
             }
@@ -55,7 +55,8 @@ if (!$sesion->activa()) {
                     $idcompra = $compraestado->getidcompra();
                     $filtro = Array();
                     $filtro['idcompra']=$idcompra;
-                    $items = $ambitems->buscar($filtro);                   
+                    $items = $ambitems->buscar($filtro); 
+                    //var_dump(count($items));                  
                     foreach ($items as $item) {
                         $idproducto = $item->getidproducto()->getidproducto();
                         //var_dum($idproducto);
@@ -68,7 +69,7 @@ if (!$sesion->activa()) {
                         $arreglo[$i]["ciprecio"] = $item->getciprecio();
                         $arreglo[$i]["idcompraitem"] = $item->getidcompraitem();
                         $arreglo[$i]["cicantidad"] = $item->getcicantidad();
-                        $arreglo[$i]["cicantidad"] = $item->getcicantidad();
+                        $arreglo[$i]["iditem"] = $item->getidcompraitem();
                         $arreglo[$i]["fecha"] = $compraestado->getcefechafin();
                         $arreglo[$i]["idcompra"] = $idcompra;
                         $i++;
@@ -102,15 +103,18 @@ if (!$sesion->activa()) {
     <?php
     if ($arreglo === false) {
         echo "<div class='alert alert-warning' role='alert' align=center>
-                        No tienes nada en tu aceptadas aún.
+                        No tienes ningun articulo comprado aun.
                         </div>";
     } else {
         echo "<form id='aceptadas' name='catalogo' method='POST' action='detalleCompra.php'>
             <div class='row'> ";
-            var_dump($arreglo);
+            //var_dump($arreglo);
+
         foreach ($arreglo as  $archivo) {
             $idcompra = $archivo["idcompra"];
             $link = $archivo["link"];
+            $iditem = $archivo["iditem"];
+            
             $idproducto = $archivo["idproducto"];
             $proprecio = $archivo["proprecio"];
             $ciprecio = $archivo["ciprecio"];
@@ -118,9 +122,9 @@ if (!$sesion->activa()) {
             $cicantidad = $archivo["cicantidad"];
             $fecha = $archivo["fecha"];
             $nombre = $archivo["nombre"];
-            //var_dum($archivo);
+          
             echo
-            "<div id='pelis' class='d-grid col-lg-2 col-sm-4 mb-4'>
+            "<div id='productos' class='col-lg-2 col-sm-4 mb-4'>
                         <h4 align='center'>$nombre</h4>
                         <img class='img-fluid' alt='$link' src='$link' width='100%'>
                         <div class='d-grid align-items-end'>
@@ -128,15 +132,17 @@ if (!$sesion->activa()) {
 						<div>Fecha de Compra:<br>$fecha</div>
 						<div>Precio Total: $$ciprecio</div>
 						</div>
+                        <input type='hidden' name='idcompra' id='idcompra' value='$idcompra'>
                         <input type='hidden' name='idcompraitem:$idcompraitem' id='idcompraitem:$idcompraitem' value='$idcompraitem'>                            
                         <input type='submit' name='Seleccion:$idcompra' id='Seleccion:$idcompra' class='btn btn-light' value='Ver detalles de compra'>";
 
-            echo "</div>
-                    </div>";
+            echo "</div>";
+            
         }
     }
     ?>
     </form>
+</div>
 
     <?php
     //FOOTER============================================================================

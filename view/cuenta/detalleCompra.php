@@ -13,11 +13,12 @@ $dir = "../inicio_cliente/index.php";
 $rol = "Cliente";
 $sesion->permisoAcceso($dir, $rol);
 
-foreach ($datos as $clave => $valor) {
-    $idcompra = str_replace("Seleccion:", '', $clave);
+foreach ($datos as $clave => $valor) {    
+    //$idcompra = str_replace("Seleccion:", '', $clave);
     $idcompraitem = str_replace("idcompraitem:", '', $clave);
 }
-
+$idcompra = $datos["idcompra"];
+//var_dump($datos);
 $where = ["idcompra" => $idcompra];
 
 $arreglo = $abmitem->buscar($where);
@@ -47,7 +48,7 @@ $coprecio = $compra->getcompraprecio();
         //var_dump($idcompra);
         echo "<form id='carrito' name='catalogo' method='POST' action='misCompras.php'>
             <div class='row'> ";
-        echo '<div align="center">';
+        //echo '<div align="center">';
         echo "<input type='hidden' name='idcompra' id='idcompra'  value='$idcompra'>";
         echo "<input type='submit' name='Seleccion:$idcompraitem' id='Seleccion:$idcompraitem' class='btn btn-dark' value='Volver a mis compras'>";
         echo '</div>';
@@ -65,21 +66,22 @@ $coprecio = $compra->getcompraprecio();
             $nombre = $item->getidproducto()->getpronombre();
             $archivos = $obj->obtenerArchivosPorId($idproducto);
             $link = $archivos["link"];
-            echo "<div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
+            echo "<div class='d-grid col-lg-2 col-sm-4 mb-4'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
             </div>";
             echo "<div>$nombre</div>";
             echo "<div>c/u: $$proprecio</div>";
             echo "<div>Productos: x$cicantidad</div>";
-            echo "<div>:Precio: $$proprecio</div>";
-            echo "</div>";
-            echo "<input type='submit' formaction='../inicio_cliente/detallesProducto.php' name='Seleccion:$idproducto' id='Seleccion:$idproducto' class='btn btn-danger' value='Comprar de nuevo'>";
+            echo "<div>Precio: $$proprecio</div>";            
+            echo "<input type='submit' formaction='../inicio_cliente/detallesProducto.php' name='idproducto:$idproducto' id='idproducto:$idproducto' class='btn btn-danger' value='Comprar de nuevo'>";
         }
-        echo "<input type='submit'  name='idcompra' id='idcompra' class='btn btn-danger' value='$idcompra'>";
+        echo "<input type='hidden'  name='idcompra' id='idcompra' class='btn btn-danger' value='$idcompra'>";
         echo "<h4>Lo compraste el $fecha</h4>";
         echo "<div>Precio total $$coprecio</div>";
+        echo "</div>";
     }
     ?>
     </form>
+</div>
 </div>
 <?php
 //FOOTER============================================================================

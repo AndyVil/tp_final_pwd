@@ -57,8 +57,7 @@ if (array_key_exists("idcompra", $datos)) {
     $obj = new Formulario;
     $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
     $respuesta = $infoArchivo["Descripcion"];
-    $link = $infoArchivo["link"];
-    $ambCompra->buscar($where);
+    $link = $infoArchivo["link"];    
     //var_dump($infoArchivo);
     //var_dump($link);
     $filtroitem=array();

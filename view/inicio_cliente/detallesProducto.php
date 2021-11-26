@@ -13,11 +13,12 @@ if (array_key_exists('stock', $datos)){
     !la cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
     </div>";
 }
-if(array_key_exists('idcompra', $datos)){
-    foreach($datos as $clave => $valor) {
-        $datos["idproducto"] = str_replace("Seleccion:", '', $clave);
-    }
-}
+
+// if(array_key_exists('idcompra', $datos)){
+//     foreach($datos as $clave => $valor) {
+//         $datos["idproducto"] = str_replace("Seleccion:", '', $clave);
+//     }
+// }
 
 //$notNull = ($datos["mensaje"] != "null" && $datos["mensaje"] != null);
 
@@ -32,18 +33,43 @@ if (array_key_exists('mensaje', $datos)) {
     $where = ['idproducto' => $id];
     $productos = $Abmproducto->buscar($where);
     $precio = $productos[0]->getproprecio();
-} else {
-    
+    $nombre = $productos[0]->getpronombre();
+    $stock = $productos[0]->getprocantstock();
+    $detalle = $productos[0]->getprodetalle();
+}elseif(array_key_exists('idcompra', $datos)){
+    //var_dump($datos);
+    foreach($datos as $clave => $valor) {
+        $datos["idproducto"] = str_replace("idproducto:", '', $clave);
+        //var_dump($datos["idproducto"]);
+    }
+    //var_dump($datos);
+    $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
+    $respuesta = $infoArchivo["Descripcion"];
+    $link = $infoArchivo["link"];
+    //var_dump($infoArchivo);
+    //var_dump($link);
+    $id = $datos["idproducto"];
+    $where = ['idproducto' => $id];
+    $productos = $Abmproducto->buscar($where);
+    $precio = $productos[0]->getproprecio();
+    $nombre = $productos[0]->getpronombre();
+    $stock = $productos[0]->getprocantstock();
+    $detalle = $productos[0]->getprodetalle();
+}
+ else {
+    //var_dum($datos["idproducto"]);
     $infoArchivo = $obj->obtenerInfoDeArchivo($datos);
 
     $respuesta = $infoArchivo["Descripcion"];
     $link = $infoArchivo["link"];
+    //var_dum($link);
     $dot = mb_strripos($link, ".");
+    //var_dum($dot);
     $id = substr($link, 0, $dot);
     $slash = mb_strripos($link, "/");
-
+    //var_dump($link);
     $id = substr($id, $slash + 1);
-
+    //var_dump($id);
     $where = ['idproducto' => $id];
     $productos = $Abmproducto->buscar($where);
     $precio = $productos[0]->getproprecio();
