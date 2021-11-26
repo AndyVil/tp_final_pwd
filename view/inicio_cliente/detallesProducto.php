@@ -7,6 +7,18 @@ $sesion = new Session();
 $datos = data_submited();
 $Abmproducto = new AbmProducto();
 $obj = new Formulario();
+if (array_key_exists('stock', $datos)){
+    $datos["idproducto"]= $datos["stock"];
+    echo "<div class='alert alert-danger' role='alert' align=center>
+    !la cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
+    </div>";
+}
+if(array_key_exists('idcompra', $datos)){
+    foreach($datos as $clave => $valor) {
+        $datos["idproducto"] = str_replace("Seleccion:", '', $clave);
+    }
+}
+
 //$notNull = ($datos["mensaje"] != "null" && $datos["mensaje"] != null);
 
 // if ($datos["mensaje"] != "null" && $datos["mensaje"] !=null) {
@@ -21,6 +33,7 @@ if (array_key_exists('mensaje', $datos)) {
     $productos = $Abmproducto->buscar($where);
     $precio = $productos[0]->getproprecio();
 } else {
+    
     $infoArchivo = $obj->obtenerInfoDeArchivo($datos);
 
     $respuesta = $infoArchivo["Descripcion"];

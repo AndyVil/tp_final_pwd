@@ -52,19 +52,10 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 lucas
 js
 ajax
-arreglar bd para vincular el menu a idmenu
-arreglar vista de comprar carrito aceptar
-persona cambiar mail
+menus y botones
 
 
 santiago
-mis compras
-arreglar bd para vincular el menu a idmenu
-poder cambiar los roles, desactivarlos
-agregar eliminar usuario
+poder cambiar los roles, desactivarlos(agrigar la vista)
 que no se puedan agrega admin o no se lo pueda quitar
-
-
-
-Final
-estilos y limpiar codigo, comentarlo
+vista de agregar productos no esta funcionando (no se muestra nuevos productos)

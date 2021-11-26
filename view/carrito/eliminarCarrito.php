@@ -15,29 +15,11 @@ foreach ($datos as $clave => $valor) {
     
 }
 $datos["idcompraitem"] = $idcompraitem;
-if (!$sesion->activa()) {
-    header('Location: ../inicio_cliente/index.php');
-} else {
-    if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
-        list($sesionValidar, $error) = $sesion->validar();
-        if ($sesionValidar) {
-            $roles = $sesion->obtenerRol();
-            $escliente = $sesion->arrayRolesUser($roles);
-            if ($escliente['Cliente'] == true) {
-                $datos["idusuario"] = $sesion->getIdUser();
-                if($carrito->eliminarItem($datos)){
-                    echo "se elimino";
-                    header('Location: index.php');
-                }
-                else{
-                    echo "error al eliminar";
-                }
-            }
-
-        } else {
-            header('Location: ../inicio_cliente/index.php');
-        }
-    }
+$dir = "../inicio_cliente/index.php";
+$rol = "Cliente";
+$sesion->permisoAcceso($dir, $rol);
+if($carrito->eliminarItem($datos)){    
+    header('Location: index.php');
 }
 //HEADER============================================================================
 ?>

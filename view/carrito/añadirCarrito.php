@@ -9,80 +9,74 @@ $Abmproducto = new AbmProducto();
 $ambCompraEstado = new AbmCompraEstado();
 $ambCompraEstadoTipo = new AbmCompraEstadoTipo();
 //var_dump($datos);
-
-if (!$sesion->activa()) {
-    header('Location: ../inicio_cliente/index.php');
-} else {
-    if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
-        list($sesionValidar, $error) = $sesion->validar();
-        if ($sesionValidar) {
-            $roles = $sesion->obtenerRol();
-            $escliente = $sesion->arrayRolesUser($roles);
-            if ($escliente['Cliente'] == true) {
-                $datos["idusuario"] = $sesion->getIdUser();
-                $compras = $ambCompra->buscar($datos);
-                $objcarrito = array();
-                if (count($compras) > 0) {
-                    foreach ($compras as $compra) {
-                        $where['idcompra'] = $compra->getidcompra();
-                        $where['idcompraestadotipo'] = 1;
-                        //var_dump($where);
-                        $objcarrito = $ambCompraEstado->buscar($where);
-                        if (count($objcarrito) > 0) {
-                            break;
-                        }
-                    }
-                }
-                if (count($compras) == 0 && count($objcarrito) == 0) {
-                    list($idcompra,$iditem, $resp) = $carrito->crearcompra($datos, 1);
-                } elseif (count($objcarrito) > 0) {
-                    //echo "entro a añadir nuevo item";
-                    $idcompra = $objcarrito[0]->getidcompra();
-                    $whereitem = array();
-                    $whereitem["idcompra"] = $idcompra;
-                    $whereitem["idproducto"] = $datos["idproducto"];
-                    $items =  $ambitem->buscar($whereitem);
-                    if(count($items)==0){
-                        $datos["idcompra"] = $idcompra;
-                        $datos["idcompraitem"] = "DEFAULT";
-                        $resp = $carrito->sumarItem($datos);
-                    }
-                    else{
-                        $datos["idcompra"] = $idcompra;
-                        $datos["idcompraitem"] = $items[0]->getidcompraitem();
-                        $stock = $items[0]->getidproducto()->getprocantstock();
-                        $idproducto = $items[0]->getidproducto()->getidproducto();
-                        if(($items[0]->getcicantidad()+$datos["cicantidad"])>$stock){
-                            $datos["cicantidad"] = $stock;
-                        }
-                        //var_dump($datos);
-                        $datos["cicantidad"] = $items[0]->getcicantidad()+$datos["cicantidad"];
-                        $datos["ciprecio"] = $items[0]->getciprecio();                        
-                        $ambitem->modificacion($datos);
-                    }
-                    
-                    //echo $resp;
-                }
+$dir = "../inicio_cliente/index.php";
+$rol = "Cliente";
+$sesion->permisoAcceso($dir, $rol);
+    $datos["idusuario"] = $sesion->getIdUser();
+    $compras = $ambCompra->buscar($datos);
+    $objcarrito = array();
+    if (count($compras) > 0) {
+        foreach ($compras as $compra) {
+            $where['idcompra'] = $compra->getidcompra();
+            $where['idcompraestadotipo'] = 1;
+            //var_dump($where);            
+            $objcarrito = $ambCompraEstado->buscar($where);
+            
+            if (count($objcarrito) > 0) {
+                break;
             }
-            $obj = new Formulario;
-            $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
-            $respuesta = $infoArchivo["Descripcion"];
-            $link = $infoArchivo["link"];
-            //var_dump($infoArchivo);
-            //var_dump($link);
-            $id = $datos["idproducto"];
-            $where = ['idproducto' => $id];
-            $productos = $Abmproducto->buscar($where);
-            $precio = $productos[0]->getproprecio();
-            $precio = $productos[0]->getproprecio();
-            $nombre = $productos[0]->getpronombre();
-            $stock = $productos[0]->getprocantstock();
-            $detalle = $productos[0]->getprodetalle();
-        } else {
-            header('Location: ../inicio_cliente/index.php');
         }
     }
-}
+    //var_dump($objcarrito);
+    if (count($compras) == 0 || count($objcarrito) == 0) {
+        echo "creo la compra";
+        list($idcompra, $iditem, $resp) = $carrito->crearcompra($datos, 1);
+    } elseif (count($objcarrito) > 0) {
+        //echo "entro a añadir nuevo item";
+        $idcompra = $objcarrito[0]->getidcompra();
+        $whereitem = array();
+        $whereitem["idcompra"] = $idcompra;
+        $whereitem["idproducto"] = $datos["idproducto"];
+        $items =  $ambitem->buscar($whereitem);
+        if (count($items) == 0) {
+            $datos["idcompra"] = $idcompra;
+            $datos["idcompraitem"] = "DEFAULT";
+            $resp = $carrito->sumarItem($datos);
+        } else {
+            $datos["idcompra"] = $idcompra;
+            $datos["idcompraitem"] = $items[0]->getidcompraitem();
+            $stock = $items[0]->getidproducto()->getprocantstock();
+            $idproducto = $items[0]->getidproducto()->getidproducto();
+            if (($items[0]->getcicantidad() + $datos["cicantidad"]) > $stock) {
+                header("Location: ../inicio_cliente/index.php?stock=". urlencode($idproducto));
+                $datos["cicantidad"] = $stock;
+            }
+            //var_dump($datos);
+            $datos["cicantidad"] = $items[0]->getcicantidad() + $datos["cicantidad"];
+            $datos["ciprecio"] = $items[0]->getciprecio();
+            $ambitem->modificacion($datos);
+        }
+
+        //echo $resp;
+    }
+
+//cargo la informacion que cargo en el formulario cuando ingreso un carrito
+$obj = new Formulario;
+$infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
+$respuesta = $infoArchivo["Descripcion"];
+$link = $infoArchivo["link"];
+//var_dump($infoArchivo);
+//var_dump($link);
+$id = $datos["idproducto"];
+$where = ['idproducto' => $id];
+$productos = $Abmproducto->buscar($where);
+$precio = $productos[0]->getproprecio();
+$precio = $productos[0]->getproprecio();
+$nombre = $productos[0]->getpronombre();
+$stock = $productos[0]->getprocantstock();
+$detalle = $productos[0]->getprodetalle();
+
+
 //HEADER============================================================================
 ?>
 <div class="container">

@@ -28,7 +28,7 @@ $sesion->permisoAcceso($dir, $rol);
                 <div class='card-body'>
                     <h4 class='mt-4'>¿Realmente desea eliminar este Usuario?</h4>
                     <button href='#' formaction='listarUsuarios.php' class='btn btn-primary' id='accion' name='accion' type='submit' value='noAccion' style='width: 3rem;'>No</button>
-                    <button href='#' class='btn btn-danger' id='accion' name='accion' type='submit' value='borrar' style='width: 3rem;'>Sí</button>
+                    <button href='#' class='btn btn-danger' id='accion' name='accion' type='submit' value='deshabilitar' style='width: 3rem;'>Sí</button>
                 </div>
             </div>";
             ?>

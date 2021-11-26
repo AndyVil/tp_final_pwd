@@ -26,18 +26,19 @@ require_once("../structure/Header.php");
                 <br>
                 <br>
                 <label for="uspass">Contraseña</label> <br>
-                <input name="uspass" id="uspass" type="text" placeholder="Contraseña">
+                <input name="uspass" id="uspass" type="password" placeholder="Contraseña">
                 <br>
                 <br>
                 <input type="hidden" value="DEFAULT" name="idusuario" id="idusuario">
                 <input type="hidden" value="0000-00-00 00:00:00" name="usdeshabilitado" id="usdeshabilitado">
                 <!-- Submit -->
-                <input type="submit" value="Enviar" name="btn-form" id="btn-form" class="btn btn-success">
+                <input type="submit" value="Enviar" name="btn-form" id="btn-registro" class="btn btn-success">
                 <br>
                 <br>
                 <input type="reset" name="btn-form" id="btn-form" class="btn btn-warning">
             </form>
         </div>
+        <!-- <span id='aviso' class='alert alert-warning' role='alert' align='center'></span> -->
     </div>
 
 </div>

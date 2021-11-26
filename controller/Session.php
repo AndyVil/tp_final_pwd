@@ -146,6 +146,39 @@ class Session
         return $roles;
     }
 
+    /**
+     * 1.admin_ini 2.dep_ini 3.cliente_ini 4.login 5.registro 6.cuenta 7.carrito
+     */
+    public function menusroles($Arraymenu){
+        $validMenu = [
+            'Administrador' => false,
+            'Deposito' => false,
+            'Cliente' => false,
+            'superuser' => false
+        ];
+
+        foreach ($Arraymenu as $menu) {
+            switch ($menu) {
+                case '1':
+                    $validRol['Administrador'] = true;
+                    break;
+                case '2':
+                    $validRol['Deposito'] = true;
+                    break;
+                case '3':
+                    $validRol['Cliente'] = true;
+                    break;
+                case '4':
+                    $validRol['Administrador'] = true;
+                    $validRol['Deposito'] = true;
+                    $validRol['Cliente'] = true;
+                    $validRol['superuser'] = true;
+                    break;
+            }
+        }
+
+        return $validMenu;
+    }
 
     /**
      * @param array de id Roles

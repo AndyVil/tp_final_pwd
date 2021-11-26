@@ -38,7 +38,7 @@ $id = '';
                 <br>
                 <br>
                 <label for="uspass">Contraseña</label> <br>
-                <input name="uspass" id="uspass" type="text" placeholder="Contraseña">
+                <input name="uspass" id="uspass" type="password" placeholder="Contraseña">
                 <br>
                 <br>
                 <!-- Submit -->

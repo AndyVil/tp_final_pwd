@@ -59,14 +59,15 @@ class Carrito
         $filtro["idcompra"] = $datos["idcompra"];
         $carrito = $ambCompraEstado->buscar($filtro);
         //var_dump($carrito);
-        var_dump($filtro);
+        //var_dump($filtro);
         $filtro["idcompraestado"] = $carrito[0]->getidcompraestado();
         $filtro["idcompraestadotipo"] = 2;
         $filtro["cefechaini"] = null;
         $filtro["cefechafin"] = date('Y-m-d h:i:s');
+        $filtro["cofecha"] = date('Y-m-d h:i:s');
         //var_dump($filtro);
         if ($ambCompraEstado->modificacion($filtro)) {
-            echo "modifico compra estado";
+            //echo "modifico compra estado";
             if ($ambCompra->modificacion($datos)) {
                 $filtro = array();
                 $filtro["idcompra"] = $datos["idcompra"];
@@ -79,7 +80,7 @@ class Carrito
                     $modificacion["prodetalle"] = $producto->getprodetalle();
                     $modificacion["procantstock"] = $producto->getprocantstock() - $item->getcicantidad();
                     if ($abmProducto->modificacion($modificacion)) {
-                        echo "modifico item";
+                        //echo "modifico item";
                         $return = true;
                     }
                 }

@@ -33,8 +33,12 @@ if (!$sesion->activa()) {
                     $where['idcompraestadotipo'] = 2;
                     //var_dump($where);
                     $estado = $ambCompraEstado->buscar($where);
-                    //var_dump($estado);                   
-                    array_push($aceptadas, $estado[0]);
+                    //var_dump($estado);
+                    if (count($estado) > 0) {
+                        array_push($aceptadas, $estado[0]);
+                    } else {
+                        echo "no tienes compras aun";
+                    }
                 }
             }
             //var_dump($aceptadas);
@@ -49,10 +53,9 @@ if (!$sesion->activa()) {
                 foreach ($aceptadas as $compraestado) {
                     //var_dump($compraestado);
                     $idcompra = $compraestado->getidcompra();
-                    $filtro = ['idcompra' => $idcompra];
-                    $items = $ambitems->buscar($filtro);
-
-                    //var_dump($items);
+                    $filtro = Array();
+                    $filtro['idcompra']=$idcompra;
+                    $items = $ambitems->buscar($filtro);                   
                     foreach ($items as $item) {
                         $idproducto = $item->getidproducto()->getidproducto();
                         //var_dum($idproducto);
@@ -60,15 +63,18 @@ if (!$sesion->activa()) {
                         //var_dum($archivos["link"]);
                         $arreglo[$i]["link"] = $archivos["link"];
                         $arreglo[$i]["idproducto"] = $idproducto;
+                        $arreglo[$i]["nombre"] = $item->getidproducto()->getpronombre();
                         $arreglo[$i]["proprecio"] = $item->getidproducto()->getproprecio();
                         $arreglo[$i]["ciprecio"] = $item->getciprecio();
                         $arreglo[$i]["idcompraitem"] = $item->getidcompraitem();
                         $arreglo[$i]["cicantidad"] = $item->getcicantidad();
+                        $arreglo[$i]["cicantidad"] = $item->getcicantidad();
+                        $arreglo[$i]["fecha"] = $compraestado->getcefechafin();
                         $arreglo[$i]["idcompra"] = $idcompra;
-
+                        $i++;
                         //$arreglo["idproducto"] = $idproducto;
                     }
-                    $i++;
+                    
                 }
                 //var_dump($arreglo);
             }
@@ -99,37 +105,32 @@ if (!$sesion->activa()) {
                         No tienes nada en tu aceptadas aún.
                         </div>";
     } else {
-        $compraExitosa = data_submited(); #Redireccion desde compraexitosa.php
-        if ($compraExitosa != null) {
-            echo "<div class='alert alert-success' role='alert' align=center>
-                ¡La compra fue exitosa!
-            </div>";
-        }
-
-        echo "<form id='aceptadas' name='catalogo' method='POST' action='../inicio_cliente/detallesproducto.php'>
+        echo "<form id='aceptadas' name='catalogo' method='POST' action='detalleCompra.php'>
             <div class='row'> ";
+            var_dump($arreglo);
         foreach ($arreglo as  $archivo) {
             $idcompra = $archivo["idcompra"];
-            $link = $archivo["link"];            
-            $idproducto = $arreglo[$i]["idproducto"];
-            $proprecio = $arreglo[$i]["proprecio"];
-            $ciprecio = $arreglo[$i]["ciprecio"];
-            $idcompraitem = $arreglo[$i]["idcompraitem"];
-            $cicantidad = $arreglo[$i]["cicantidad"];   
-
+            $link = $archivo["link"];
+            $idproducto = $archivo["idproducto"];
+            $proprecio = $archivo["proprecio"];
+            $ciprecio = $archivo["ciprecio"];
+            $idcompraitem = $archivo["idcompraitem"];
+            $cicantidad = $archivo["cicantidad"];
+            $fecha = $archivo["fecha"];
+            $nombre = $archivo["nombre"];
             //var_dum($archivo);
             echo
             "<div id='pelis' class='d-grid col-lg-2 col-sm-4 mb-4'>
+                        <h4 align='center'>$nombre</h4>
                         <img class='img-fluid' alt='$link' src='$link' width='100%'>
                         <div class='d-grid align-items-end'>
-                        <input type='hidden' name='imagen' id='proprecio' value='$archivo'> 
-                        <input type='hidden' name='proprecio' id='proprecio' value='$proprecio'> 
-                        <input type='hidden' name='ciprecio' id='v' value='$ciprecio'> 
-                        <input type='hidden' name='idcompraitem' id='idcompraitem' value='$idcompraitem'> 
-                        <input type='hidden' name='cicantidad' id='cicantidad' value='$cicantidad'> 
-                        <input type='hidden' name='idproducto' id='idproducto' value='$idproducto'> 
-                        <input type='hidden' name='idcompra' id='idcompra' value='$idcompra'>                            
-                        <input type='submit' name='Seleccion:$idcompra' id='Seleccion:$idcompra' class='btn btn-primary' value='Ver Detalles'>";
+
+						<div>Fecha de Compra:<br>$fecha</div>
+						<div>Precio Total: $$ciprecio</div>
+						</div>
+                        <input type='hidden' name='idcompraitem:$idcompraitem' id='idcompraitem:$idcompraitem' value='$idcompraitem'>                            
+                        <input type='submit' name='Seleccion:$idcompra' id='Seleccion:$idcompra' class='btn btn-light' value='Ver detalles de compra'>";
+
             echo "</div>
                     </div>";
         }

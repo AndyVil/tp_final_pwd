@@ -21,7 +21,7 @@ if (!$sesion->activa()) {
             $f['idusuario'] = $sesion->getIdUser();
             $compras = $abmCompra->buscar($f);
             $carrito = array();
-            
+            //var_dump($compras);
             if (count($compras) > 0) {
                 foreach ($compras as $compra) {
                     $where['idcompra'] = $compra->getidcompra();
@@ -68,6 +68,8 @@ if (!$sesion->activa()) {
                     
                     //var_dump($arreglo);
                 }
+            }else{
+                $arreglo = false;
             }
         } else {
             $arreglo = false;
@@ -88,7 +90,7 @@ if (!$sesion->activa()) {
     <?php
      //var_dump($arreglo);
     if ($arreglo === false) {
-        echo "<div class='alert alert-warning' role='alert' align=center>
+        echo "<div class='alert alert-warning' role='alert' align='center'>
                         No tienes nada en tu carrito aún.
                         </div>";
     } else {
@@ -114,7 +116,7 @@ if (!$sesion->activa()) {
                 "<div id='pelis' class='d-grid col-lg-2 col-sm-4 mb-4'>
                         <img class='img-fluid' alt='$link' src='$link' width='100%'>
                         <div class='d-grid align-items-end'>
-                        
+                        <div align='center'>x$cicantidad </div>
                         <input type='hidden' name='imagen' id='imagen' value='$link'> 
                         <input type='hidden' name='proprecio' id='proprecio' value=$proprecio'> 
                         <input type='hidden' name='ciprecio' id='v' value='$ciprecio'> 
@@ -131,7 +133,7 @@ if (!$sesion->activa()) {
     }
     ?>
     </form>
-
+    </div>
     <?php
     //FOOTER============================================================================
     require_once("../structure/footer.php");

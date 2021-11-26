@@ -70,7 +70,8 @@ Class CompraEstado{
     {   
         if($valor!=null){
             $this->cefechaini=$valor;
-        }        
+        }
+                
         //var_dump($valor);
 
         // $cefechaini = $this->getidcompraestado();
