@@ -58,6 +58,31 @@ class Formulario
         return $retorno;
     }
 
+    public function borrarArchivos($nombre, $datos){
+        $retorno = false;
+        /**
+         * Reescalamos la imagen, creamos un txt con la descripcion como contenido
+         */
+        $dir = $GLOBALS['ROOT'] . 'uploads/';
+        $todoOK = true;
+        if ($todoOK && !  unlink($_FILES['productoImagen']['tmp_name'], $dir . $nombre)) {
+            $error = "ERROR: No se pudo copiar la imagen.";
+            $todoOK = false;
+            $retorno = true;
+        }
+        // $pos = mb_strripos($nombre, ".");
+
+
+        // $txtName = substr($nombre, 0, $pos) . ".txt";
+        // $txtName = $dir . $txtName;
+        // $texto = $this->verInformacion($datos, $nombre);
+        // /* fopen crea un nuevo archivo con nombre $name y con "w" reemplaza la información si ya existia */
+        // $ar = fopen($txtName, "w") or die("error al crear");
+        // fwrite($ar, $texto);
+        // fclose($ar);
+
+        return $retorno;
+    }
 
     /**
      * @param string $nombre (Nombre del archivo)

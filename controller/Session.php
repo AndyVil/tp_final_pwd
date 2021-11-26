@@ -156,13 +156,16 @@ class Session
         $arrayMenu = [];
         foreach($roles as $rol){
             $where = ['idrol' => $rol];
-            $menu = $abmMenu->buscar($where);
-
-            array_push($arrayMenu, $menu);
+            $menus = $abmMenu->buscar($where);
+            foreach($menus as $menu){
+                $idmenu = $menu->getidMenu();
+                array_push($arrayMenu, $idmenu);
+            }
+            // ahora hay que comparar con lo que te mande desde cada script 
         }
-        print_r($arrayMenu);
+        //print_r($arrayMenu);
 
-
+        return $arrayMenu;
     }
 
 
@@ -192,16 +195,16 @@ class Session
                 case '3':
                     $validMenu['cliente_ini'] = true;
                     break;
-                case '5':
+                case '4':
                     $validMenu['login'] = true;
                     break;
-                case '6':
+                case '5':
                     $validMenu['registro'] = true;
                     break;
-                case '7':
+                case '6':
                     $validMenu['cuenta'] = true;
                     break;
-                case '8':
+                case '7':
                     $validMenu['carrito'] = true;
                     break;
             }
@@ -214,7 +217,7 @@ class Session
      * @param array de id Roles
      * @return array booleano
      */
-    public function arrayRolesUser($ArrayIdRoles)
+        public function arrayRolesUser($ArrayIdRoles)
     {
         $validRol = [
             'Administrador' => false,

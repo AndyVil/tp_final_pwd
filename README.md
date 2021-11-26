@@ -49,15 +49,9 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 
 
 
-lucas
+FALTA
 js
 ajax
-menus y botones
 que se puedan agregar menus a los roles
-
-santiago
 poder cambiar los roles, desactivarlos(agrigar la vista)
 que no se puedan agrega admin o no se lo pueda quitar
-vista de agregar productos no esta funcionando (no se muestra nuevos productos)
-
-no se eliminan los producos de la vista cuando se quitan de la base de datos

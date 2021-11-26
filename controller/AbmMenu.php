@@ -23,7 +23,7 @@ class AbmMenu
             $objpadre = new Menu();
             $objpadre->setidmenu($param['idpadre']);
             $objpadre->cargar();
-            $obj->setear($param['idmenu'], $param['menombre'], $param['medescripcion'], $objpadre, $param['menudeshabilitado']);
+            $obj->setear($param['idmenu'], $param['menombre'], $param['medescripcion'], $param['idpadre'], $param['menudeshabilitado']);
         }
         return $obj;
     }

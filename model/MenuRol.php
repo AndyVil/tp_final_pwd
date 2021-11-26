@@ -95,7 +95,7 @@ class MenuRol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO menurol (idmenu,idrol)  VALUES ('" . $this->getidMenu()->getidmenu() . "','" . $this->getidrol()->getidrol() . "')";
+        $sql = "INSERT INTO menurol (idmenu,idrol)  VALUES ('" . $this->getidMenu() . "','" . $this->getidrol() . "')";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -114,7 +114,7 @@ class MenuRol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM menurol WHERE idmenu = " . $this->getidMenu()->getidMenu() . "and idrol =" . $this->getidrol()->getidrol();
+        $sql = "DELETE FROM menurol WHERE idmenu = " . $this->getidMenu() . "and idrol =" . $this->getidrol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 return true;
@@ -154,7 +154,7 @@ class MenuRol
                         $idRol->cargar();
                     }
                     $id = new Menurol();
-                    $id->setear($idMenu, $idRol);
+                    $id->setear($row['idmenu'], $row['idrol']);
                     array_push($arreglo, $id);
                 }
             }

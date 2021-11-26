@@ -19,7 +19,13 @@ $arrProductos = $productos->buscar(null);
 if ($datos["accion"] == "borrar") {
 	$productos->baja($datos);
 	$idproducto = $datos['idproducto'];
-	header("Location: index.php?mensaje="). urlencode("se elimino exitosamente el producto: ".$idproducto);
+
+	$formularioCargarProducto = new Formulario();
+	$array = $formularioCargarProducto->obtenerArchivosPorId($idproducto);
+	$link= $array["link"];
+	//prueba haber si funciona y borra el archivo
+	$succes = unlink($link);
+	header("Location: index.php?mensaje=" . urlencode("Se elimino exitosamente el producto: " . $idproducto));
 } else {
 
 	//Llamada a clases y resolucion del problema
@@ -80,6 +86,7 @@ if ($datos["accion"] == "borrar") {
 			
 		}
 	}
+
 
 }
 

@@ -50,30 +50,32 @@
           $roles = $sesion->obtenerRol(); #La funcion la cree debajo del validarRol() en Sesion
           $validRol = $sesion->arrayRolesUser($roles);
 
-          $sesion->idMenu($roles);
+          $menus = $sesion->idMenu($roles);
+          $validMenu = $sesion->menusroles($menus);
+          //var_dump($validMenu);
+ 
+//array(7) { ["admin_ini"]=> bool(true) ["dep_ini"]=> bool(true) ["cliente_ini"]=> bool(true) ["login"]=> bool(true) ["registro"]=> bool(true) ["cuenta"]=> bool(true) ["carrito"]=> bool(true) }
 
-
-          
           echo "
               <li class='nav-item'>
               <a id='cliente_ini' class='nav-link' href='./../inicio_cliente/'>Catalogo</a>
               </li>
             ";
-          if ($validRol['Cliente'] == true || $validRol['superuser'] == true) {
+          if ($validMenu['carrito'] == true) {
             echo "
               <li class='nav-item'>
               <a id='carrito' class='nav-link' href='./../carrito/'>Carrito</a>
               </li>
             ";
           }
-          if ($validRol['Deposito'] == true || $validRol['superuser'] == true) {
+          if ($validMenu['dep_ini'] == true) {
             echo "
               <li class='nav-item'>
               <a id='dep_ini' class='nav-link' href='./../inicio_deposito/'>Deposito</a>
               </li>
             ";
           }
-          if ($validRol['Administrador'] == true || $validRol['superuser'] == true) {
+          if ($validMenu['admin_ini'] == true) {
             echo "
               <li class='nav-item'>
               <a id='admin_ini' class='nav-link' href='./../inicio_admin/'>Administrador</a>
