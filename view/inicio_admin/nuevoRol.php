@@ -18,7 +18,7 @@ $sesion->permisoAcceso($dir, $rol);
 	<div class="row" style="padding-top: 2%;">
 		<div class="col" align="center">
 			<!-- Formulario -->
-			<form id="nuevoRol" name="nuevoRol" method="POST" action="abmRol.php" data-toggle="validator">
+			<form id="nuevoRol" name="nuevoRol" method="POST" action="actionMenuRol.php" data-toggle="validator">
 				<label for="roldescricion">Descripcion de Rol</label> <br>
 				<input name="roldescricion" id="roldescricion" type="text" placeholder="Descripcion de Rol" required>
 				<br>

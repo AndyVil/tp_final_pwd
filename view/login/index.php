@@ -14,6 +14,14 @@ if ($objLogin->activa()) {
           Datos incorrectos!
           </div>";
 }
+if (array_key_exists('message', $datos)) {
+
+    $mensaje = $datos["message"];
+    echo "<div class='alert alert-success' role='alert' align=center>
+    $mensaje
+  </div>
+  ";
+}
 $id = '';
 
 
@@ -32,7 +40,7 @@ $id = '';
     <div class="row" style="padding-top: 2%;">
         <div class="col" align="center">
             <!-- Formulario -->
-            <form class="form-signin" id="login" name="login" action="verificarLogin.php" method="POST">
+            <form class="form-signin" id="login" name="login" action="action.php" method="POST">
                 <label for="usnombre">Usuario</label> <br>
                 <input name="usnombre" id="usnombre" type="text" placeholder="Usuario">
                 <br>

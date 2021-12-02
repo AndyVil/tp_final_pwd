@@ -9,7 +9,6 @@ $url = data_submited();
 $dir = "../inicio_cliente/index.php";
 $rol = "Deposito";
 $sesion = new Session();
-//echo "entra a permisos";
 $sesion->permisoAcceso($dir, $rol);
 
 ?>

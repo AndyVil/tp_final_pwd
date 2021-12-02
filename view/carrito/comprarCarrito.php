@@ -8,11 +8,11 @@ foreach ($datos as $key => $valor) {
 	$accion = $valor;
 }
 if (!array_key_exists("idcompra", $datos)) {
+	$abmItem = new AbmCompraItem();
+	$abmproducto = new AbmProducto();
 	$pronombre = $datos["pronombre"];
 	$procantstock = $datos["procantstock"];
 	$prodetalle = $datos["prodetalle"];
-	$abmItem = new AbmCompraItem();
-	$abmproducto = new AbmProducto();
 	$idproducto = $datos["idproducto"];
 	$productos = $abmproducto->buscar($datos);
 	$proprecio = $productos[0]->getproprecio();
@@ -24,7 +24,6 @@ if (!array_key_exists("idcompra", $datos)) {
 }
 $abmItem = new AbmCompraItem();
 $abmcompra = new AbmCompra();
-//var_dump($datos);
 
 //HEADER================================================================================
 ?>

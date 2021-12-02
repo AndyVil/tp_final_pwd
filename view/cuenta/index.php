@@ -21,30 +21,27 @@ require_once("../structure/Header.php");
             $rol = $sesion->obtenerRol();
             $cliente = $sesion->arrayRolesUser($rol);
             $type = "hidden";
-            //var_dum($sesion->getIdUser());
 
             $usuario = new AbmUsuario();
             $idUsuario = [];
             $idUsuario['idusuario'] = $sesion->getIdUser();
             $user = $usuario->buscar($idUsuario);
-            //var_dump($user);
             $mail = $user[0]->getusmail();
-            //var_dum($mail);
+
             
             if ($cliente['Cliente'] == true) {
                 $ref = "miscompras.php";
                 $type = "button";
-                //echo '<button  class="btn btn-dark" onclick="location.href="./cerrarSesion.php"">Mis Compras</button>'; 
 
-                //CAMBIAR LA RUTA!!!!!!!!!!!!!-------------------------------------------------------------------------------------------------------------
+                echo '<form action="action.php" method="POST">';
                 echo '<br><br><input type="text" id="emailCambio" name="emailCambio" placeholder="Nuevo Email" value="'.$mail. '"> '; 
-                echo "<button class='btn btn-light' formaction='' id='accion' name='accion' value='editar'>Cambiar email</button><br><br>";
+                echo "<button class='btn btn-light' id='accion' name='accion' value='editar'>Cambiar email</button><br><br>";
+                echo '</form>';
             }
 
             ?>
-            <!-- <button class="btn btn-dark" onclick="location.href='misCompras.php'">Mis Compras</button> -->
             <input type="<?=$type?>" value="Mis Compras" class="btn btn-dark" onclick="location.href='<?=$ref?>'">
-            
+
 
         </div>
         <br><br>

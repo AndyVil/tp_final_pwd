@@ -33,7 +33,7 @@ $sesion->permisoAcceso($dir, $rol);
     <div class="row" align="center">
         <div align="center" id="columnaCarga" style="padding-top: 20px;">
 
-            <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
+            <form action="action.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
 
                 <div class="row align-items-center">
 

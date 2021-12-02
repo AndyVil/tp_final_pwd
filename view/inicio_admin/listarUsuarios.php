@@ -1,14 +1,12 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-$objAbmTabla = new AbmUsuario();
-$listaTabla = $objAbmTabla->buscar(null);
-
 $url = data_submited();
+$sesion = new Session();
 $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
-$sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
+
 //HEADER============================================================================
 ?>
 
@@ -30,8 +28,6 @@ $sesion->permisoAcceso($dir, $rol);
                     <thead>
                         <br>
                         <h3 align="center">Listar Usuarios</h3>
-
-
                         <?php
                         $edicion = data_submited();
                         if (array_key_exists('mensaje', $edicion)) {
@@ -46,11 +42,7 @@ $sesion->permisoAcceso($dir, $rol);
                                 </div>";
                             }
                         }
-                        
                         ?>
-
-
-
                         <hr>
                         <tr>
                             <th scope="col" id="tablepadding">Id</th>
@@ -60,7 +52,8 @@ $sesion->permisoAcceso($dir, $rol);
                         </tr>
                     </thead>
                     <?php
-
+                    $objAbmTabla = new AbmUsuario();
+                    $listaTabla = $objAbmTabla->buscar(null);
                     if (count($listaTabla) > 0) {
                         $i = 1;
                         echo '<tbody>';

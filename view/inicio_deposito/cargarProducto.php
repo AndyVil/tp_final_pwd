@@ -29,7 +29,7 @@ $sesion->permisoAcceso($dir, $rol);
 
         <div align="center" id="columnaCarga">
 
-            <form action="abmProducto.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
+            <form action="action.php" method="POST" name="cargaProducto" id="cargaProducto" enctype="multipart/form-data">
 
                 <div class="row align-items-center">
 
@@ -61,7 +61,7 @@ $sesion->permisoAcceso($dir, $rol);
                         <label for="talle">S</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-m' value='M'>
                         <label for="talle">M</label>
-                        <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L'checked>
+                        <input type="checkbox" name='talle[]' class="talle" id='talle-l' value='L' checked>
                         <label for="talle">L</label>
                         <input type="checkbox" name='talle[]' class="talle" id='talle-xl' value='XL'>
                         <label for="talle">XL</label>

@@ -2,85 +2,17 @@
 require_once("../structure/Header.php");
 $datos = data_submited();
 $sesion = new Session();
-$ambCompra = new AbmCompra();
-$ambitem = new AbmCompraItem();
-$carrito = new Carrito();
-$Abmproducto = new AbmProducto();
-$ambCompraEstado = new AbmCompraEstado();
-$ambCompraEstadoTipo = new AbmCompraEstadoTipo();
-$arreglo   = array();
-$idcompra ="";
-//var_dump($datos);
 $dir = "../inicio_cliente/index.php";
 $rol = "Cliente";
 $sesion->permisoAcceso($dir, $rol);
-if (array_key_exists("idcompra", $datos)) {
-    //echo "entro compra carrito";
-    $idcompra = $datos["idcompra"];
-    $resp = $carrito->confirmarcarrito($datos);
-    $filtroitem=array();
-    $filtroitem["idcompra"] = $idcompra;
-    $items = $ambitem->buscar($filtroitem);
-    $compras= $ambCompra->buscar($filtroitem);
-    $compra = $compras[0];
-    $coprecio = $compra->getcompraprecio();
-    $cofecha = $compra->getcofecha();
-    $i = 0;
-    //var_dum($items);
-    foreach ($items as $item) {
-        $id = $item->getidproducto()->getidproducto();
-        $obj = new Formulario;
-        $infoArchivo = $obj->obtenerArchivosPorId($id);
-        $respuesta = $infoArchivo["Descripcion"];
-        $link = $infoArchivo["link"];
-        //var_dump($infoArchivo);
-        //var_dump($link);
-        
-        $where=array();
-        $where["idproducto"] = $id;        
-        $productos = $Abmproducto->buscar($where);
-        $arreglo[$i]["idproducto"] = $id;
-        $arreglo[$i]["pronombre"] = $productos[0]->getpronombre();
-        $arreglo[$i]["prodetalle"] = $productos[0]->getprodetalle();
-        $arreglo[$i]["procantstock"] = $productos[0]->getprocantstock();
-        $arreglo[$i]["cicantidad"] = $item->getcicantidad();
-        $arreglo[$i]["proprecio"] = $productos[0]->getproprecio();
-        $arreglo[$i]["ciprecio"] = $item->getciprecio();
-        $arreglo[$i]["link"] = $link;
-        $i++;
-    }
-} else {
-    $i = 0;
-    $datos["idusuario"] = $sesion->getIdUser();
-    list($idcompra, $iditem, $resp) = $carrito->crearcompra($datos, 2);
-    //echo "Exito al carga de la compra: " . $resp;
-    $obj = new Formulario;
-    $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
-    $respuesta = $infoArchivo["Descripcion"];
-    $link = $infoArchivo["link"];    
-    //var_dump($infoArchivo);
-    //var_dump($link);
-    $filtroitem=array();
-    $filtroitem["idcompra"] = $idcompra;
-    $compras= $ambCompra->buscar($filtroitem);
-    $compra = $compras[0];
-    $coprecio = $compra->getcompraprecio();
-    $cofecha = $compra->getcofecha();
-    $items = $ambitem->buscar($filtroitem);
-    $item = $items[0];
-    $id = $datos["idproducto"];
-    $where = ['idproducto' => $id];
-    $productos = $Abmproducto->buscar($where);
-    $arreglo[$i]["idproducto"] = $id;
-    $arreglo[$i]["prodetalle"] = $productos[0]->getprodetalle();
-    $arreglo[$i]["procantstock"] = $productos[0]->getprocantstock();
-    $arreglo[$i]["pronombre"] = $productos[0]->getpronombre();
-    $arreglo[$i]["cicantidad"] = $item->getcicantidad();
-    $arreglo[$i]["proprecio"] = $productos[0]->getproprecio();
-    $arreglo[$i]["ciprecio"] = $item->getciprecio();
-    $arreglo[$i]["link"] = $link;
-}
 
+$carrito = new Carrito();
+$resultado = $carrito->compraExitosa($datos);
+
+$arreglo = $resultado['arreglo'];
+$idcompra = $resultado['idcompra'];
+$coprecio = $resultado['coprecio'];
+$cofecha = $resultado['cofecha'];
 
 //HEADER============================================================================
 ?>
@@ -94,7 +26,6 @@ if (array_key_exists("idcompra", $datos)) {
     <form id="carrito" name="carrito" method="POST" action="../cuenta/detalleCompra.php">
         <div class="row">
             <?php    
-            //var_dump($arreglo);  
             echo "<div class='alert alert-success mt-5' role='alert'>";
 
             foreach ($arreglo as $item) {
@@ -142,9 +73,6 @@ if (array_key_exists("idcompra", $datos)) {
 
 
 <?php
-//$compraExitosa = 'compra exitosa';
-//header('Location:../cuenta/miscompras.php?mensaje=' . urlencode($compraExitosa));
-
 //FOOTER============================================================================
 require_once("../structure/footer.php");
 ?>

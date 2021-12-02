@@ -1,15 +1,15 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-//$objAbmTabla = new AbmRol();
-$menuRoles = new AbmMenurol();
-$listaMenu = $menuRoles->buscar(null);
-//$listaTabla = $objAbmTabla->buscar(null);
-
 $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
 $sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
+
+//$objAbmTabla = new AbmRol();
+$menuRoles = new AbmMenurol();
+$listaMenu = $menuRoles->buscar(null);
+//$listaTabla = $objAbmTabla->buscar(null);
 //HEADER============================================================================
 ?>
 
@@ -19,7 +19,7 @@ $sesion->permisoAcceso($dir, $rol);
 
 <div align="center">
     <!-- Botones -->
-    <button onclick="location.href='nuevoRol.php'" class="btn btn-dark">Nuevo Rol</button>
+    <button onclick="location.href='nuevoRol.php'" class="btn btn-dark">Nuevo Menu-Rol</button>
     <button onclick="location.href='listarUsuarios.php'" class="btn btn-dark">Usuarios</button>
 </div>
 
@@ -50,26 +50,50 @@ $sesion->permisoAcceso($dir, $rol);
                         //$id = $objRol->getidRol();
                         $idRol = $menu -> getidrol();
                         $idMenu = $menu -> getidMenu();
-                        $descripcion = '';
+                        $descripcionRol = '';
                         switch ($idRol) {
                             case '1':
-                                $descripcion = 'Administrador';
+                                $descripcionRol = 'Administrador';
                                 break;
                             case '2':
-                                $descripcion = 'Deposito';
+                                $descripcionRol = 'Deposito';
                                 break;
                             case '3':
-                                $descripcion = 'Cliente';
+                                $descripcionRol = 'Cliente';
                                 break;
                             case '4':
-                                $descripcion = 'Superusuario';
+                                $descripcionRol = 'Superusuario';
+                                break;
+                        }
+                        $descripcionMenu = '';
+                        switch ($idMenu) {
+                            case '1':
+                                $descripcionMenu = 'admin_ini';
+                                break;
+                            case '2':
+                                $descripcionMenu = 'dep_ini';
+                                break;
+                            case '3':
+                                $descripcionMenu = 'cliente_ini';
+                                break;
+                            case '4':
+                                $descripcionMenu = 'login';
+                                break;
+                            case '5':
+                                $descripcionMenu = 'registro';
+                                break;
+                            case '6':
+                                $descripcionMenu = 'cuenta';
+                                break;
+                            case '7':
+                                $descripcionMenu = 'carrito';
                                 break;
                         }
 
 
                         echo '<tr class="align-middle">';
-                        echo '<th scope="row" id="tablepadding">' . $idMenu .'</th>';
-                        echo '<td id="tablepadding">(' . $idRol .') '.$descripcion . '</td>';
+                        echo '<th scope="row" id="tablepadding">(' . $idMenu .') '. $descripcionMenu . '</th>';
+                        echo '<td id="tablepadding">(' . $idRol .') '. $descripcionRol . '</td>';
                         echo '
                         <td class="text-center">
                             <button class="btn btn-success btn-sm" type="submit" value="' . $idMenu . '" id="proEdit" name="roledit" role="roledit">

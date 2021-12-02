@@ -12,7 +12,7 @@ require_once("../structure/Header.php");
 	<div class="row" style="padding-top: 2%;">
 		<div class="col" align="center">
 			<!-- Formulario -->
-			<form id="nuevoUsuario" name="nuevoUsuario" method="POST" action="abmUsuario.php" data-toggle="validator">
+			<form id="nuevoUsuario" name="nuevoUsuario" method="POST" action="actionUsuario.php" data-toggle="validator">
 				<label for="usnombre">Usuario</label> <br>
 				<input name="usnombre" id="usnombre" type="text" placeholder="Usuario">
 				<br>

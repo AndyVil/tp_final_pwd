@@ -1,20 +1,18 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-$datos = data_submited();
-$rol = new AbmRol();
-$usuariorol = new AbmUsuarioRol();
-$allrol = $rol->buscar(null);
-$objAbmUsuario = new AbmUsuario();
-$filtro = array();
-$filtro['idusuario'] = $datos['roledit'];
-$unUsuario = $objAbmUsuario->buscar($filtro);
-$colrol = $usuariorol->buscar($filtro);
-
 $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
 $sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
+
+$datos = data_submited();
+$formulario = new Formulario();
+$respuesta = $formulario -> actualizarLogin($datos);
+$allrol = $respuesta['allrol'];
+$unUsuario = $respuesta['unUsuario'];
+$colrol= $respuesta['colrol'];
+
 
 
 //HEADER============================================================================
@@ -28,7 +26,7 @@ $sesion->permisoAcceso($dir, $rol);
 </div>
 
 <div class="container">
-    <form id="actualizarLogin" method="POST" action="abmUsuario.php">
+    <form id="actualizarLogin" method="POST" action="actionUsuario.php">
         <?php
 
         if (count($unUsuario) > 0) {

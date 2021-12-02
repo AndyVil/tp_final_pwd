@@ -20,7 +20,7 @@ $sesion->permisoAcceso($dir, $rol);
 </div>
 
 <div class="row my-5">
-    <form class="mb-5" method="POST" action="abmProducto.php">
+    <form class="mb-5" method="POST" action="action.php">
         <div class="d-flex justify-content-center">
             <?php
             echo "<input class='d-none' id='idproducto' name='idproducto' type='hidden' value='" . $id . "'>";

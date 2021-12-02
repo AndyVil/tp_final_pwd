@@ -6,29 +6,18 @@ $arreglo = $obj->obtenerArchivos();
 $sesion = new Session();
 $datos = data_submited();
 $Abmproducto = new AbmProducto();
-$obj = new Formulario();
+
 if (array_key_exists('stock', $datos)) {
     $datos["idproducto"] = $datos["stock"];
     echo "<div class='alert alert-danger' role='alert' align=center>
-    !La cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
+    ¡La cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
     </div>";
 }
 
-// if(array_key_exists('idcompra', $datos)){
-//     foreach($datos as $clave => $valor) {
-//         $datos["idproducto"] = str_replace("Seleccion:", '', $clave);
-//     }
-// }
-
-//$notNull = ($datos["mensaje"] != "null" && $datos["mensaje"] != null);
-
-// if ($datos["mensaje"] != "null" && $datos["mensaje"] !=null) {
 if (array_key_exists('mensaje', $datos)) {
     $infoArchivo = $obj->obtenerArchivosPorId($datos["mensaje"]);
     $respuesta = $infoArchivo["Descripcion"];
     $link = $infoArchivo["link"];
-    //var_dump($infoArchivo);
-    //var_dump($link);
     $id = $datos["mensaje"];
     $where = ['idproducto' => $id];
     $productos = $Abmproducto->buscar($where);
@@ -37,17 +26,12 @@ if (array_key_exists('mensaje', $datos)) {
     $stock = $productos[0]->getprocantstock();
     $detalle = $productos[0]->getprodetalle();
 } elseif (array_key_exists('idcompra', $datos)) {
-    //var_dump($datos);
     foreach ($datos as $clave => $valor) {
         $datos["idproducto"] = str_replace("idproducto:", '', $clave);
-        //var_dump($datos["idproducto"]);
     }
-    //var_dump($datos);
     $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
     $respuesta = $infoArchivo["Descripcion"];
     $link = $infoArchivo["link"];
-    //var_dump($infoArchivo);
-    //var_dump($link);
     $id = $datos["idproducto"];
     $where = ['idproducto' => $id];
     $productos = $Abmproducto->buscar($where);
@@ -56,19 +40,13 @@ if (array_key_exists('mensaje', $datos)) {
     $stock = $productos[0]->getprocantstock();
     $detalle = $productos[0]->getprodetalle();
 } else {
-    //var_dum($datos["idproducto"]);
     $infoArchivo = $obj->obtenerInfoDeArchivo($datos);
-
     $respuesta = $infoArchivo["Descripcion"];
     $link = $infoArchivo["link"];
-    //var_dum($link);
     $dot = mb_strripos($link, ".");
-    //var_dum($dot);
     $id = substr($link, 0, $dot);
     $slash = mb_strripos($link, "/");
-    //var_dump($link);
     $id = substr($id, $slash + 1);
-    //var_dump($id);
     $where = ['idproducto' => $id];
     $productos = $Abmproducto->buscar($where);
     $precio = $productos[0]->getproprecio();
@@ -76,22 +54,18 @@ if (array_key_exists('mensaje', $datos)) {
     $stock = $productos[0]->getprocantstock();
     $detalle = $productos[0]->getprodetalle();
 }
-// }else{
-//     header('Location: index.php');
-// }
+
 
 
 //var_dump($id);
-$actionCarrito = "action.php";
-$actionComprar = "action.php";
+$actionCarrito = "redireccion.php";
+$actionComprar = "redireccion.php";
 
-//header('Location: ../login/index.php'); DESCOMENT
 if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
     list($sesionValidar, $error) = $sesion->validar();
     if ($sesionValidar) {
         $roles = $sesion->obtenerRol();
         $escliente = $sesion->arrayRolesUser($roles);
-        //var_dump($escliente);
         $comprar = false;
         if ($escliente['Cliente'] == true) {
             $actionCarrito = "../carrito/añadirCarrito.php";
@@ -99,11 +73,9 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
             $comprar = true;
         }
     } else {
-        //header('Location: cerrarSesion.php');
         $comprar = false;
     }
 }
-//var_dump($actionCarrito);
 
 
 
