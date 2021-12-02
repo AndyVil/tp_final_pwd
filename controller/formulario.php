@@ -611,7 +611,83 @@ class Formulario
 
 
 
+    public function detallesProducto($datos){
+        $resultado = [];
+        $Abmproducto = new AbmProducto();
+        if (array_key_exists('mensaje', $datos)) {
+            $infoArchivo = $this->obtenerArchivosPorId($datos["mensaje"]);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $id = $datos["mensaje"];
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+        } elseif (array_key_exists('idcompra', $datos)) {
+            foreach ($datos as $clave => $valor) {
+                $datos["idproducto"] = str_replace("idproducto:", '', $clave);
+            }
+            $infoArchivo = $this->obtenerArchivosPorId($datos["idproducto"]);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $id = $datos["idproducto"];
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+        } else {
+            $infoArchivo = $this->obtenerInfoDeArchivo($datos);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $dot = mb_strripos($link, ".");
+            $id = substr($link, 0, $dot);
+            $slash = mb_strripos($link, "/");
+            $id = substr($id, $slash + 1);
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+        }
+        $resultado = [
+            'link'=> $link,
+            'id'=> $id,
+            'precio'=> $precio,
+            'nombre'=> $nombre,
+            'stock'=> $stock,
+            'detalle'=> $detalle
+        ];
+        return $resultado;
+    }
 
+
+    public function permisoCompra(){
+        $sesion = new Session();
+        $actionCarrito = "redireccion.php";
+        $actionComprar = "redireccion.php";
+        if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
+            list($sesionValidar, $error) = $sesion->validar();
+            if ($sesionValidar) {
+                $roles = $sesion->obtenerRol();
+                $escliente = $sesion->arrayRolesUser($roles);
+                $comprar = false;
+                if ($escliente['Cliente'] == true) {
+                    $actionCarrito = "../carrito/añadirCarrito.php";
+                    $actionComprar = "../carrito/action.php";
+                    $comprar = true;
+                }
+            } else {
+                $comprar = false;
+            }
+        }
+        $resultado = ['comprar'=>$comprar, 'actionCarrito'=> $actionCarrito,'actionComprar'=>$actionComprar];
+        return $resultado;
+    }
 
 
 

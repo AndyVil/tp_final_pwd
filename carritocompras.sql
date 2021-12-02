@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2021 a las 20:13:12
+-- Tiempo de generación: 02-12-2021 a las 17:00:57
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -43,7 +43,12 @@ INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`, `coprecio`) VALUES
 (66, '2021-11-26 06:27:08', 1, 67470.00),
 (67, '2021-11-26 15:51:01', 1, 2000.00),
 (68, '2021-11-26 07:03:31', 1, 470.00),
-(69, '2021-11-26 19:06:05', 1, 0.00);
+(69, '2021-11-26 19:58:24', 1, 34970.00),
+(70, '2021-11-26 08:05:06', 4, 470.00),
+(71, '2021-11-30 21:38:52', 1, 0.00),
+(72, '2021-12-02 15:10:35', 4, 32500.00),
+(73, '2021-12-02 11:29:01', 4, 32500.00),
+(74, '2021-12-02 15:10:27', 4, 32500.00);
 
 -- --------------------------------------------------------
 
@@ -68,7 +73,12 @@ INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, 
 (53, 66, 2, '2021-11-26 06:24:48', '2021-11-26 07:20:13'),
 (54, 67, 2, '2021-11-26 15:51:01', '2021-11-26 07:03:15'),
 (55, 68, 2, '2021-11-26 07:03:31', '2021-11-26 07:03:40'),
-(56, 69, 1, '2021-11-26 07:03:56', '0000-00-00 00:00:00');
+(56, 69, 2, '2021-11-26 07:03:56', '2021-11-26 07:58:55'),
+(57, 70, 2, '2021-11-26 08:05:06', '2021-11-26 08:07:17'),
+(58, 71, 1, '2021-11-26 08:19:01', '0000-00-00 00:00:00'),
+(59, 72, 2, '2021-11-30 09:37:52', '2021-12-02 15:19:56'),
+(60, 73, 2, '2021-12-02 11:29:01', '2021-12-02 11:29:01'),
+(61, 74, 2, '2021-12-02 15:10:27', '2021-12-02 15:10:27');
 
 -- --------------------------------------------------------
 
@@ -113,7 +123,14 @@ INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`
 (133, 1220, 65, 1, 470.00),
 (134, 1217, 66, 2, 65000.00),
 (135, 1220, 66, 1, 470.00),
-(136, 1219, 66, 1, 2000.00);
+(136, 1219, 66, 1, 2000.00),
+(141, 1220, 69, 1, 470.00),
+(142, 1219, 69, 1, 2000.00),
+(143, 1217, 69, 1, 32500.00),
+(144, 1220, 70, 1, 470.00),
+(150, 1217, 73, 1, 32500.00),
+(151, 1217, 74, 1, 32500.00),
+(152, 1217, 72, 1, 32500.00);
 
 -- --------------------------------------------------------
 
@@ -194,11 +211,10 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`) VALUES
-(1217, 'remera', 'Remera algodon S S S', 9, 32500),
-(1219, 'pantalon', 'pantalon XL', 49, 2000),
-(1220, 'otro', 'Gorra S', 6, 470),
-(1221, 'remera', 'Sin stock S', 0, 7000),
-(1227, 'otro', 'Campera S, M, L, XL', 50, 7000);
+(1217, 'remera', 'Remera algodon\r\n S', 7, 32500),
+(1219, 'remera', 'pantalon S', 47, 2000),
+(1220, 'remera', 'Gorra SE COMPRO, y se borro S', 5, 470),
+(1221, 'remera', 'Sin stock S', 0, 7000);
 
 -- --------------------------------------------------------
 
@@ -244,7 +260,7 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabili
 (2, '21232f297a57a5a743894a0e4a801fc3', '21232f297a57a5a743894a0e4a801fc3', 'admin@admin.com', '0000-00-00 00:00:00'),
 (3, 'caaf856169610904e4f188e6ee23e88c', 'caaf856169610904e4f188e6ee23e88c', 'deposito@deposito.com', '0000-00-00 00:00:00'),
 (4, '4983a0ab83ed86e0e7213c8783940193', '4983a0ab83ed86e0e7213c8783940193', 'cliente@cliente.com', '0000-00-00 00:00:00'),
-(39, '7215ee9c7d9dc229d2921a40e899ec5f', '7215ee9c7d9dc229d2921a40e899ec5f', ' asdasdasd', '2021-11-26 05:35:31');
+(39, '7215ee9c7d9dc229d2921a40e899ec5f', '7215ee9c7d9dc229d2921a40e899ec5f', 'usuariotest@gmail.com', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -266,6 +282,7 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (2, 1),
 (3, 2),
 (4, 3),
+(39, 2),
 (39, 3),
 (39, 4);
 
@@ -357,19 +374,19 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `compraestado`
 --
 ALTER TABLE `compraestado`
-  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `compraitem`
 --
 ALTER TABLE `compraitem`
-  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -381,7 +398,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1232;
+  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -393,7 +410,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Restricciones para tablas volcadas

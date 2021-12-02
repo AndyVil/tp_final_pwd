@@ -5,7 +5,7 @@ $obj = new Formulario();
 $arreglo = $obj->obtenerArchivos();
 $sesion = new Session();
 $datos = data_submited();
-$Abmproducto = new AbmProducto();
+
 
 if (array_key_exists('stock', $datos)) {
     $datos["idproducto"] = $datos["stock"];
@@ -14,68 +14,20 @@ if (array_key_exists('stock', $datos)) {
     </div>";
 }
 
-if (array_key_exists('mensaje', $datos)) {
-    $infoArchivo = $obj->obtenerArchivosPorId($datos["mensaje"]);
-    $respuesta = $infoArchivo["Descripcion"];
-    $link = $infoArchivo["link"];
-    $id = $datos["mensaje"];
-    $where = ['idproducto' => $id];
-    $productos = $Abmproducto->buscar($where);
-    $precio = $productos[0]->getproprecio();
-    $nombre = $productos[0]->getpronombre();
-    $stock = $productos[0]->getprocantstock();
-    $detalle = $productos[0]->getprodetalle();
-} elseif (array_key_exists('idcompra', $datos)) {
-    foreach ($datos as $clave => $valor) {
-        $datos["idproducto"] = str_replace("idproducto:", '', $clave);
-    }
-    $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
-    $respuesta = $infoArchivo["Descripcion"];
-    $link = $infoArchivo["link"];
-    $id = $datos["idproducto"];
-    $where = ['idproducto' => $id];
-    $productos = $Abmproducto->buscar($where);
-    $precio = $productos[0]->getproprecio();
-    $nombre = $productos[0]->getpronombre();
-    $stock = $productos[0]->getprocantstock();
-    $detalle = $productos[0]->getprodetalle();
-} else {
-    $infoArchivo = $obj->obtenerInfoDeArchivo($datos);
-    $respuesta = $infoArchivo["Descripcion"];
-    $link = $infoArchivo["link"];
-    $dot = mb_strripos($link, ".");
-    $id = substr($link, 0, $dot);
-    $slash = mb_strripos($link, "/");
-    $id = substr($id, $slash + 1);
-    $where = ['idproducto' => $id];
-    $productos = $Abmproducto->buscar($where);
-    $precio = $productos[0]->getproprecio();
-    $nombre = $productos[0]->getpronombre();
-    $stock = $productos[0]->getprocantstock();
-    $detalle = $productos[0]->getprodetalle();
-}
+$resultado = $obj->detallesProducto($datos);
+$link = $resultado['link'];
+$id = $resultado['id'];
+$precio = $resultado['precio'];
+$nombre = $resultado['nombre'];
+$stock = $resultado['stock'];
+$detalle = $resultado['detalle'];
 
 
+$resultado = $obj->permisoCompra();
+$actionCarrito = $resultado['actionCarrito'];
+$actionComprar = $resultado['actionComprar'];
+$comprar = $resultado['comprar'];
 
-//var_dump($id);
-$actionCarrito = "redireccion.php";
-$actionComprar = "redireccion.php";
-
-if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
-    list($sesionValidar, $error) = $sesion->validar();
-    if ($sesionValidar) {
-        $roles = $sesion->obtenerRol();
-        $escliente = $sesion->arrayRolesUser($roles);
-        $comprar = false;
-        if ($escliente['Cliente'] == true) {
-            $actionCarrito = "../carrito/añadirCarrito.php";
-            $actionComprar = "../carrito/action.php";
-            $comprar = true;
-        }
-    } else {
-        $comprar = false;
-    }
-}
 
 
 
