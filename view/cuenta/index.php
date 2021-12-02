@@ -21,16 +21,24 @@ require_once("../structure/Header.php");
             $rol = $sesion->obtenerRol();
             $cliente = $sesion->arrayRolesUser($rol);
             $type = "hidden";
+            //var_dum($sesion->getIdUser());
 
-            $usuario = new Usuario();
-            $mail = $usuario->getusmail();
+            $usuario = new AbmUsuario();
+            $idUsuario = [];
+            $idUsuario['idusuario'] = $sesion->getIdUser();
+            $user = $usuario->buscar($idUsuario);
+            //var_dump($user);
+            $mail = $user[0]->getusmail();
+            //var_dum($mail);
             
             if ($cliente['Cliente'] == true) {
                 $ref = "miscompras.php";
                 $type = "button";
                 //echo '<button  class="btn btn-dark" onclick="location.href="./cerrarSesion.php"">Mis Compras</button>'; 
-                echo '<br><br><input type="text" id="emailCambio" name="emailCambio" placeholder="Nuevo Email" value="'.$mail. '"> 
-                <button class="btn btn-light" formaction="">Cambiar email</button><br><br>';
+
+                //CAMBIAR LA RUTA!!!!!!!!!!!!!-------------------------------------------------------------------------------------------------------------
+                echo '<br><br><input type="text" id="emailCambio" name="emailCambio" placeholder="Nuevo Email" value="'.$mail. '"> '; 
+                echo "<button class='btn btn-light' formaction='' id='accion' name='accion' value='editar'>Cambiar email</button><br><br>";
             }
 
             ?>

@@ -1,8 +1,10 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-$objAbmTabla = new AbmRol();
-$listaTabla = $objAbmTabla->buscar(null);
+//$objAbmTabla = new AbmRol();
+$menuRoles = new AbmMenurol();
+$listaMenu = $menuRoles->buscar(null);
+//$listaTabla = $objAbmTabla->buscar(null);
 
 $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
@@ -29,28 +31,48 @@ $sesion->permisoAcceso($dir, $rol);
             <table class="table table-striped">
                 <thead>
                     <br>
-                    <h3 align="center">Listar Roles</h3>
+                    <h3 align="center">Listar Menu Roles</h3>
                     <hr>
                     <tr>
-                        <th scope="col" id="tablepadding">Id</th>
-                        <th scope="col" id="tablepadding">Descripcion</th>
+                        <th scope="col" id="tablepadding">id Menu</th>
+                        <th scope="col" id="tablepadding">id Rol</th>
                         <th scope="col" class="text-center" id="tablepadding">Editar</th>
                     </tr>
                 </thead>
                 <?php
 
-                if (count($listaTabla) > 0) {
+                if (count($listaMenu) > 0) {
                     $i = 1;
                     echo '<tbody>';
-                    foreach ($listaTabla as $objRol) {
-                        $des = $objRol->getroldescripcion();
-                        $id = $objRol->getidRol();
+                    foreach ($listaMenu as $menu) {  
+                    //foreach ($listaTabla as $objRol) {
+                        //$des = $objRol->getroldescripcion();
+                        //$id = $objRol->getidRol();
+                        $idRol = $menu -> getidrol();
+                        $idMenu = $menu -> getidMenu();
+                        $descripcion = '';
+                        switch ($idRol) {
+                            case '1':
+                                $descripcion = 'Administrador';
+                                break;
+                            case '2':
+                                $descripcion = 'Deposito';
+                                break;
+                            case '3':
+                                $descripcion = 'Cliente';
+                                break;
+                            case '4':
+                                $descripcion = 'Superusuario';
+                                break;
+                        }
+
+
                         echo '<tr class="align-middle">';
-                        echo '<th scope="row" id="tablepadding">' . $id . '</th>';
-                        echo '<td id="tablepadding">' . $des .    '</td>';
+                        echo '<th scope="row" id="tablepadding">' . $idMenu .'</th>';
+                        echo '<td id="tablepadding">(' . $idRol .') '.$descripcion . '</td>';
                         echo '
                         <td class="text-center">
-                            <button class="btn btn-success btn-sm" type="submit" value="' . $id . '" id="proEdit" name="roledit" role="roledit">
+                            <button class="btn btn-success btn-sm" type="submit" value="' . $idMenu . '" id="proEdit" name="roledit" role="roledit">
                                 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -59,7 +81,7 @@ $sesion->permisoAcceso($dir, $rol);
 
                             </button>
 
-                            <button class="btn btn-danger btn-sm" type="submit" value="' . $id . '" formaction="eliminarProducto.php" id="roldelete" name="roldelete" role="button">
+                            <button class="btn btn-danger btn-sm" type="submit" value="' . $idMenu . '" formaction="eliminarProducto.php" id="roldelete" name="roldelete" role="button">
                                 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -75,7 +97,7 @@ $sesion->permisoAcceso($dir, $rol);
                 } else {
                     echo "<div class='alert alert-danger d-flex align-items-center mt-5' role='alert'>
                     <svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Danger:'><use xlink:href='#exclamation-triangle-fill'/></svg>
-                    <div>No hay roles registrados.</div></div>";
+                    <div>No hay menus registrados.</div></div>";
                 }
 
                 ?>

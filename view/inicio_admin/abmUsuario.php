@@ -53,6 +53,7 @@ $sesion->permisoAcceso($dir, $rol);
 					$existerol=$ambuserRol->buscar($filtrorol);
 					#compruebo que el usuario si tenga el rol con el id actual de la iteracion para eliminarlo
 					if($existerol!=null)
+					echo 'entro a baja';
 					$ambuserRol->baja($filtrorol);
 				}	
 			}

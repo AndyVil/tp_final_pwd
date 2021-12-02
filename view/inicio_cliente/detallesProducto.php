@@ -7,10 +7,10 @@ $sesion = new Session();
 $datos = data_submited();
 $Abmproducto = new AbmProducto();
 $obj = new Formulario();
-if (array_key_exists('stock', $datos)){
-    $datos["idproducto"]= $datos["stock"];
+if (array_key_exists('stock', $datos)) {
+    $datos["idproducto"] = $datos["stock"];
     echo "<div class='alert alert-danger' role='alert' align=center>
-    !la cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
+    !La cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
     </div>";
 }
 
@@ -36,9 +36,9 @@ if (array_key_exists('mensaje', $datos)) {
     $nombre = $productos[0]->getpronombre();
     $stock = $productos[0]->getprocantstock();
     $detalle = $productos[0]->getprodetalle();
-}elseif(array_key_exists('idcompra', $datos)){
+} elseif (array_key_exists('idcompra', $datos)) {
     //var_dump($datos);
-    foreach($datos as $clave => $valor) {
+    foreach ($datos as $clave => $valor) {
         $datos["idproducto"] = str_replace("idproducto:", '', $clave);
         //var_dump($datos["idproducto"]);
     }
@@ -55,8 +55,7 @@ if (array_key_exists('mensaje', $datos)) {
     $nombre = $productos[0]->getpronombre();
     $stock = $productos[0]->getprocantstock();
     $detalle = $productos[0]->getprodetalle();
-}
- else {
+} else {
     //var_dum($datos["idproducto"]);
     $infoArchivo = $obj->obtenerInfoDeArchivo($datos);
 
@@ -93,12 +92,15 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
         $roles = $sesion->obtenerRol();
         $escliente = $sesion->arrayRolesUser($roles);
         //var_dump($escliente);
+        $comprar = false;
         if ($escliente['Cliente'] == true) {
             $actionCarrito = "../carrito/añadirCarrito.php";
             $actionComprar = "../carrito/action.php";
+            $comprar = true;
         }
     } else {
         //header('Location: cerrarSesion.php');
+        $comprar = false;
     }
 }
 //var_dump($actionCarrito);
@@ -113,10 +115,11 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
 
     <!-- Titulo pagina -->
     <div align="center">
-        <h2 class="mt-5"><?=$nombre?></h2>
+        <h2 class="mt-5"><?= $nombre ?></h2>
     </div>
     <form id="carrito" name="carrito" method="POST" action="<?= $actionCarrito ?>">
         <div class="row">
+            <input type="hidden" name="compraHabilitada" id="compraHabilitada" value="<?= $comprar?>">
             <?php
             echo "<div class='alert alert-success mt-5' role='alert'>
                   <div class='row px-2 my-4 justify-content-center'>
@@ -129,12 +132,13 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
             echo "<input type='hidden' name='pronombre' id='nombre' value='$nombre' >";
             echo "<input type='hidden' name='prodetalle' id='prodetalle' value='$detalle' >";
             echo "<input type='hidden' name='proprecio' id='idproducto' value='$precio' >";
-            
+
             echo "<input type='hidden' name='ciprecio' id='ciprecio' value='$precio'>";
             echo ' ';
             //echo "<input type='submit' formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' value='Agregar al carrito'>";
-            
+
             if ($stock > 0) {
+                echo '<div id="botonesCompra">';
                 echo "<input min='1' max='$stock' type='number' name='cicantidad' id='cicantidad' value='1'>";
                 echo "
                 <button formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' style='width:40; height:40;'>
@@ -144,15 +148,15 @@ if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SES
                 </button>";
                 echo " ";
                 echo "<input type='submit' formaction='$actionComprar' name='$id' id='Seleccion:$id' class='btn btn-success' value='Comprar'>";
-            }
-            else{
+                echo "</div>";
+            } else {
                 echo "
                 <div class='alert alert-danger mt-3' role='alert' align=center>
                 Stock agotado
                 </div>";
             }
 
-            
+
             echo "</div>";
             echo "
             <div class='alert alert-warning mt-3' role='alert' align=center>

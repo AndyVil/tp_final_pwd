@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2021 a las 18:50:15
+-- Tiempo de generación: 26-11-2021 a las 20:13:12
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -41,7 +41,9 @@ CREATE TABLE `compra` (
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`, `coprecio`) VALUES
 (65, '2021-11-26 05:52:01', 1, 470.00),
 (66, '2021-11-26 06:27:08', 1, 67470.00),
-(67, '2021-11-26 15:51:01', 1, 2000.00);
+(67, '2021-11-26 15:51:01', 1, 2000.00),
+(68, '2021-11-26 07:03:31', 1, 470.00),
+(69, '2021-11-26 19:06:05', 1, 0.00);
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,9 @@ CREATE TABLE `compraestado` (
 INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
 (52, 65, 2, '2021-11-26 05:52:01', '2021-11-26 05:52:01'),
 (53, 66, 2, '2021-11-26 06:24:48', '2021-11-26 07:20:13'),
-(54, 67, 1, '2021-11-26 15:51:01', '0000-00-00 00:00:00');
+(54, 67, 2, '2021-11-26 15:51:01', '2021-11-26 07:03:15'),
+(55, 68, 2, '2021-11-26 07:03:31', '2021-11-26 07:03:40'),
+(56, 69, 1, '2021-11-26 07:03:56', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -192,7 +196,7 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`) VALUES
 (1217, 'remera', 'Remera algodon S S S', 9, 32500),
 (1219, 'pantalon', 'pantalon XL', 49, 2000),
-(1220, 'otro', 'Gorra S', 8, 470),
+(1220, 'otro', 'Gorra S', 6, 470),
 (1221, 'remera', 'Sin stock S', 0, 7000),
 (1227, 'otro', 'Campera S, M, L, XL', 50, 7000);
 
@@ -353,19 +357,19 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `compraestado`
 --
 ALTER TABLE `compraestado`
-  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `compraitem`
 --
 ALTER TABLE `compraitem`
-  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -377,7 +381,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1228;
+  MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1232;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

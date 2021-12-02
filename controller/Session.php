@@ -121,10 +121,6 @@ class Session
     }
 
 
-    public function setear()
-    {
-    }
-
     /**
      * @param int ID de usuario
      * @return array ID de ROL

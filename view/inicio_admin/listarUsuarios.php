@@ -20,7 +20,7 @@ $sesion->permisoAcceso($dir, $rol);
     <div align="center">
         <!-- Botones -->
         <button onclick="location.href='nuevoUsuario.php'" class="btn btn-dark">Nuevo Usuario</button>
-        <button onclick="location.href='listarRoles.php'" class="btn btn-dark">Roles</button>
+        <button onclick="location.href='listarRoles.php'" class="btn btn-dark">Roles Menu</button>
     </div>
 
     <div class="row mb-5">
@@ -57,7 +57,6 @@ $sesion->permisoAcceso($dir, $rol);
                             <th scope="col" id="tablepadding">Nombre</th>
                             <th scope="col" id="tablepadding">Mail</th>
                             <th scope="col" class="text-center" id="tablepadding">Deshabilitado</th>
-                            <th scope="col" class="text-center" id="tablepadding">Editar</th>
                         </tr>
                     </thead>
                     <?php
@@ -73,9 +72,8 @@ $sesion->permisoAcceso($dir, $rol);
                             echo '<tr class="align-middle">';
                             echo '<th scope="row" id="tablepadding">' . $i . '</th>';
                             echo '<td id="tablepadding">' . $nombre .    '</td>';
-
                             echo '<td id="tablepadding">' . $mail .  '</td>';
-                            //echo '<td>' . $des .  '</td>';
+                            echo '<td id="tablepadding" align="center">' . $des .  '</td>';
                             if ($des) {
                                 echo "<td class='text-center text-success'><i class='fas fa-check'></i></td>";
                             } else {
@@ -94,8 +92,8 @@ $sesion->permisoAcceso($dir, $rol);
 
                                 <button class="btn btn-danger btn-sm" type="submit" value="' . $id . '" formaction="eliminarLogin.php" id="roldelete" name="roldelete" role="button">
                                 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
                                 </svg>
 
                             </button>

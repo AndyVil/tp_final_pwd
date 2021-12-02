@@ -1,6 +1,6 @@
 ### Ruta de proyecto: C:\xampp\htdocs\pwd_proyectos\tp_final_pwd
 
-# TP Final Programacion Web Dinamica
+# TP Final Programacion Web Dinamica (Lucas Villarruel / Santiago Avilez)
 
 ## Objetivo
 El objetivo del trabajo es integrar
@@ -49,9 +49,17 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 
 
 
+HICE
+jquery X
+desactivar usuarios desactivarlos(vista) X
+
+
+cambiar mail usuario desde cuenta (falta cambiar la ruta del script del boton)
+que se puedan agregar menus a los roles cambiar por el menu roles(falta la accion de la base de datos con los botones)
+
+
 FALTA
-js
-ajax
-que se puedan agregar menus a los roles
-poder cambiar los roles, desactivarlos(agrigar la vista)
-que no se puedan agrega admin o no se lo pueda quitar
+corregir errores de la vista
+desactivar roles en editar usuarios
+no eliminar productos, solo deshabilitarlos
+action de cada script arreglar

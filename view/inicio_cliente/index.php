@@ -17,6 +17,7 @@ if (array_key_exists('mensaje', $datos)) {
     header("Location: ../inicio_cliente/detallesProducto.php?mensaje=" . urlencode($id));
 }
 
+
 //HEADER============================================================================
 ?>
 <div class="container">
