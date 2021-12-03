@@ -83,7 +83,7 @@ $listaTabla = $objAbmTabla->buscar(null);
 
                             </button>
 
-                            <button class="btn btn-danger btn-sm" type="submit" value="' . $id . '" onclick="desactivarProducto()" id="proBorrar" name="proBorrar" role="button">
+                            <button class="btn btn-danger btn-sm" type="submit" value="' . $id . '" formaction="eliminarProducto.php" id="proBorrar" name="proBorrar" role="button">
                                 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -93,7 +93,6 @@ $listaTabla = $objAbmTabla->buscar(null);
                         </td>';
                         echo '</tr>';
                         $i++;
-                        //formaction="eliminarProducto.php" DONDE ESTA EL ONCLICK
                     }
 
                     echo '</tbody>';
@@ -113,19 +112,7 @@ $listaTabla = $objAbmTabla->buscar(null);
 
 
 
-<script type="text/javascript">
-    function desactivarProducto() {
 
-        let confirmar = confirm("¿Desea deshabilitar este producto?");
-        if (confirmar) {
-            //Aquí pones lo que quieras si da a Aceptar
-            alert('Cambio aceptado.');
-        } else {
-            //Aquí pones lo que quieras Cancelar
-            alert('Cambio cancelado.');
-        }
-    }
-</script>
 
 <?php
 //FOOTER============================================================================

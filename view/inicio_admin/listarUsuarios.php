@@ -18,7 +18,7 @@ $sesion->permisoAcceso($dir, $rol);
     <div align="center">
         <!-- Botones -->
         <button onclick="location.href='nuevoUsuario.php'" class="btn btn-dark">Nuevo Usuario</button>
-        <button onclick="location.href='listarRoles.php'" class="btn btn-dark">Roles Menu</button>
+        <button onclick="location.href='../menu-new/menu_list.php'" class="btn btn-dark">Roles Menu</button>
     </div>
 
     <div class="row mb-5">

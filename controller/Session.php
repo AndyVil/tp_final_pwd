@@ -259,6 +259,7 @@ class Session
             if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
                 list($sesionValidar, $error) = $this->validar();
                 if ($sesionValidar) {
+                    //operaciones
                     $mensaje = 'No tiene permisos de ' . $rol;
                     $roles = $this->obtenerRol();
                     $usuario = $this->arrayRolesUser($roles);

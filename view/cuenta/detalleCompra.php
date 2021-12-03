@@ -5,6 +5,7 @@ $sesion = new Session();
 $dir = "../inicio_cliente/index.php";
 $rol = "Cliente";
 $sesion->permisoAcceso($dir, $rol);
+$obj = new Formulario();
 //HEADER=============================================================================
 ?>
 

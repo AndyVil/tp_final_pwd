@@ -25,7 +25,7 @@ $url = data_submited();
                         " . $url['message'] . "
               </div>";
     }
-    if ($arreglo === false) {
+    if ($arreglo === false|| count($arreglo)==0) {
         echo "<div class='alert alert-warning' role='alert' align='center'>
                         No tienes nada en tu carrito aún.
               </div>";
