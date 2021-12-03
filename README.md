@@ -1,7 +1,8 @@
 ### Ruta de proyecto: C:\xampp\htdocs\pwd_proyectos\tp_final_pwd
 
+### (Lucas Villarruel / Santiago Avilez)
 # TP Final Programacion Web Dinamica
-# (Lucas Villarruel / Santiago Avilez)
+
 
 ## Objetivo
 El objetivo del trabajo es integrar
