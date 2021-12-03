@@ -1,6 +1,5 @@
 ### Ruta de proyecto: C:\xampp\htdocs\pwd_proyectos\tp_final_pwd
 
-### (Lucas Villarruel / Santiago Avilez)
 # TP Final Programacion Web Dinamica
 
 
@@ -46,3 +45,5 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 8. Desde la aplicación un usuario con rol Administrador podrá:
  - Crear nuevos usuarios al sistema, asignar los roles correspondientes y actualizar la información que se requiera.
  - Gestionar y administrar nuevos roles e ítem del menú. Vinculando item del menú al rol según corresponda.
+
+### (Lucas Villarruel / Santiago Avilez)
