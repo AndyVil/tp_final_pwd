@@ -268,7 +268,7 @@ class Carrito
                 $arreglo[$i]["link"] = $link;
                 $i++;
             }
-            header("Location: ../cuenta/miscompras.php?mensaje=" . urlencode($id) . "&compra=" . urlencode($idcompra));
+            header("Location: ../cuenta/misCompras.php");
         } else {
             $i = 0;
             $datos["idusuario"] = $sesion->getIdUser();
@@ -296,7 +296,7 @@ class Carrito
             $arreglo[$i]["proprecio"] = $productos[0]->getproprecio();
             $arreglo[$i]["ciprecio"] = $item->getciprecio();
             $arreglo[$i]["link"] = $link;
-            header("Location: ../cuenta/miscompras.php?mensaje=" . urlencode($id) . "&compra=" . urlencode($idcompra));
+            header("Location: ../cuenta/misCompras.php");
         }
         $resultado = ['arreglo' => $arreglo, 'idcompra' => $idcompra, 'coprecio' => $coprecio, 'cofecha' => $cofecha];
         return $resultado;

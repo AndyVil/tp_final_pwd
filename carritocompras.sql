@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2021 a las 22:39:55
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.12
+-- Tiempo de generación: 03-12-2021 a las 11:40:41
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,16 @@ CREATE TABLE `compra` (
   `coprecio` float(9,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`, `coprecio`) VALUES
+(97, '2021-12-03 02:54:28', 1, 106939.99),
+(98, '2021-12-03 10:26:21', 1, 8440.00),
+(99, '2021-12-03 10:17:02', 1, 0.00),
+(100, '2021-12-03 10:27:28', 1, 5500.00);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +57,16 @@ CREATE TABLE `compraestado` (
   `cefechaini` timestamp NOT NULL DEFAULT current_timestamp(),
   `cefechafin` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compraestado`
+--
+
+INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
+(84, 97, 2, '2021-12-02 14:54:06', '2021-12-03 10:10:50'),
+(85, 98, 2, '2021-12-03 10:11:03', '2021-12-03 10:27:20'),
+(86, 99, 2, '2021-12-03 10:17:02', '2021-12-03 10:17:02'),
+(87, 100, 2, '2021-12-03 10:27:24', '2021-12-03 10:32:09');
 
 -- --------------------------------------------------------
 
@@ -82,6 +102,20 @@ CREATE TABLE `compraitem` (
   `cicantidad` int(11) NOT NULL,
   `ciprecio` float(7,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compraitem`
+--
+
+INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`, `ciprecio`) VALUES
+(200, 1220, 97, 8, 3760.00),
+(201, 1219, 97, 4, 8000.00),
+(202, 1221, 97, 1, 99999.99),
+(206, 1220, 98, 2, 940.00),
+(207, 1219, 98, 2, 4000.00),
+(208, 1217, 98, 1, 3500.00),
+(209, 1219, 100, 1, 2000.00),
+(210, 1217, 100, 1, 3500.00);
 
 -- --------------------------------------------------------
 
@@ -163,9 +197,9 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`) VALUES
-(1217, 'remera', 'Remera algodon S S S', 7, 3500, '0000-00-00 00:00:00'),
-(1219, 'pantalon', 'pantalon XL', 47, 2000, '0000-00-00 00:00:00'),
-(1220, 'otro', 'Gorra S', 49, 470, '0000-00-00 00:00:00'),
+(1217, 'remera', 'Remera algodon  S, M, L', 7, 3500, '0000-00-00 00:00:00'),
+(1219, 'pantalon', 'pantalon XL', 46, 2000, '0000-00-00 00:00:00'),
+(1220, 'otro', 'Gorra S', 47, 470, '0000-00-00 00:00:00'),
 (1221, 'remera', 'Sin stock S', 50, 343000, '0000-00-00 00:00:00'),
 (1227, 'otro', 'Campera S, M, L, XL', 41, 7000, '0000-00-00 00:00:00');
 
@@ -328,19 +362,19 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `idcompra` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `compraestado`
 --
 ALTER TABLE `compraestado`
-  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de la tabla `compraitem`
 --
 ALTER TABLE `compraitem`
-  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`

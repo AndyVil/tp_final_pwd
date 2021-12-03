@@ -1,6 +1,9 @@
 <?php
 require_once("../structure/header.php");
 $datos = data_submited();
+$resultado = $_SESSION['cargarCarrito'];
+$comprobacion = $resultado['comprobacion'];
+$datosRes = $resultado['datosRes'];
 //HEADER================================================================================
 ?>
 
@@ -12,72 +15,57 @@ $datos = data_submited();
 		</div>
 		<form method="POST" action="compraexitosa.php">
 			<div align="center">
-				<!-- Botones -->
 				<?php
 				$id = '';
 				foreach ($datos as $key => $valor) {
 					$id = $key;
 					$accion = $valor;
 				}
-				if (!array_key_exists("idcompra", $datos)) {
-					$abmItem = new AbmCompraItem();
-					$abmproducto = new AbmProducto();
-					$pronombre = $datos["pronombre"];
-					$procantstock = $datos["procantstock"];
-					$prodetalle = $datos["prodetalle"];
-					$idproducto = $datos["idproducto"];
-					$productos = $abmproducto->buscar($datos);
-					$proprecio = $productos[0]->getproprecio();
-					$cicantidad = $datos["cicantidad"];
-					$ciprecio = $datos["ciprecio"];
-					$formulario = new Formulario();
-					$infoArchivo = $formulario->obtenerArchivosPorId($idproducto);
-					$link = $infoArchivo["link"];
-				}
-				$abmItem = new AbmCompraItem();
-				$abmcompra = new AbmCompra();
+				echo "<div class='row'>";
+				if ($comprobacion) {
+					$idcompra = $datosRes["idcompra"];
+					$coprecio = $datosRes["coprecio"];
+					$items = $datosRes["items"];
+					for($i=0; $i<count($items); $i++) {
+						$ciprecio = $items[$i]['ciprecio'];
+						$cicantidad = $items[$i]['cicantidad'];
+						$idproducto = $items[$i]['idproducto'];
+						$proprecio =  $items[$i]['proprecio'];
+						$pronombre = $items[$i]['pronombre'];
+						$procantstock = $items[$i]['procantstock'];
+						$link = $items[$i]['link'];
 
-				if (array_key_exists("idcompra", $datos)) {
-					echo "<div class='row'>";
-					$idcompra = $datos["idcompra"];
-					$where = ['idcompra' => $idcompra];
-					$compras =$abmcompra->buscar($where);
-					$coprecio = $compras[0]->getcompraprecio();
-					$items = $abmItem->buscar($where);
-					foreach ($items as $item) {
-						$ciprecio = $item->getciprecio();
-						$cicantidad = $item->getcicantidad();
-						$idproducto = $item->getidproducto()->getidproducto();
-						$proprecio = $item->getidproducto()->getproprecio();
-						$pronombre = $item->getidproducto()->getpronombre();
-						$procantstock = $item->getidproducto()->getprocantstock();
-						$formulario = new Formulario();
-						$infoArchivo = $formulario->obtenerArchivosPorId($idproducto);
-						$link = $infoArchivo["link"];
-						
 						echo "<div>Nombre de Producto: $pronombre</div>";
-						echo "<div>c/u: $$proprecio</div>";
-						echo "<div> cantidad x$cicantidad</div>";
-						echo "<div>total: $$proprecio</div>";
-						echo "</div>";
-						echo '<hr>';
+						echo "<div>C/U: $$proprecio</div>";
+						echo "<div>Cantidad ×$cicantidad</div>";
+						echo "<div>Total: $$proprecio</div>";
+						echo '<span class="container"><hr></span>'; //Los span limitan el ancho de los hr
 					}
 
 					echo "<input type='hidden' name='idcompra' id='idcompra'  class='btn btn-dark' value='$idcompra'>";
-					echo "<div>Precio Total de compra : $coprecio </div> ";
-					echo '<hr>';
+					echo "<div>Precio total de compra : $coprecio </div> ";
+					echo '<span class="container"><hr></span>'; //Los span limitan el ancho de los hr
 				} else {
+					$pronombre = $datosRes["pronombre"];
+					$procantstock = $datosRes["procantstock"];
+					$prodetalle = $datosRes["prodetalle"];
+					$idproducto = $datosRes["idproducto"];
+					$proprecio = $datosRes["proprecio"];
+					$cicantidad = $datosRes["cicantidad"];
+					$ciprecio = $datosRes["ciprecio"];
+					$link = $datosRes["link"];
+
 					echo "<div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
-						</div>";
+						 </div>";
 					echo "<div>$pronombre</div>";
-					echo "<div>c/u: $$proprecio</div>";
-					echo "<div> x$cicantidad</div>";
+					echo "<div>C/U: $$proprecio</div>";
+					echo "<div>×$cicantidad</div>";
 					echo "<div>$$ciprecio</div>";
-					echo "</div>";
 					echo "<input type='hidden' name='pronombre' id='pronombre'  class='btn btn-dark' value='$pronombre'>";
 					echo "<input type='hidden' name='procantstock' id='procantstock'  class='btn btn-dark' value='$procantstock'>";
 					echo "<input type='hidden' name='prodetalle' id='prodetalle'  class='btn btn-dark' value='$prodetalle'>";
 				}
+				echo '</div>'; //div class row
 				?>
 
 				<input type='submit' name='<?= $idproducto ?>' id='<?= $idproducto ?>' class='btn btn-info' value='Confirmar compra'>
@@ -93,9 +81,6 @@ $datos = data_submited();
 		</form>
 	</div>
 </div>
-
-
-
 <?php
 //FOOTER=================================================================================
 require_once("../structure/footer.php");

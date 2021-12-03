@@ -9,17 +9,7 @@ $sesion->permisoAcceso($dir, $rol);
 $datos = data_submited();
 $carrito = new Carrito();
 $carrito -> aniadirCarrito($datos);
-#Cargo la informacion que cargo en el formulario cuando ingreso un carrito
-
-
-
-
-
-
-
-
-
-
+header('Location: index.php?message=Se agrego al carrito!');
 //FOOTER============================================================================
 require_once("../structure/footer.php");
 ?>

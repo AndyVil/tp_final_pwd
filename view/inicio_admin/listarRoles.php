@@ -43,9 +43,6 @@ $listaMenu = $menuRoles->buscar(null);
                     $i = 1;
                     echo '<tbody>';
                     foreach ($listaMenu as $menu) {  
-                    //foreach ($listaTabla as $objRol) {
-                        //$des = $objRol->getroldescripcion();
-                        //$id = $objRol->getidRol();
                         $idRol = $menu -> getidrol();
                         $idMenu = $menu -> getidMenu();
                         $descripcionRol = '';
