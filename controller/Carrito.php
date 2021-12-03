@@ -131,13 +131,14 @@ class Carrito
                 $respuesta = true;
             }
         }
-        array_push($return, $idcompra,$iditem, $respuesta);
+        array_push($return, $idcompra, $iditem, $respuesta);
         return $return;
     }
 
 
 
-    public function arregloCarrito($datos){
+    public function arregloCarrito()
+    {
         $arreglo = array();
         $obj = new Formulario();
         $abmCompra = new AbmCompra();
@@ -204,7 +205,8 @@ class Carrito
     }
 
 
-    public function eliminarCarrito($datos){
+    public function eliminarCarrito($datos)
+    {
         $sesion = new Session();
         $ambCompra = new AbmCompra();
         $ambitem = new AbmCompraItem();
@@ -222,7 +224,8 @@ class Carrito
         }
     }
 
-    public function compraExitosa($datos){
+    public function compraExitosa($datos)
+    {
         $resultado = [];
         $sesion = new Session();
         $ambCompra = new AbmCompra();
@@ -232,15 +235,15 @@ class Carrito
         $ambCompraEstado = new AbmCompraEstado();
         $ambCompraEstadoTipo = new AbmCompraEstadoTipo();
         $arreglo   = array();
-        $idcompra ="";
+        $idcompra = "";
 
         if (array_key_exists("idcompra", $datos)) {
             $idcompra = $datos["idcompra"];
             $resp = $carrito->confirmarcarrito($datos);
-            $filtroitem=array();
+            $filtroitem = array();
             $filtroitem["idcompra"] = $idcompra;
             $items = $ambitem->buscar($filtroitem);
-            $compras= $ambCompra->buscar($filtroitem);
+            $compras = $ambCompra->buscar($filtroitem);
             $compra = $compras[0];
             $coprecio = $compra->getcompraprecio();
             $cofecha = $compra->getcofecha();
@@ -251,9 +254,9 @@ class Carrito
                 $infoArchivo = $obj->obtenerArchivosPorId($id);
                 $respuesta = $infoArchivo["Descripcion"];
                 $link = $infoArchivo["link"];
-                
-                $where=array();
-                $where["idproducto"] = $id;        
+
+                $where = array();
+                $where["idproducto"] = $id;
                 $productos = $Abmproducto->buscar($where);
                 $arreglo[$i]["idproducto"] = $id;
                 $arreglo[$i]["pronombre"] = $productos[0]->getpronombre();
@@ -265,6 +268,7 @@ class Carrito
                 $arreglo[$i]["link"] = $link;
                 $i++;
             }
+            header("Location: ../cuenta/miscompras.php?mensaje=" . urlencode($id) . "&compra=" . urlencode($idcompra));
         } else {
             $i = 0;
             $datos["idusuario"] = $sesion->getIdUser();
@@ -272,10 +276,10 @@ class Carrito
             $obj = new Formulario;
             $infoArchivo = $obj->obtenerArchivosPorId($datos["idproducto"]);
             $respuesta = $infoArchivo["Descripcion"];
-            $link = $infoArchivo["link"];    
-            $filtroitem=array();
+            $link = $infoArchivo["link"];
+            $filtroitem = array();
             $filtroitem["idcompra"] = $idcompra;
-            $compras= $ambCompra->buscar($filtroitem);
+            $compras = $ambCompra->buscar($filtroitem);
             $compra = $compras[0];
             $coprecio = $compra->getcompraprecio();
             $cofecha = $compra->getcofecha();
@@ -292,15 +296,19 @@ class Carrito
             $arreglo[$i]["proprecio"] = $productos[0]->getproprecio();
             $arreglo[$i]["ciprecio"] = $item->getciprecio();
             $arreglo[$i]["link"] = $link;
+            header("Location: ../cuenta/miscompras.php?mensaje=" . urlencode($id) . "&compra=" . urlencode($idcompra));
         }
         $resultado = ['arreglo' => $arreglo, 'idcompra' => $idcompra, 'coprecio' => $coprecio, 'cofecha' => $cofecha];
         return $resultado;
-        
     }
 
 
 
-    public function aniadirCarrito($datos){
+    public function aniadirCarrito($datos)
+    {
+        $return = "";
+        $resp = false;
+        $todook = true;
         $sesion = new Session();
         $ambCompra = new AbmCompra();
         $ambitem = new AbmCompraItem();
@@ -323,6 +331,9 @@ class Carrito
         }
         if (count($compras) == 0 || count($objcarrito) == 0) {
             list($idcompra, $iditem, $resp) = $this->crearcompra($datos, 1);
+            $idproducto = $datos["idproducto"];
+            header("Location: ../inicio_cliente/detallesProducto.php?mensaje=" . urlencode($idproducto) . "&carrito=" . urlencode($idcompra));
+
         } elseif (count($objcarrito) > 0) {
             $idcompra = $objcarrito[0]->getidcompra();
             $whereitem = array();
@@ -333,23 +344,34 @@ class Carrito
                 $datos["idcompra"] = $idcompra;
                 $datos["idcompraitem"] = "DEFAULT";
                 $resp = $this->sumarItem($datos);
+                $idproducto = $datos["idproducto"];
+                header("Location: ../inicio_cliente/detallesProducto.php?mensaje=" . urlencode($idproducto) . "&carrito=" . urlencode($idcompra));
             } else {
                 $datos["idcompra"] = $idcompra;
                 $datos["idcompraitem"] = $items[0]->getidcompraitem();
                 $stock = $items[0]->getidproducto()->getprocantstock();
                 $idproducto = $items[0]->getidproducto()->getidproducto();
                 if (($items[0]->getcicantidad() + $datos["cicantidad"]) > $stock) {
-                    header("Location: ../inicio_cliente/detallesProducto.php?stock=" . urlencode($idproducto));
+                    header("Location: ../inicio_cliente/detallesProducto.php?stock=" . urlencode($idproducto) . "&idcompra=" . urlencode($idcompra));
                     $datos["cicantidad"] = $stock;
+                    $todook = false;
                 }
-                $datos["cicantidad"] = $items[0]->getcicantidad() + $datos["cicantidad"];
-                $datos["ciprecio"] = $items[0]->getciprecio();
-                $ambitem->modificacion($datos);
+                if ($todook) {
+                    $datos["cicantidad"] = $items[0]->getcicantidad() + $datos["cicantidad"];
+                    $datos["ciprecio"] = $items[0]->getciprecio();
+                    $resp = $ambitem->modificacion($datos);
+                }
+                if ($resp) {
+                    header("Location: ../inicio_cliente/detallesProducto.php?mensaje=" . urlencode($idproducto) . "&carrito=" . urlencode($idcompra));
+                }
             }
         }
+
+        return $return;
     }
 
-    public function ingresoCarrito($datos){
+    public function ingresoCarrito($datos)
+    {
         $resultado = [];
         $sesion = new Session();
         $ambCompra = new AbmCompra();
@@ -370,15 +392,13 @@ class Carrito
         $detalle = $productos[0]->getprodetalle();
 
         $resultado = [
-            'link' => $link ,
-            'id' => $id ,
-            'precio' => $precio ,
-            'nombre' => $nombre ,
-            'stock' => $stock ,
-            'detalle' => $detalle 
+            'link' => $link,
+            'id' => $id,
+            'precio' => $precio,
+            'nombre' => $nombre,
+            'stock' => $stock,
+            'detalle' => $detalle
         ];
         return $resultado;
     }
-
-
 }

@@ -4,15 +4,20 @@ require_once("../structure/Header.php");
 $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
 $sesion = new Session();
+$datos = data_submited();
 $sesion->permisoAcceso($dir, $rol);
 
-$datos = data_submited();
-$formulario = new Formulario();
-$respuesta = $formulario -> actualizarLogin($datos);
+$esSuperuser = $_SESSION['esSuperuser'];
+$respuesta = $_SESSION['actionLogin'];
 $allrol = $respuesta['allrol'];
 $unUsuario = $respuesta['unUsuario'];
-$colrol= $respuesta['colrol'];
+$colrol = $respuesta['colrol'];
 
+if(array_key_exists('roledit', $datos)){
+    if ($datos["roledit"] == 1) {
+        header('Location: listarUsuarios.php?mensaje=' . urldecode('No puede deshabilitar este usuario'));
+    }
+}
 
 
 //HEADER============================================================================
@@ -68,10 +73,11 @@ $colrol= $respuesta['colrol'];
                 if ($checkeado) {
                     $check = "Checked";
                 }
-
-                echo "<input class='form-check-input' type='checkbox' name='colrol[]' class='colrol' id='colrol' value=" . $id . " " . $check . ">";
-                echo "<label for='roles'>" . $descripcion . "</label>";
-                echo ' | ';
+                if ((($id != 4)and($id!=1)) || ($esSuperuser)and ($id != 4)) {
+                    echo "<input class='form-check-input' type='checkbox' name='colrol[]' class='colrol' id='colrol' value=" . $id . " " . $check . ">";
+                    echo "<label for='roles'>" . $descripcion . "</label>";
+                    echo ' | ';
+                }
             }
             echo "<br><br>";
             echo '<div>';

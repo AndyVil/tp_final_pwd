@@ -49,30 +49,32 @@ Verificar la estructura de las tablas y realizar las modificaciones que crea nec
 
 
 
-HICE
-jquery X
-desactivar usuarios desactivarlos(vista) X
-action de login
-action de registro
-action de deposito
-action de admin
-action de cuenta
-action carrito
-action cliente
-
-
-
 
 FALTA
+ajax -----------------------------------------
+
+comprar carrito y añadir a carrito (actions)
+
+
+
 desactivar roles en editar usuarios
 
-arreglar carrito
-
-no eliminar productos, solo deshabilitarlos
-
 editar roles(ahra editar menus, tiene mal las rutas en los formaction y no ahce lo que debe)
+
 que se puedan agregar menus a los roles cambiar por el menu roles(falta la accion de la base de datos con los botones)
+
 pass de la sesion
 
+crear usuario desde administrador no se hace
+
+crear nuevo menu rol no se hace(seria mejor solo modificarlo y poner null donde no hay)
+
+cambiar mail usuario desde cuenta (falta cambiar la ruta del script del boton)
+
+corregir errores de la vista
+
+form
+
+los action se complicaron cuando empezaron a imprimir los datos de las cosas que se compran 
 
 

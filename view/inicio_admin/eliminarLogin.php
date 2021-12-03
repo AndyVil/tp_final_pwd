@@ -5,9 +5,11 @@ $dir = "../inicio_cliente/index.php";
 $rol = "Administrador";
 $sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
-
 $datos = data_submited();
 $id = $datos['roldelete'];
+if($id ==$sesion->getIdUser()||$id ==1){
+    header('Location: listarUsuarios.php?mensaje=' . urldecode('No puede deshabilitar este usuario'));
+}
 //HEADER============================================================================
 ?>
 <div align="center">

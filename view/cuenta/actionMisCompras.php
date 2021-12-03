@@ -1,25 +1,14 @@
 <?php
 require_once("../structure/Header.php");
 //HEADER============================================================================
-$sesion = new Session();
-$dir = "../inicio_cliente/index.php";
-$rol = "Cliente";
-$sesion->permisoAcceso($dir, $rol);
-
 $datos = data_submited();
-$carrito = new Carrito();
-$carrito -> aniadirCarrito($datos);
-#Cargo la informacion que cargo en el formulario cuando ingreso un carrito
-
-
-
-
-
-
-
-
-
-
+$obj = new Formulario();
+$arregloRes = $obj->misCompras($datos);
+if ($arregloRes[0] !== false){
+    $arregloRes[0] = array_reverse($arregloRes[0]);
+}
+$_SESSION['misCompras'] = $arregloRes;
+header('Location:misCompras.php');
 //FOOTER============================================================================
 require_once("../structure/footer.php");
 ?>

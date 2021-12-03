@@ -1,20 +1,13 @@
 <title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-$datos = data_submited();
-$obj = new Formulario();
 $sesion = new Session();
-
 $dir = "../inicio_cliente/index.php";
 $rol = "Cliente";
 $sesion->permisoAcceso($dir, $rol);
-
-$arregloRes = $obj->misCompras($datos);
-echo $arregloRes[1];
-$arreglo = $arregloRes[0];
-
 //HEADER============================================================================
 ?>
+
 <div class="container">
     <!-- Titulo pagina -->
     <div align="center">
@@ -22,12 +15,15 @@ $arreglo = $arregloRes[0];
         <hr>
     </div>
     <?php
+    $arregloRes = $_SESSION['misCompras'];
+    echo $arregloRes[1];
+    $arreglo = $arregloRes[0];
     if ($arreglo === false) {
         echo "<div class='alert alert-warning' role='alert' align=center>
                         No tienes ningun articulo comprado aun.
                         </div>";
     } else {
-        echo "<form id='aceptadas' name='catalogo' method='POST' action='detalleCompra.php'>
+        echo "<form id='aceptadas' name='catalogo' method='POST' action='ActionDetalleCompra.php'>
             <div class='row'> ";
 
         foreach ($arreglo as  $archivo) {
@@ -41,7 +37,8 @@ $arreglo = $arregloRes[0];
             $idcompraitem = $archivo["idcompraitem"];
             $cicantidad = $archivo["cicantidad"];
             $fecha = $archivo["fecha"];
-            $nombre = $archivo["nombre"];
+            $nombre = $archivo["nombre"];            
+
           
             echo
             "<div id='productos' class='col-lg-2 col-sm-4 mb-4'>
@@ -52,12 +49,11 @@ $arreglo = $arregloRes[0];
 						<div>Fecha de Compra:<br>$fecha</div>
 						<div>Precio Total: $$ciprecio</div>
 						</div>
-                        <input type='hidden' name='idcompra' id='idcompra' value='$idcompra'>
-                        <input type='hidden' name='idcompraitem:$idcompraitem' id='idcompraitem:$idcompraitem' value='$idcompraitem'>                            
                         <input type='submit' name='Seleccion:$idcompra' id='Seleccion:$idcompra' class='btn btn-light' value='Ver detalles de compra'>";
 
             echo "</div>";
-            
+            //<input type='hidden' name='idcompraitem:$idcompraitem' id='idcompraitem:$idcompraitem' value='$idcompraitem'>                            
+
         }
     }
     ?>

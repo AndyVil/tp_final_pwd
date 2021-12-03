@@ -6,10 +6,8 @@ $rol = "Administrador";
 $sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
 
-//$objAbmTabla = new AbmRol();
 $menuRoles = new AbmMenurol();
 $listaMenu = $menuRoles->buscar(null);
-//$listaTabla = $objAbmTabla->buscar(null);
 //HEADER============================================================================
 ?>
 

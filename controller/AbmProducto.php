@@ -18,9 +18,10 @@ class AbmProducto
             and array_key_exists('prodetalle', $param)
             and array_key_exists('procantstock', $param)
             and array_key_exists('proprecio', $param)
+            and array_key_exists('prodeshabilitado', $param)
         ) {
             $obj = new Producto();
-            $obj->setear($param['idproducto'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio']);
+            $obj->setear($param['idproducto'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio'],$param['prodeshabilitado']);
         }
         return $obj;
     }
@@ -37,7 +38,7 @@ class AbmProducto
 
         if (isset($param['idproducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idproducto'], "", "", "", "");
+            $obj->setear($param['idproducto'], "", "", "", "", "");
         }
         return $obj;
     }
@@ -114,7 +115,7 @@ class AbmProducto
                 $elProducto[0]->setprodetalle($param['prodetalle']);
                 $elProducto[0]->setprocantstock($param['procantstock']);
                 $elProducto[0]->setproprecio($param['proprecio']);
-
+                $elProducto[0]->setprodeshabilitado($param['prodeshabilitado']);
                 if ($elProducto[0] != null and $elProducto[0]->modificar()) {
                     $resp = true;
                 }

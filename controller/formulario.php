@@ -48,14 +48,15 @@ class Formulario
         return $retorno;
     }
 
-    public function borrarArchivos($nombre, $datos){
+    public function borrarArchivos($nombre, $datos)
+    {
         $retorno = false;
         /**
          * Reescalamos la imagen, creamos un txt con la descripcion como contenido
          */
         $dir = $GLOBALS['ROOT'] . 'uploads/';
         $todoOK = true;
-        if ($todoOK && !  unlink($_FILES['productoImagen']['tmp_name'], $dir . $nombre)) {
+        if ($todoOK && !unlink($_FILES['productoImagen']['tmp_name'], $dir . $nombre)) {
             $error = "ERROR: No se pudo copiar la imagen.";
             $todoOK = false;
             $retorno = true;
@@ -135,28 +136,25 @@ class Formulario
         //Miramos si existe el archivo pasado como parámetro
         $i = 0;
         $loencontre = false;
-        $descripcion ="";
-        $imagen ="";
+        $descripcion = "";
+        $imagen = "";
         foreach ($archivos as $archivo) {
             $dot = mb_strripos($archivo, ".");
             $nombre = substr($archivo, 0, $dot);
-            $ext = substr($archivo, $dot+1);
-            
-            if($nombre==$id){ 
-                
-                if($ext =="txt"){
+            $ext = substr($archivo, $dot + 1);
+
+            if ($nombre == $id) {
+
+                if ($ext == "txt") {
                     $fArchivoOBS = fopen($directorio . $archivo, "r");
                     $descripcion = fread($fArchivoOBS, filesize($directorio . $archivo));
+                } else {
+                    $imagen = $directorio . $archivo;
                 }
-                else{
-                    $imagen = $directorio. $archivo;
-                }
-                
-                
-            }                    
+            }
         }
         $return = [
-            "link" => $imagen,            
+            "link" => $imagen,
             "Descripcion" => $descripcion
 
         ];
@@ -197,7 +195,8 @@ class Formulario
     }
 
 
-    public function registro($datos){
+    public function registro($datos)
+    {
 
         $ambrol = new AbmUsuarioRol();
         $object = new AbmUsuario();
@@ -222,7 +221,8 @@ class Formulario
     }
 
 
-    public function verificarLogin($datos){
+    public function verificarLogin($datos)
+    {
         $sesion = new Session();
         $name = md5($datos['usnombre']);
         $pass = md5($datos['uspass']);
@@ -242,24 +242,116 @@ class Formulario
         return $return;
     }
 
+    public function detallesProducto($datos)
+    {
+        $resultado = [];
+        $Abmproducto = new AbmProducto();
+        if (array_key_exists('mensaje', $datos)) {
+            $infoArchivo = $this->obtenerArchivosPorId($datos["mensaje"]);
+            //var_dump($datos);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $id = $datos["mensaje"];
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+            $deshabilitado = $productos[0]->getprodeshabilitado();
+        } elseif (array_key_exists('idcompra', $datos)) {
+            if (!array_key_exists('stock', $datos)) {
+                foreach ($datos as $clave => $valor) {
+                    $datos["idproducto"] = str_replace("idproducto:", '', $clave);
+                }
+            }
+            //var_dum($datos);
+            $infoArchivo = $this->obtenerArchivosPorId($datos["idproducto"]);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $id = $datos["idproducto"];
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+            $deshabilitado = $productos[0]->getprodeshabilitado();
+        } else {
+            $infoArchivo = $this->obtenerInfoDeArchivo($datos);
+            $respuesta = $infoArchivo["Descripcion"];
+            $link = $infoArchivo["link"];
+            $dot = mb_strripos($link, ".");
+            $id = substr($link, 0, $dot);
+            $slash = mb_strripos($link, "/");
+            $id = substr($id, $slash + 1);
+            $where = ['idproducto' => $id];
+            $productos = $Abmproducto->buscar($where);
+            $precio = $productos[0]->getproprecio();
+            $nombre = $productos[0]->getpronombre();
+            $stock = $productos[0]->getprocantstock();
+            $detalle = $productos[0]->getprodetalle();
+            $deshabilitado = $productos[0]->getprodeshabilitado();
+        }
+        $resultado = [
+            'link' => $link,
+            'id' => $id,
+            'precio' => $precio,
+            'nombre' => $nombre,
+            'stock' => $stock,
+            'detalle' => $detalle,
+            'deshabilitado' => $deshabilitado
+        ];
+        return $resultado;
+    }
 
-    public function actionProducto($datos){
+    public function permisoCompra()
+    {
+        $sesion = new Session();
+        $actionCarrito = "redireccion.php";
+        $actionComprar = "redireccion.php";
+        if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
+            list($sesionValidar, $error) = $sesion->validar();
+            if ($sesionValidar) {
+                $roles = $sesion->obtenerRol();
+                $escliente = $sesion->arrayRolesUser($roles);
+                $comprar = false;
+                if ($escliente['Cliente'] == true) {
+                    $actionCarrito = "../carrito/añadirCarrito.php";
+                    $actionComprar = "../carrito/comprarCarrito.php";
+                    $comprar = true;
+                }
+            } else {
+                $comprar = false;
+            }
+        }
+        $resultado = ['comprar' => $comprar, 'actionCarrito' => $actionCarrito, 'actionComprar' => $actionComprar];
+        return $resultado;
+    }
+
+
+    public function actionProducto($datos)
+    {
         $ruta = $GLOBALS['ROOT'];
         $productos = new AbmProducto;
-        $base = new BaseDatos();
-        $arrProductos = [];
-        $arrProductos = $productos->buscar(null);
         $idproducto = $datos['idproducto'];
         if ($datos["accion"] == "borrar") {
-            $productos->baja($datos);
-
-
-            $formularioCargarProducto = new Formulario();
-            $array = $formularioCargarProducto->obtenerArchivosPorId($idproducto);
-            $link = $array["link"];
-            //Prueba haber si funciona y borra el archivo
-            $succes = unlink($link);
-            $respuesta = "Location: index.php?mensaje=Se elimino exitosamente el producto: " . $idproducto;
+            $filtro['idproducto'] = $datos['idproducto'];
+            $colproducto = $productos->buscar($filtro);
+            $objproducto = $colproducto[0];
+            $datos['pronombre'] = $objproducto->getpronombre();
+            $datos['prodetalle'] = $objproducto->getprodetalle();
+            $datos['procantstock'] = $objproducto->getprocantstock();
+            $datos['proprecio'] = $objproducto->getproprecio();
+            date_default_timezone_set("America/Argentina/Buenos_Aires");
+            #Si la fecha y hora seteada la convierte en 0000-00-00 00:00:00, si no es seteada coloca un timestamp
+            if ($objproducto->getprodeshabilitado() != '0000-00-00 00:00:00' && $objproducto->getprodeshabilitado() != NULL) {
+                $datos['prodeshabilitado'] = '0000-00-00 00:00:00';
+            } else {
+                $datos['prodeshabilitado'] = date('Y-m-d h:i:s'); #Timestamp
+            }
+            $productos->modificacion($datos);
+            $respuesta = "Location: index.php?mensaje=Se habilito/deshabilito exitosamente el producto: " . $idproducto;
         } else {
 
             $tipoProducto = $datos['tipoProducto'];
@@ -296,7 +388,8 @@ class Formulario
         return $respuesta;
     }
 
-    public function misCompras ($datos){
+    public function misCompras($datos)
+    {
 
         $sesion = new Session();
         $arreglo = array();
@@ -370,7 +463,8 @@ class Formulario
     }
 
 
-    public function detalleCompra($datos){
+    public function detalleCompra($datos)
+    {
         $resultado = [];
         $abmCompra = new AbmCompra();
         $abmitem = new AbmCompraItem();
@@ -390,20 +484,21 @@ class Formulario
         $coprecio = $compra->getcompraprecio();
 
         $resultado = [
-        'idcompraitem'=>$idcompraitem,
-         'idcompra'=>$idcompra,
-          'arreglo'=>$arreglo,
-           'colcompras'=>$colcompras,
-            'compra'=>$compra,
-             'fecha'=>$fecha,
-              'coprecio'=>$coprecio
+            'idcompraitem' => $idcompraitem,
+            'idcompra' => $idcompra,
+            'arreglo' => $arreglo,
+            'colcompras' => $colcompras,
+            'compra' => $compra,
+            'fecha' => $fecha,
+            'coprecio' => $coprecio
         ];
         return $resultado;
     }
 
 
 
-    public function controlUsuario($datos){
+    public function controlUsuario($datos)
+    {
         if ($datos['accion'] == 'noAccion') {
             header('Location: listarUsuarios.php');
         }
@@ -433,7 +528,7 @@ class Formulario
                         $existerol = $ambuserRol->buscar($filtrorol);
                         #compruebo que el usuario no tenga el rol con el id actual de la iteracion para agregarlo
                         if ($existerol == null)
-                        $ambuserRol->alta($filtrorol);
+                            $ambuserRol->alta($filtrorol);
                     }
                 }
                 #Si el count del array es menor a la cantidad de roles que corresponda entonces SI quita un rol
@@ -443,7 +538,7 @@ class Formulario
                         $existerol = $ambuserRol->buscar($filtrorol);
                         #compruebo que el usuario si tenga el rol con el id actual de la iteracion para eliminarlo
                         if ($existerol != null)
-                        $ambuserRol->baja($filtrorol);
+                            $ambuserRol->baja($filtrorol);
                     }
                 }
                 if ($abmUser->modificacion($datos)) {
@@ -497,7 +592,8 @@ class Formulario
     }
 
 
-    public function controlMenuRol($datos){
+    public function controlMenuRol($datos)
+    {
         if ($datos['accion'] == 'noAccion') {
             header('Location: listarRols.php');
         }
@@ -590,11 +686,12 @@ class Formulario
         $encuentraError = strpos(strtoupper($mensaje), 'ERROR');
     }
 
-    
+
     /**
      * @return array
      */
-    public function actualizarLogin($datos){
+    public function actualizarLogin($datos)
+    {
         $respuesta = [];
         $filtro = array();
         $filtro['idusuario'] = $datos['roledit'];
@@ -605,94 +702,33 @@ class Formulario
         $unUsuario = $objAbmUsuario->buscar($filtro);
         $colrol = $usuariorol->buscar($filtro);
 
-        $respuesta=['allrol'=> $allrol, 'unUsuario'=> $unUsuario, 'colrol'=> $colrol];
+        $respuesta = ['allrol' => $allrol, 'unUsuario' => $unUsuario, 'colrol' => $colrol];
+        return $respuesta;
+    }
+
+
+    public function actualizarProducto($datos){
+        $respuesta = [];
+        $objAbmProducto = new AbmProducto();
+        $filtro = array();
+        $filtro['idproducto'] = $datos['proEdit'];
+        $unProducto = $objAbmProducto->buscar($filtro);
+        $producto = $unProducto[0];
+        $id = $producto->getidproducto();
+        $precio = $producto->getproprecio();
+        $stock = $producto->getprocantstock();
+        $detalles = $producto->getprodetalle();
+        $respuesta = ['id'=>$id, 'precio'=>$precio, 'stock'=>$stock, 'detalles'=>$detalles];
         return $respuesta;
     }
 
 
 
-    public function detallesProducto($datos){
-        $resultado = [];
-        $Abmproducto = new AbmProducto();
-        if (array_key_exists('mensaje', $datos)) {
-            $infoArchivo = $this->obtenerArchivosPorId($datos["mensaje"]);
-            $respuesta = $infoArchivo["Descripcion"];
-            $link = $infoArchivo["link"];
-            $id = $datos["mensaje"];
-            $where = ['idproducto' => $id];
-            $productos = $Abmproducto->buscar($where);
-            $precio = $productos[0]->getproprecio();
-            $nombre = $productos[0]->getpronombre();
-            $stock = $productos[0]->getprocantstock();
-            $detalle = $productos[0]->getprodetalle();
-        } elseif (array_key_exists('idcompra', $datos)) {
-            foreach ($datos as $clave => $valor) {
-                $datos["idproducto"] = str_replace("idproducto:", '', $clave);
-            }
-            $infoArchivo = $this->obtenerArchivosPorId($datos["idproducto"]);
-            $respuesta = $infoArchivo["Descripcion"];
-            $link = $infoArchivo["link"];
-            $id = $datos["idproducto"];
-            $where = ['idproducto' => $id];
-            $productos = $Abmproducto->buscar($where);
-            $precio = $productos[0]->getproprecio();
-            $nombre = $productos[0]->getpronombre();
-            $stock = $productos[0]->getprocantstock();
-            $detalle = $productos[0]->getprodetalle();
-        } else {
-            $infoArchivo = $this->obtenerInfoDeArchivo($datos);
-            $respuesta = $infoArchivo["Descripcion"];
-            $link = $infoArchivo["link"];
-            $dot = mb_strripos($link, ".");
-            $id = substr($link, 0, $dot);
-            $slash = mb_strripos($link, "/");
-            $id = substr($id, $slash + 1);
-            $where = ['idproducto' => $id];
-            $productos = $Abmproducto->buscar($where);
-            $precio = $productos[0]->getproprecio();
-            $nombre = $productos[0]->getpronombre();
-            $stock = $productos[0]->getprocantstock();
-            $detalle = $productos[0]->getprodetalle();
-        }
-        $resultado = [
-            'link'=> $link,
-            'id'=> $id,
-            'precio'=> $precio,
-            'nombre'=> $nombre,
-            'stock'=> $stock,
-            'detalle'=> $detalle
-        ];
-        return $resultado;
-    }
-
-
-    public function permisoCompra(){
-        $sesion = new Session();
-        $actionCarrito = "redireccion.php";
-        $actionComprar = "redireccion.php";
-        if (array_key_exists('usnombre', $_SESSION) and array_key_exists('uspass', $_SESSION)) {
-            list($sesionValidar, $error) = $sesion->validar();
-            if ($sesionValidar) {
-                $roles = $sesion->obtenerRol();
-                $escliente = $sesion->arrayRolesUser($roles);
-                $comprar = false;
-                if ($escliente['Cliente'] == true) {
-                    $actionCarrito = "../carrito/añadirCarrito.php";
-                    $actionComprar = "../carrito/action.php";
-                    $comprar = true;
-                }
-            } else {
-                $comprar = false;
-            }
-        }
-        $resultado = ['comprar'=>$comprar, 'actionCarrito'=> $actionCarrito,'actionComprar'=>$actionComprar];
-        return $resultado;
-    }
 
 
 
-
-    public function cambiarMail($nuevoMail){
+    public function cambiarMail($nuevoMail)
+    {
     }
 
     // /**

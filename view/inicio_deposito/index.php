@@ -1,16 +1,15 @@
 <?php
 $Titulo = "Depósito";
 require_once("../structure/header.php");
-
-$objAbmTabla = new AbmProducto();
-$listaTabla = $objAbmTabla->buscar(null);
-
 $url = data_submited();
 $dir = "../inicio_cliente/index.php";
 $rol = "Deposito";
 $sesion = new Session();
 $sesion->permisoAcceso($dir, $rol);
 
+$objAbmTabla = new AbmProducto();
+$listaTabla = $objAbmTabla->buscar(null);
+//HEADER============================================================================
 ?>
 <!-- Titulo pagina -->
 <div align="center">
@@ -45,6 +44,7 @@ $sesion->permisoAcceso($dir, $rol);
                         <th scope="col" id='tablepadding'>Detalle</th>
                         <th scope="col" id='tablepadding'>Stock</th>
                         <th scope="col" id='tablepadding'>Precio</th>
+                        <th scope="col" id='tablepadding'>deshabilitado</th>
                     </tr>
                 </thead>
                 <?php
@@ -58,6 +58,7 @@ $sesion->permisoAcceso($dir, $rol);
                         $detalle = $objProducto->getprodetalle();
                         $des = $objProducto->getprocantstock();
                         $precio = $objProducto->getproprecio();
+                        $deshabilitado = $objProducto->getprodeshabilitado();
                         echo '<tr class="align-middle">';
                         echo '<th scope="row" id="tablepadding">' . $id . '</th>';
                         echo '<td id="tablepadding">' . $nombre .    '</td>';
@@ -69,6 +70,7 @@ $sesion->permisoAcceso($dir, $rol);
                             echo "<td class='text-center text-danger' id='tablepadding'>" . $des . "<i class='fas fa-times'></i></td>";
                         }
                         echo '<td id="tablepadding">' . $precio .  '</td>';
+                        echo '<td id="tablepadding">' . $deshabilitado .  '</td>';
                         //SVG son los iconos de los botones
                         echo '
                         <td class="text-center">
@@ -109,5 +111,6 @@ $sesion->permisoAcceso($dir, $rol);
 </div>
 
 <?php
+//FOOTER============================================================================
 require_once("../structure/footer.php");
 ?>

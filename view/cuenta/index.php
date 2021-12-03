@@ -30,7 +30,7 @@ require_once("../structure/Header.php");
 
             
             if ($cliente['Cliente'] == true) {
-                $ref = "miscompras.php";
+                $ref = "actionMisCompras.php";
                 $type = "button";
 
                 echo '<form action="action.php" method="POST">';

@@ -1,30 +1,6 @@
 <?php
 require_once("../structure/header.php");
 $datos = data_submited();
-$id = '';
-
-foreach ($datos as $key => $valor) {
-	$id = $key;
-	$accion = $valor;
-}
-if (!array_key_exists("idcompra", $datos)) {
-	$abmItem = new AbmCompraItem();
-	$abmproducto = new AbmProducto();
-	$pronombre = $datos["pronombre"];
-	$procantstock = $datos["procantstock"];
-	$prodetalle = $datos["prodetalle"];
-	$idproducto = $datos["idproducto"];
-	$productos = $abmproducto->buscar($datos);
-	$proprecio = $productos[0]->getproprecio();
-	$cicantidad = $datos["cicantidad"];
-	$ciprecio = $datos["ciprecio"];
-	$formulario = new Formulario();
-	$infoArchivo = $formulario->obtenerArchivosPorId($idproducto);
-	$link = $infoArchivo["link"];
-}
-$abmItem = new AbmCompraItem();
-$abmcompra = new AbmCompra();
-
 //HEADER================================================================================
 ?>
 
@@ -38,6 +14,29 @@ $abmcompra = new AbmCompra();
 			<div align="center">
 				<!-- Botones -->
 				<?php
+				$id = '';
+				foreach ($datos as $key => $valor) {
+					$id = $key;
+					$accion = $valor;
+				}
+				if (!array_key_exists("idcompra", $datos)) {
+					$abmItem = new AbmCompraItem();
+					$abmproducto = new AbmProducto();
+					$pronombre = $datos["pronombre"];
+					$procantstock = $datos["procantstock"];
+					$prodetalle = $datos["prodetalle"];
+					$idproducto = $datos["idproducto"];
+					$productos = $abmproducto->buscar($datos);
+					$proprecio = $productos[0]->getproprecio();
+					$cicantidad = $datos["cicantidad"];
+					$ciprecio = $datos["ciprecio"];
+					$formulario = new Formulario();
+					$infoArchivo = $formulario->obtenerArchivosPorId($idproducto);
+					$link = $infoArchivo["link"];
+				}
+				$abmItem = new AbmCompraItem();
+				$abmcompra = new AbmCompra();
+
 				if (array_key_exists("idcompra", $datos)) {
 					echo "<div class='row'>";
 					$idcompra = $datos["idcompra"];
@@ -55,17 +54,18 @@ $abmcompra = new AbmCompra();
 						$formulario = new Formulario();
 						$infoArchivo = $formulario->obtenerArchivosPorId($idproducto);
 						$link = $infoArchivo["link"];
-						//var_dump($link);
-						echo "<div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
-						</div>";
-						echo "<div>$pronombre</div>";
+						
+						echo "<div>Nombre de Producto: $pronombre</div>";
 						echo "<div>c/u: $$proprecio</div>";
-						echo "<div> x$cicantidad</div>";
-						echo "<div>Precio Total: $$proprecio</div>";
+						echo "<div> cantidad x$cicantidad</div>";
+						echo "<div>total: $$proprecio</div>";
 						echo "</div>";
+						echo '<hr>';
 					}
+
 					echo "<input type='hidden' name='idcompra' id='idcompra'  class='btn btn-dark' value='$idcompra'>";
-					echo "<div>$coprecio </div> ";
+					echo "<div>Precio Total de compra : $coprecio </div> ";
+					echo '<hr>';
 				} else {
 					echo "<div class='col-lg-5 col-xl-4 text-lg-end'><img class='img-fluid' alt='Portada' src='" . $link . "' style= 'margin-bottom: 10px';>
 						</div>";

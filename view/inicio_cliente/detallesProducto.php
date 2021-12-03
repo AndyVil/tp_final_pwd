@@ -1,35 +1,33 @@
-<title><?= "Tienda de ropa" ?></title>
 <?php
 require_once("../structure/Header.php");
-$obj = new Formulario();
-$arreglo = $obj->obtenerArchivos();
-$sesion = new Session();
-$datos = data_submited();
+$resultado = $_SESSION['detallesProducto'];
+$datos = $_SESSION['datosDetalleProducto'];
+$permisos = $_SESSION['permisos'] ;
 
-
+#Mensajes de burbuja
 if (array_key_exists('stock', $datos)) {
     $datos["idproducto"] = $datos["stock"];
     echo "<div class='alert alert-danger' role='alert' align=center>
     ¡La cantidad ingresada del item de tu carrito supera el stock intenta nuevamente!
     </div>";
 }
+if (array_key_exists('carrito', $datos)) {
+    $datos["idproducto"] = $datos["mensaje"];
+    echo "<div class='alert alert-success' role='alert' align=center>
+    ¡se añadio el item a tu carrito!
+    </div>";
+}
 
-$resultado = $obj->detallesProducto($datos);
 $link = $resultado['link'];
 $id = $resultado['id'];
 $precio = $resultado['precio'];
 $nombre = $resultado['nombre'];
 $stock = $resultado['stock'];
 $detalle = $resultado['detalle'];
-
-
-$resultado = $obj->permisoCompra();
-$actionCarrito = $resultado['actionCarrito'];
-$actionComprar = $resultado['actionComprar'];
-$comprar = $resultado['comprar'];
-
-
-
+$deshabilitado = $resultado['deshabilitado'];
+$actionCarrito = $permisos['actionCarrito'];
+$actionComprar = $permisos['actionComprar'];
+$comprar = $permisos['comprar'];
 
 //HEADER============================================================================
 ?>
@@ -43,7 +41,7 @@ $comprar = $resultado['comprar'];
     </div>
     <form id="carrito" name="carrito" method="POST" action="<?= $actionCarrito ?>">
         <div class="row">
-            <input type="hidden" name="compraHabilitada" id="compraHabilitada" value="<?= $comprar?>">
+            <input type="hidden" name="compraHabilitada" id="compraHabilitada" value="<?= $comprar ?>">
             <?php
             echo "<div class='alert alert-success mt-5' role='alert'>
                   <div class='row px-2 my-4 justify-content-center'>
@@ -56,7 +54,7 @@ $comprar = $resultado['comprar'];
             echo "<input type='hidden' name='pronombre' id='nombre' value='$nombre' >";
             echo "<input type='hidden' name='prodetalle' id='prodetalle' value='$detalle' >";
             echo "<input type='hidden' name='proprecio' id='idproducto' value='$precio' >";
-
+            echo "<input type='hidden' name='prodeshabilitado' id='prodeshabilitado' value='$deshabilitado' >";
             echo "<input type='hidden' name='ciprecio' id='ciprecio' value='$precio'>";
             echo ' ';
             //echo "<input type='submit' formaction='$actionCarrito' name='$id' id='Seleccion:$id' class='btn btn-warning' value='Agregar al carrito'>";
@@ -96,7 +94,3 @@ $comprar = $resultado['comprar'];
     </form>
 
 </div>
-<?php
-//FOOTER============================================================================
-require_once("../structure/footer.php");
-?>
